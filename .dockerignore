@@ -1,0 +1,13 @@
+IDE Fragments
+/.vscode
+*__pycache__*
+
+
+# Docker Files
+docker-compose.yml
+
+# Ignore Files
+.gitignore
+
+# virtual env
+venv
