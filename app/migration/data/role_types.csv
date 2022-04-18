@@ -1,0 +1,5 @@
+id,name,description,creation_user
+1,"admin","Administrator User","admin"
+2,"webuser","Web Interface User","admin"
+3,"user","Application User", "admin"
+4,"guess","Application Guess", "admin"

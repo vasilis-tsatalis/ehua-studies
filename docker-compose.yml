@@ -2,35 +2,39 @@ version: "3"
 
 services:
   db:
-    image: postgres:11
+    image: postgres:14
     ports:
       - "5432:5432"
     environment:
       - POSTGRES_USER=dbuser
       - POSTGRES_PASSWORD=pass123
-      - POSTGRES_DB=test_db
+      - POSTGRES_DB=ehua-portal
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-  web:
+  web-api:
+    #restart: always
     build:
       context: .
-      dockerfile: ./Dockerfile
-    command: bash -c "wait-for-it db:5432 --uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+      dockerfile: Dockerfile
+    command: bash -c "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
     environment:
-      - DB_URL=postgresql://dbuser:pass123@db/test_db
+      - DB_URL=postgresql://dbuser:pass123@db/ehua-portal
     ports:
       - "8000:8000"
+    env_file:
+      - .env
     depends_on:
       - db
   nginx:
-    image: nginx:latest
+    image: nginx:1.19.2-alpine
     volumes:
       - ./nginx/nginx.http.config:/etc/nginx/nginx.conf
-      - ./nginx/certs:/etc/nginx/certs
+    #  - ./nginx/certs:/etc/nginx/certs
     ports:
       - "80:80"
+    #  - "443:443"
     depends_on:
-      - web
+      - web-api
   
 volumes:
   postgres_data:
