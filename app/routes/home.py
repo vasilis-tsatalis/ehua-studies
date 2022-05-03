@@ -15,6 +15,7 @@ home_router = APIRouter(
 @home_router.get("/", response_class=HTMLResponse)
 @home_router.get("/home", response_class=HTMLResponse)
 async def root():
+
     return """
         <html>
             <head>
