@@ -1,0 +1,48 @@
+<%- include("./partials/header") %>
+<%- include("./navbar/menu") %>
+
+<br>
+
+<div class="container mt-4">
+        
+    <div class="jumbotron">
+        <p class="lead">Upload document to Cloud Document Storage</p>
+        <hr class="my-4">
+    </div>
+
+    <div class="jumbotron">
+        <form action="/upload" enctype="multipart/form-data" method="POST">
+
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                  Select Document Type
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                  <li><a class="dropdown-item" href="#">Type 1</a></li>
+                  <li><a class="dropdown-item" href="#">Type 2</a></li>
+                  <li><a class="dropdown-item" href="#">Type 3</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Other</a></li>
+                </ul>
+            </div>
+            <hr class="my-4">
+
+            <div class="mb-3 mt-4">
+                <label for="formFile" class="form-label">Upload Document</label>
+                <input class="form-control" type="file" id="formFile" name="doc_conv" required/> <br>
+                <input type="submit" value="submit">
+            </div>                
+            <hr class="my-4">
+
+      </form>
+    </div>
+    <br>
+    <% if (typeof message !== 'undefined' ) { %>
+        <p><%= message %></p>
+        <% } %>
+
+</div>
+
+<br>
+
+<%- include("./partials/footer") %>

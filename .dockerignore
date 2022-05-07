@@ -11,3 +11,6 @@ docker-compose.yml
 
 # virtual env
 venv
+
+node_modules
+npm-debug.log

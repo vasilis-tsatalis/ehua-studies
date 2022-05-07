@@ -11,21 +11,21 @@ from ..auth.authentication import authenticate_admin, authenticate_webuser
 security = HTTPBasic()
 
 from ..schemas import department
-from ..controllers import departments
+from ..controllers import crud_departments
 from ..config.database import get_db
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Department main server route listener
 department_router = APIRouter(
-    prefix = os.getenv("API_URL"),
+    prefix = os.getenv("API_URL") + '/departments',
     tags=['departments']
 )
 
 
-@department_router.get("/departments", response_model=List[department.Department], status_code = status.HTTP_200_OK)
+@department_router.get("/", response_model=List[department.Department], status_code = status.HTTP_200_OK)
 async def get_departments(webuser: str = Depends(authenticate_webuser), skip: int = 0, limit: int = 200, db: Session = Depends(get_db)):
-    db_departments = await departments.get_departments(db, skip=skip, limit=limit)
+    db_departments = await crud_departments.get_departments(db, skip=skip, limit=limit)
     if db_departments:
         return db_departments
     raise HTTPException(
@@ -35,9 +35,9 @@ async def get_departments(webuser: str = Depends(authenticate_webuser), skip: in
         )
 
 
-@department_router.get("/departments/{id}", response_model=department.Department, status_code = status.HTTP_200_OK)
+@department_router.get("/{id}", response_model=department.Department, status_code = status.HTTP_200_OK)
 async def get_department_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
-    db_department = await departments.get_department_by_id(db, id=id)
+    db_department = await crud_departments.get_department_by_id(db, id=id)
     if db_department is None:
         raise HTTPException(
             status_code=404, 
@@ -47,9 +47,9 @@ async def get_department_by_id(id: int, webuser: str = Depends(authenticate_webu
     return db_department
 
 
-@department_router.get("/departments/{name}", response_model=department.Department, status_code = status.HTTP_200_OK)
+@department_router.get("/{name}", response_model=department.Department, status_code = status.HTTP_200_OK)
 async def get_department_by_name(name: str, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
-    db_department = await departments.get_department_by_name(db, name=name.upper())
+    db_department = await crud_departments.get_department_by_name(db, name=name.upper())
     if db_department is None:
         raise HTTPException(
             status_code=404, 
@@ -59,23 +59,24 @@ async def get_department_by_name(name: str, webuser: str = Depends(authenticate_
     return db_department
 
 
-@department_router.post("/departments", response_model=department.Department, status_code = status.HTTP_201_CREATED)
+@department_router.post("/", response_model=department.Department, status_code = status.HTTP_201_CREATED)
 async def create_department(department: department.DepartmentCreate, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
-    db_department = await departments.get_department_by_name(db, name=department.name.upper())
+    db_department = await crud_departments.get_department_by_name(db, name=department.name.upper())
     if db_department:
         raise HTTPException(
             status_code=400, 
             detail="Department name already existing", 
             headers={"WWW-Authenticate": "Basic"},
         )
-    return await departments.create_department(db, department=department, creation_user=administrator)
+    return await crud_departments.create_department(db, department=department, creation_user=administrator)
 
 
-@department_router.patch("/departments/{id}", status_code = status.HTTP_202_ACCEPTED)
+@department_router.patch("/{id}", status_code = status.HTTP_202_ACCEPTED)
 async def update_department(id: int, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
     return {'id': id}
 
 
-@department_router.delete("/departments/{id}", status_code = status.HTTP_205_RESET_CONTENT)
+@department_router.delete("/{id}", status_code = status.HTTP_205_RESET_CONTENT)
 async def delete_department(id: int, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
-    return {'id': id}
+    db_department = await crud_departments.delete_department_by_id(db, id=id)
+    return db_department

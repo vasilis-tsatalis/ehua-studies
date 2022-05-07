@@ -5,6 +5,7 @@ from sqlalchemy_utils import EmailType
 from ..config.database import Base
 import datetime
 
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # DATABASE MODELS - TABLES AND RELATIONSHIPS
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

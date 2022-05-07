@@ -1,0 +1,44 @@
+<%- include("./partials/header") %>
+<%- include("./navbar/menu") %>
+
+<br>
+
+<div class="container mt-4">
+        
+  <div class="row align-items-start">
+
+      <div class="col">
+          <label for="my_table"><b><i>Καρτέλα Φοιτητών</i></b></label>
+          <hr class="my-4">
+          <table class="table" id="my_table">
+              <thead>
+              <tr>
+                  <th scope="col">_id</th>
+                  <th scope="col">Χρήστης</th>
+                  <th scope="col">Όνομα</th>
+                  <th scope="col">Επώνυμο</th>
+                  <th scope="col">Ηλ.Ταχυδρομείο</th>
+                  <th scope="col">Έτος Εγγραφής</th>
+              </tr>
+              </thead>
+              <tbody>
+                  <% if (typeof sections != 'undefined') { %> <% sections.forEach(section => { %>
+              <tr>
+                  <th scope="row"><%= section.id %></th>
+                  <td><%= section.username %></td>
+                  <td><%= section.fname %></td>
+                  <td><%= section.lname %></td>
+                  <td><%= section.email %></td>
+                  <td><%= section.year %></td>
+              </tr>
+              <% }) %> <% } %>
+              </tbody>
+          </table>
+      </div>           
+
+  </div>
+</div>
+
+
+
+<%- include("./partials/footer") %>

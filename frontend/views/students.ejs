@@ -1,0 +1,46 @@
+<%- include("./partials/header") %>
+<%- include("./navbar/menu") %>
+
+<br>
+
+  <div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+      <h2 class="display-7 fw-bold">Display all Students</h2>
+      <p class="col-md-8 fs-4">This selection displays all students which are existing in HUA.</p>
+      <button class="btn btn-primary btn-lg" type="button" id="myButton1"> Search &raquo;</button>
+    </div>
+  </div>
+
+  <div class="row align-items-md-stretch">
+    <div class="col-md-6">
+      <div class="h-100 p-5 text-white bg-dark rounded-3">
+        <h2>Students by Course</h2>
+        <p>This selection filter the students by courses.</p>
+        <button class="btn btn-outline-light" type="button" id="myButton2"> Find </button>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="h-100 p-5 bg-light border rounded-3">
+        <h2>Students by Section</h2>
+        <p>This selection filter the students by sections.</p>
+        <button class="btn btn-outline-secondary" type="button" id="myButton3"> Find </button>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <script type="text/javascript">
+    document.getElementById("myButton1").onclick = function () {
+        location.href = "/students/all";
+    };
+    document.getElementById("myButton2").onclick = function () {
+      location.href = "/students/courses";
+    };
+    document.getElementById("myButton3").onclick = function () {
+      location.href = "/students/sections";
+    };
+  </script>
+
+
+<%- include("./partials/footer") %>

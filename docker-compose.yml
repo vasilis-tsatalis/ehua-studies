@@ -1,22 +1,7 @@
-version: "3.7"
-
-# Settings and configurations that are common for all containers
-x-minio-common: &minio-common
-  image: quay.io/minio/minio:RELEASE.2022-03-05T06-32-39Z
-  command: server --console-address ":9001" http://minio{1...4}/data{1...2}
-  expose:
-    - "9000"
-    - "9001"
-  environment:
-    MINIO_ROOT_USER: minioadmin
-    MINIO_ROOT_PASSWORD: minioadmin
-  healthcheck:
-    test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-    interval: 30s
-    timeout: 20s
-    retries: 3
+version: "3.8"
 
 services:
+
   db:
     image: postgres:14
     ports:
@@ -27,6 +12,7 @@ services:
       - POSTGRES_DB=ehua-portal
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+
   web-api:
     #restart: always
     build:
@@ -41,6 +27,15 @@ services:
       - .env
     depends_on:
       - db
+
+  frontend:
+    build:
+      dockerfile: frontend.Dockerfile
+    env_file:
+      - ./frontend/.env
+    ports:
+      - '3000:3000'
+
   mailhog:
       image: mailhog/mailhog
       logging:
@@ -48,40 +43,19 @@ services:
       ports:
           - 1025:1025 # smtp server
           - 8025:8025 # web ui
-      depends_on:
-        - web-api
 
-# starts 4 docker containers running minio server instances.
-# using nginx reverse proxy, load balancing, you can access
-# it through port 9000.
-  minio1:
-    <<: *minio-common
-    hostname: minio1
+  minio:
+    image: minio/minio:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
     volumes:
-      - ./minio/data1-1:/data1
-      - ./minio/data1-2:/data2
-
-  minio2:
-    <<: *minio-common
-    hostname: minio2
-    volumes:
-      - ./minio/data2-1:/data1
-      - ./minio/data2-2:/data2
-
-  minio3:
-    <<: *minio-common
-    hostname: minio3
-    volumes:
-      - ./minio/data3-1:/data1
-      - ./minio/data3-2:/data2
-
-  minio4:
-    <<: *minio-common
-    hostname: minio4
-    volumes:
-      - ./minio/data4-1:/data1
-      - ./minio/data4-2:/data2
-
+      - storage-minio:/data
+    command: server --address ":9001" --console-address ":9000" /data
+    restart: always # necessary since it's failing to start sometimes
 
   nginx:
     image: nginx:1.19.2-alpine
@@ -92,24 +66,13 @@ services:
     ports:
       - "80:80" # fastapi
     #  - "443:443"
-      - "9000:9000" # minio
-      - "9001:9001" # minio
+    #  - "9000:9000" # minio
+    #  - "9001:9001" # minio
     depends_on:
       - web-api
-      - minio1
-      - minio2
-      - minio3
-      - minio4
-  
+    #  - frontend
+    #  - minio
+
 volumes:
   postgres_data:
-  ## By default this config uses default local driver,
-  ## For custom volumes replace with volume driver configuration.
-  data1-1:
-  data1-2:
-  data2-1:
-  data2-2:
-  data3-1:
-  data3-2:
-  data4-1:
-  data4-2:
+  storage-minio:

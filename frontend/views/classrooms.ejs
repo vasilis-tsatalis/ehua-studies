@@ -1,0 +1,32 @@
+<%- include("./partials/header") %>
+<%- include("./navbar/menu") %>
+
+<br>
+
+<div class="container">
+    <h5 class="border-bottom pb-4 mb-2">Classrooms Types</h5>
+    <br>
+    <div class="row g-2">
+
+        <% if (typeof classrooms != 'undefined') { %> <% classrooms.forEach(classroom => { %>
+
+      <div class="col-4">
+        <div class="p-5 border bg-white text-info rounded-3 mb-4">
+            <p><strong>Class Code: </strong><i class="text-dark"><%= classroom.id %></i></p>
+            <p><strong>Class Name: </strong><i class="text-dark"><%= classroom.name %></i></p>
+            <p><strong>Class Building: </strong><i class="text-dark"><%= classroom.building %></i></p>
+            <p><strong>Class Number: </strong><i class="text-dark"><%= classroom.number %></i></p>
+            <p><strong>Class Type: </strong><i class="text-dark"><%= classroom.type %></i></p>
+        </div>
+      </div>
+
+      <% }) %> <% } %>
+
+    </div>
+  </div>
+
+<br>
+
+<%- include("./partials/footer") %>
+
+

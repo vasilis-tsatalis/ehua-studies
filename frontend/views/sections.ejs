@@ -1,0 +1,29 @@
+<%- include("./partials/header") %>
+<%- include("./navbar/menu") %>
+
+<br>
+
+  <div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" src="/assets/HUAimages.jpeg" alt="" width="84" height="77">
+    <h1 class="display-5 fw-bold">Yearly Sections</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">This Page separates the Current Sections</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button type="button" id="myButton1" class="btn btn-primary btn-lg px-4 gap-3">My Sections &raquo;</button>
+        <button type="button" id="myButton2" class="btn btn-outline-secondary btn-lg px-4">General Sections</button>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <script type="text/javascript">
+    document.getElementById("myButton1").onclick = function () {
+        location.href = "/sections/myselection";
+    };
+    document.getElementById("myButton2").onclick = function () {
+      location.href = "/sections/genselection";
+    };
+  </script>
+
+<%- include("./partials/footer") %>

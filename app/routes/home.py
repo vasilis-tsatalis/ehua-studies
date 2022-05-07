@@ -9,7 +9,7 @@ load_dotenv()
 # Default main server route listener
 home_router = APIRouter(
     prefix = os.getenv("API_URL"),
-    tags=['Default']
+    tags=['Default - Home']
 )
 
 @home_router.get("/", response_class=HTMLResponse)

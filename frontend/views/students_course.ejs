@@ -1,0 +1,33 @@
+<%- include("./partials/header") %>
+<%- include("./navbar/menu") %>
+
+<h2>Καθηγητές Πανεπιστημείου</h2>
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Κωδικός Τμήματος</th>
+        <th scope="col">_id</th>
+        <th scope="col">Όνομα</th>
+        <th scope="col">Περιγραφή</th>
+        <th scope="col">Ενεργό</th>
+        <th scope="col">Βαρύτητα</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (typeof professors != 'undefined') { %> <% professors.forEach(professor => { %>
+      <tr>
+          <td><%= professor.department_id %></td>
+          <th scope="row"><%= professor.id %></th>
+          <td><%= professor.name %></td>
+          <td><%= professor.description %></td>
+          <td><%= professor.is_active %></td>
+          <td><%= professor.gravity %></td>
+      </tr>
+      <% }) %> <% } %>
+    </tbody>
+  </table>
+</div>
+
+
+<%- include("./partials/footer") %>

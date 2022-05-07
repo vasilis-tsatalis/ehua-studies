@@ -2,19 +2,21 @@ from fastapi import FastAPI
 import os
 
 # Import separated routes
+from .routes.migration import migration_router
 from .routes.home import home_router
 from .routes.user import user_router
 from .routes.student import student_router
 from .routes.professor import professor_router
-from .routes.doc import doc_router
+from .routes.document import doc_router
 from .routes.course import course_router
 from .routes.department import department_router
 from .routes.section import section_router
-from .routes.role import role_router
-from .routes.scheduled import schedule_router
-from .routes.exam import exam_router
-from .routes.semester import semester_router
-from .routes.document import document_router
+from .routes.roles_type import role_router
+from .routes.schedulers_type import schedule_router
+from .routes.exams_type import exam_router
+from .routes.semesters_type import semester_router
+from .routes.documents_type import document_router
+from .routes.classrooms_type import classroom_router
 
 from .config.database import SessionLocal, engine
 from .models import tables_definitions
@@ -31,12 +33,12 @@ EHUA-Studies Portal helps you do awesome stuff. 🚀 \n
 * **CRUD Departments**
 * **CRUD Documents**
 * **CRUD Documents Types**
-* **CRUD Exam Types**
+* **CRUD Exams Types**
 * **CRUD Professors**
-* **CRUD Role Types**
-* **CRUD Schedule Types**
+* **CRUD Roles Types**
+* **CRUD Schedulers Types**
 * **CRUD Sections**
-* **CRUD Semester Types**
+* **CRUD Semesters Types**
 * **CRUD Students**
 
 ## Web User Frontend Actions
@@ -45,12 +47,12 @@ EHUA-Studies Portal helps you do awesome stuff. 🚀 \n
 * **Read Departments**
 * **Read - Create Documents**
 * **Read Documents Types**
-* **Read Exam Types**
+* **Read Exams Types**
 * **Read Professors**
-* **Read Role Types**
-* **Read Schedule Types**
+* **Read Roles Types**
+* **Read Schedulers Types**
 * **Read - Add Sections**
-* **Read Semester Types**
+* **Read Semesters Types**
 * **Read Students**
 
 """
@@ -63,7 +65,7 @@ tables_definitions.Base.metadata.create_all(bind=engine)
 app = FastAPI(
     title = "eHUA studies portal",
     description = description,
-    version = "0.1",
+    version = "1.0",
     openapi_url = os.getenv("API_URL") + '/openapi.json',
     docs_url = os.getenv("API_URL") + '/documentation', 
     redoc_url = os.getenv("API_URL") + '/redocs',
@@ -78,6 +80,8 @@ app = FastAPI(
     },
 )
 
+# API Migration data route
+app.include_router(migration_router)
 # API Default page
 app.include_router(home_router)
 # Authentication User routes
@@ -95,3 +99,4 @@ app.include_router(schedule_router)
 app.include_router(exam_router)
 app.include_router(semester_router)
 app.include_router(document_router)
+app.include_router(classroom_router)

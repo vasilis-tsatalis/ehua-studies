@@ -1,0 +1,21 @@
+{
+    "data": 
+    [
+        {
+            "name": "admin",
+            "description": "Administrator User"
+        },
+        {
+            "name": "webuser",
+            "description": "Web Interface User"
+        },
+        {
+            "name": "user",
+            "description": "Application User"
+        },
+        {
+            "name": "guess",
+            "description": "Application Guess"
+        }
+    ]
+}

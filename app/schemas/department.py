@@ -9,10 +9,11 @@ class DepartmentBase(BaseModel):
 
 
 class DepartmentCreate(DepartmentBase):
-    creation_date: datetime
+    pass
 
 
 class Department(DepartmentBase):
     id: int
     creation_user: str
+    creation_date: datetime
     last_update_at: datetime
