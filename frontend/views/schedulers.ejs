@@ -6,17 +6,23 @@
 <div class="container">
     <h5 class="border-bottom pb-4 mb-2">Schedulers</h5>
     <br>
-    <div class="row g-2">
 
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
         <% if (typeof schedulers != 'undefined') { %> <% schedulers.forEach(scheduler => { %>
 
-          <div class="col-4">
-            <div class="p-5 border bg-dark text-success rounded-3 mb-4">
-                <p><strong>Scheduler Code: </strong><i class="text-white"><%= scheduler.id %></i></p>
-                <p><strong>Scheduler Name: </strong><i class="text-white"><%= scheduler.name %></i></p>
-                <p><strong>Scheduler Day: </strong><i class="text-white"><%= scheduler.day %></i></p>
-                <p><strong>Scheduler Start Time: </strong><i class="text-white"><%= scheduler.start_time %></i></p>
-                <p><strong>Scheduler End Time: </strong><i class="text-white"><%= scheduler.end_time %></i></p>
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3 text-white bg-warning border-dark">
+                <h4 class="my-0 fw-normal"><strong>Name: </strong><%= scheduler.name %></h4>
+              </div>
+              <div class="card-body">
+                <h2 class="card-title pricing-card-title"><strong>Code: </strong><%= scheduler.id %></h2>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li><strong>Day: </strong><%= scheduler.day %></li>
+                  <li><strong>Start Time: </strong><%= scheduler.start_time %></li>
+                  <li><strong>End Time: </strong><%= scheduler.end_time %></li>
+                </ul>
+              </div>
             </div>
           </div>
 
@@ -28,5 +34,3 @@
 <br>
 
 <%- include("./partials/footer") %>
-
-

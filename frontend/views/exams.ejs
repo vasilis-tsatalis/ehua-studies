@@ -6,15 +6,21 @@
 <div class="container">
   <h5 class="border-bottom pb-4 mb-2">Exams Types</h5>
   <br>
-    <div class="row g-2">
 
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
         <% if (typeof exams != 'undefined') { %> <% exams.forEach(exam => { %>
 
-          <div class="col-4">
-            <div class="p-5 border bg-dark text-danger rounded-3 mb-4">
-                <p><strong>Exam Type Code: </strong><i class="text-white"><%= exam.id %></i></p>
-                <p><strong>Exam Type Name: </strong><i class="text-white"><%= exam.name %></i></p>
-                <p><strong>Exam Type Gravity: </strong><i class="text-white"><%= exam.gravity %></i></p>
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3 text-white bg-danger border-dark">
+                <h4 class="my-0 fw-normal"><strong>Name: </strong><%= exam.name %></h4>
+              </div>
+              <div class="card-body">
+                <h2 class="card-title pricing-card-title"><strong>Code: </strong><%= exam.id %></h2>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li><strong>Gravity: </strong><%= exam.gravity %></li>
+                </ul>
+              </div>
             </div>
           </div>
 
@@ -26,5 +32,3 @@
 <br>
 
 <%- include("./partials/footer") %>
-
-

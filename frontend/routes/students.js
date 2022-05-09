@@ -30,81 +30,63 @@ router.get('/all', authenticateUser, async (req, res) => {
             'username': 'asbasile',
             'first_name': 'Vasilis',
             'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
+            'date_of_birth': '10/10/1990',
+            'address': 'My Address',
+            'city': 'Athens',
+            'zipcode': '12345',
+            'telephone': '2101122333',
+            'phone': '2103322111',
+            'mobile': '6971234567',
+            'email': 'prof2@email.com',
+            'year_group': '2020',
+            'is_active': 'Y',
+            'notes': 'some notes'
         }, 
         {
             'id': 2,
-            'username': 'cvbasile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
-        },
-        {
-            'id': 3,
-            'username': 'ghbasile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
-        }];
-
-        data.forEach(element => {
-            students.push({id: element.id, username: element.username, fname: element.first_name, 
-                           lname: element.last_name, email: element.email, year: element.year 
-                            })
-        });
-
-        res.render("students_list", {students, username});
-
-    }catch(err){
-        res.sendStatus(400).json({ message:err });
-    }
-});
-
-
-
-router.get('/courses', authenticateUser, async (req, res) => {
-    try{
-
-        const students = [];
-        const username = req.session.user.username;
-
-        //const data = await get_data('/students');
-
-        const data = [{
-            'id': 1,
             'username': 'asbasile',
             'first_name': 'Vasilis',
             'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
-        }, 
-        {
-            'id': 2,
-            'username': 'cvbasile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
+            'date_of_birth': '10/10/1990',
+            'address': 'My Address',
+            'city': 'Athens',
+            'zipcode': '12345',
+            'telephone': '2101122333',
+            'phone': '2103322111',
+            'mobile': '6971234567',
+            'email': 'prof2@email.com',
+            'year_group': '2020',
+            'is_active': 'Y',
+            'notes': 'some notes'
         },
         {
             'id': 3,
-            'username': 'ghbasile',
+            'username': 'asbasile',
             'first_name': 'Vasilis',
             'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
+            'date_of_birth': '10/10/1990',
+            'address': 'My Address',
+            'city': 'Athens',
+            'zipcode': '12345',
+            'telephone': '2101122333',
+            'phone': '2103322111',
+            'mobile': '6971234567',
+            'email': 'prof2@email.com',
+            'year_group': '2020',
+            'is_active': 'Y',
+            'notes': 'some notes'
         }];
 
         data.forEach(element => {
-            students.push({id: element.id, username: element.username, fname: element.first_name, 
-                           lname: element.last_name, email: element.email, year: element.year 
-                            })
+            students.push({id: element.id, username: element.username, first_name: element.first_name, 
+                last_name: element.last_name, date_of_birth: element.date_of_birth, address: element.address,
+                city: element.city, zipcode: element.zipcode, telephone: element.telephone, 
+                phone: element.phone, mobile: element.mobile, email: element.email, 
+                year_group: element.year_group, is_active: element.is_active, notes: element.notes
+                })
         });
 
-        res.render("students_course", {students, username});
+        res.render("students_list", {students, username});
 
     }catch(err){
         res.sendStatus(400).json({ message:err });
@@ -121,34 +103,67 @@ router.get('/sections', authenticateUser, async (req, res) => {
         //const data = await get_data('/students');
 
         const data = [{
+            'section_id': 'maths_1',
             'id': 1,
             'username': 'asbasile',
             'first_name': 'Vasilis',
             'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
+            'date_of_birth': '10/10/1990',
+            'address': 'My Address',
+            'city': 'Athens',
+            'zipcode': '12345',
+            'telephone': '2101122333',
+            'phone': '2103322111',
+            'mobile': '6971234567',
+            'email': 'prof2@email.com',
+            'year_group': '2020',
+            'is_active': 'Y',
+            'notes': 'some notes'
         }, 
         {
+            'section_id': 'maths_2',
             'id': 2,
-            'username': 'cvbasile',
+            'username': 'asbasile',
             'first_name': 'Vasilis',
             'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
+            'date_of_birth': '10/10/1990',
+            'address': 'My Address',
+            'city': 'Athens',
+            'zipcode': '12345',
+            'telephone': '2101122333',
+            'phone': '2103322111',
+            'mobile': '6971234567',
+            'email': 'prof2@email.com',
+            'year_group': '2020',
+            'is_active': 'Y',
+            'notes': 'some notes'
         },
         {
+            'section_id': 'maths_3',
             'id': 3,
-            'username': 'ghbasile',
+            'username': 'asbasile',
             'first_name': 'Vasilis',
             'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
+            'date_of_birth': '10/10/1990',
+            'address': 'My Address',
+            'city': 'Athens',
+            'zipcode': '12345',
+            'telephone': '2101122333',
+            'phone': '2103322111',
+            'mobile': '6971234567',
+            'email': 'prof2@email.com',
+            'year_group': '2020',
+            'is_active': 'Y',
+            'notes': 'some notes'
         }];
 
         data.forEach(element => {
-            students.push({id: element.id, username: element.username, fname: element.first_name, 
-                           lname: element.last_name, email: element.email, year: element.year 
-                            })
+            students.push({section_id: element.section_id, id: element.id, username: element.username, first_name: element.first_name, 
+                last_name: element.last_name, date_of_birth: element.date_of_birth, address: element.address,
+                city: element.city, zipcode: element.zipcode, telephone: element.telephone, 
+                phone: element.phone, mobile: element.mobile, email: element.email, 
+                year_group: element.year_group, is_active: element.is_active, notes: element.notes
+                })
         });
 
         res.render("students_section", {students, username});

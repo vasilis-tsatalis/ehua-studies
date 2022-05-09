@@ -6,27 +6,29 @@
 <div class="container">
     <h5 class="border-bottom pb-4 mb-2">Documents Types</h5>
     <br>
-    <div class="row g-2">
 
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
         <% if (typeof docs_types != 'undefined') { %> <% docs_types.forEach(docs_type => { %>
 
-          <div class="col-4">
-            <div class="p-5 border bg-dark text-primary rounded-3 mb-4">
-                <p><strong>Document Type Code: </strong><i class="text-white"><%= docs_type.id %></i></p>
-                <p><strong>Document Type Name: </strong><i class="text-white"><%= docs_type.name %></i></p>
-                <p><strong>Document Type Building: </strong><i class="text-white"><%= docs_type.building %></i></p>
-                <p><strong>Document Type Number: </strong><i class="text-white"><%= docs_type.number %></i></p>
-                <p><strong>Document Type Type: </strong><i class="text-white"><%= docs_type.type %></i></p>
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3 text-white bg-success border-dark">
+                <h4 class="my-0 fw-normal"><strong>Name: </strong><%= docs_type.name %></h4>
+              </div>
+              <div class="card-body">
+                <h2 class="card-title pricing-card-title"><strong>Code: </strong><%= docs_type.id %></h2>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li><strong>Description: </strong><%= docs_type.description %></li>
+                </ul>
+              </div>
             </div>
           </div>
 
       <% }) %> <% } %>
-
+    
     </div>
   </div>
 
 <br>
 
 <%- include("./partials/footer") %>
-
-

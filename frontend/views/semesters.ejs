@@ -6,17 +6,23 @@
 <div class="container">
     <h5 class="border-bottom pb-4 mb-2">Semesters</h5>
     <br>
-    <div class="row g-2">
 
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
         <% if (typeof semesters != 'undefined') { %> <% semesters.forEach(semester => { %>
 
-          <div class="col-4">
-            <div class="p-5 border bg-dark text-warning rounded-3 mb-4">
-                <p><strong>Semester Code: </strong><i class="text-white"><%= semester.id %></i></p>
-                <p><strong>Semester Name: </strong><i class="text-white"><%= semester.name %></i></p>
-                <p><strong>Semester Description: </strong><i class="text-white"><%= semester.description %></i></p>
-                <p><strong>Semester Start Time: </strong><i class="text-white"><%= semester.start_time %></i></p>
-                <p><strong>Semester Days Time: </strong><i class="text-white"><%= semester.days_time %></i></p>
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3 text-white bg-secondary border-dark">
+                <h4 class="my-0 fw-normal"><strong>Name: </strong><%= semester.name %></h4>
+              </div>
+              <div class="card-body">
+                <h2 class="card-title pricing-card-title"><strong>Code: </strong><%= semester.id %></h2>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li><strong>Description: </strong><%= semester.description %></li>
+                  <li><strong>Start Time: </strong><%= semester.start_time %></li>
+                  <li><strong>Days Time: </strong><%= semester.days_time %></li>
+                </ul>
+              </div>
             </div>
           </div>
 
@@ -28,5 +34,3 @@
 <br>
 
 <%- include("./partials/footer") %>
-
-

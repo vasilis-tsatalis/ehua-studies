@@ -23,36 +23,45 @@ router.get('/myselection', authenticateUser, async (req, res) => {
         const sections = [];
         const username = req.session.user.username;
 
-                //const data = await get_data('/students');
+        //const data = await get_data('/students');
 
         const data = [{
+            'course_id': '5',
             'id': 1,
-            'username': 'basile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
+            'professor_id': '14',
+            'classroom_type_id': '8',
+            'year': '2022',
+            'exam_type_id': '3'
         }, 
         {
+            'course_id': '5',
             'id': 2,
-            'username': 'basile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
+            'professor_id': '14',
+            'classroom_type_id': '8',
+            'year': '2022',
+            'exam_type_id': '3'
         },
         {
+            'course_id': '3',
             'id': 3,
-            'username': 'basile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
+            'professor_id': '14',
+            'classroom_type_id': '8',
+            'year': '2022',
+            'exam_type_id': '3'
+        },
+        {
+            'course_id': '59',
+            'id': 4,
+            'professor_id': '14',
+            'classroom_type_id': '8',
+            'year': '2022',
+            'exam_type_id': '3'
         }];
 
         data.forEach(element => {
-            sections.push({id: element.id, username: element.username, fname: element.first_name, 
-                           lname: element.last_name, email: element.email, year: element.year 
+            sections.push({course_id: element.course_id, id: element.id, professor_id: element.professor_id, 
+                classroom_type_id: element.classroom_type_id, year: element.year, 
+                exam_type_id: element.exam_type_id
                             })
         });
 
@@ -71,84 +80,45 @@ router.get('/genselection', authenticateUser, async (req, res) => {
 
                 //const data = await get_data('/students');
 
-        const data = [{
-            'id': 1,
-            'username': 'basile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
-        }, 
-        {
-            'id': 2,
-            'username': 'basile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
-        },
-        {
-            'id': 3,
-            'username': 'basile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
-        },
-        {
-            'id': 2,
-            'username': 'basile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
-        },
-        {
-            'id': 2,
-            'username': 'basile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
-        },
-        {
-            'id': 2,
-            'username': 'basile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
-        },
-        {
-            'id': 2,
-            'username': 'basile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
-        },
-        {
-            'id': 2,
-            'username': 'basile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
-        },  
-        {
-            'id': 2,
-            'username': 'basile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'email': 'tsatalis.vas@gmail.com',
-            'year': '2020'
-        }];
-
-        data.forEach(element => {
-            sections.push({id: element.id, username: element.username, fname: element.first_name, 
-                           lname: element.last_name, email: element.email, year: element.year 
-                            })
-        });
+                const data = [{
+                    'course_id': '5',
+                    'id': 1,
+                    'professor_id': '14',
+                    'classroom_type_id': '8',
+                    'year': '2022',
+                    'exam_type_id': '3'
+                }, 
+                {
+                    'course_id': '5',
+                    'id': 2,
+                    'professor_id': '14',
+                    'classroom_type_id': '8',
+                    'year': '2022',
+                    'exam_type_id': '3'
+                },
+                {
+                    'course_id': '3',
+                    'id': 3,
+                    'professor_id': '14',
+                    'classroom_type_id': '8',
+                    'year': '2022',
+                    'exam_type_id': '3'
+                },
+                {
+                    'course_id': '59',
+                    'id': 4,
+                    'professor_id': '14',
+                    'classroom_type_id': '8',
+                    'year': '2022',
+                    'exam_type_id': '3'
+                }];
+        
+                data.forEach(element => {
+                    sections.push({course_id: element.course_id, id: element.id, professor_id: element.professor_id, 
+                        classroom_type_id: element.classroom_type_id, year: element.year, 
+                        exam_type_id: element.exam_type_id
+                                    })
+                });
 
         res.render("sections_selection", {sections, username});
     }catch(err){

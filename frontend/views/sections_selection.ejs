@@ -8,32 +8,41 @@
   <div class="row align-items-start">
 
       <div class="col">
-          <label for="my_table"><b><i>Καρτέλα Φοιτητών</i></b></label>
+          <label for="my_table"><b><i>Courses Sections</i></b></label>
           <hr class="my-4">
           <table class="table" id="my_table">
               <thead>
               <tr>
+                  <th scope="col">Κωδ.Μαθήματος</th>
                   <th scope="col">_id</th>
-                  <th scope="col">Χρήστης</th>
-                  <th scope="col">Όνομα</th>
-                  <th scope="col">Επώνυμο</th>
-                  <th scope="col">Ηλ.Ταχυδρομείο</th>
-                  <th scope="col">Έτος Εγγραφής</th>
+                  <th scope="col">Κωδ.Καθηγητή</th>
+                  <th scope="col">Κωδ.Αίθουσας</th>
+                  <th scope="col">Ακαδ.Έτος</th>
+                  <th scope="col">Κωδ.Εξετάσεων</th>
               </tr>
               </thead>
               <tbody>
                   <% if (typeof sections != 'undefined') { %> <% sections.forEach(section => { %>
               <tr>
-                  <th scope="row"><%= section.id %></th>
-                  <td><%= section.username %></td>
-                  <td><%= section.fname %></td>
-                  <td><%= section.lname %></td>
-                  <td><%= section.email %></td>
+                  <td><%= section.course_id %></td>
+                  <td scope="row"><strong><%= section.id %></strong></td>
+                  <td><%= section.professor_id %></td>
+                  <td><%= section.classroom_type_id %></td>
                   <td><%= section.year %></td>
+                  <td><%= section.exam_type_id %></td>
               </tr>
               <% }) %> <% } %>
               </tbody>
           </table>
+
+          <br>
+          <button type="button" class="btn btn-outline-info btn-sm" onclick="tableToCSV()">
+              export CSV
+          </button>
+          <button type="button" class="btn btn-outline-warning btn-sm" onclick="tableToJSON('myTable')">
+            export JSON
+        </button>
+
       </div>           
 
   </div>
