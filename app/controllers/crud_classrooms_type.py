@@ -25,8 +25,8 @@ async def update_classroom_by_id(db: Session, id: int):
     return 'updated'
 
 async def delete_classroom_by_id(db: Session, id: int):
-    db_classroom = Classroom_Type.query.filter_by(id=id).one()
+    db_classroom = db.query(Classroom_Type).filter(Classroom_Type.id == id).first()
     db.delete(db_classroom)
     db.commit()
-    db.refresh(db_classroom)
-    return db_classroom
+    status = 'OK'
+    return status

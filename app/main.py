@@ -2,7 +2,6 @@ from fastapi import FastAPI
 import os
 
 # Import separated routes
-from .routes.migration import migration_router
 from .routes.home import home_router
 from .routes.user import user_router
 from .routes.student import student_router
@@ -80,8 +79,6 @@ app = FastAPI(
     },
 )
 
-# API Migration data route
-app.include_router(migration_router)
 # API Default page
 app.include_router(home_router)
 # Authentication User routes

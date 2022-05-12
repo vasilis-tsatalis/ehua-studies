@@ -78,5 +78,30 @@ async def update_department(id: int, administrator: str = Depends(authenticate_a
 
 @department_router.delete("/{id}", status_code = status.HTTP_205_RESET_CONTENT)
 async def delete_department(id: int, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
-    db_department = await crud_departments.delete_department_by_id(db, id=id)
-    return db_department
+    status = await crud_departments.delete_department_by_id(db, id=id)
+    db_department = await crud_departments.get_department_by_id(db, id=id)
+    if db_department is None:
+        return {'message': status}
+    raise HTTPException(
+        status_code=501, 
+        detail="Department not deleted",
+        headers={"WWW-Authenticate": "Basic"},
+        )
+
+@department_router.get("/{id}/courses", status_code = status.HTTP_200_OK)
+async def get_department_courses_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
+    db_department = await crud_departments.get_department_by_id(db, id=id)
+    if db_department is None:
+        raise HTTPException(
+            status_code=404, 
+            detail="Department not found",
+            headers={"WWW-Authenticate": "Basic"},
+            )
+    db_courses = await crud_departments.get_department_courses(db, id=db_department.id)
+    if db_courses:
+        return db_courses
+    raise HTTPException(
+        status_code=404, 
+        detail="Department courses not found",
+        headers={"WWW-Authenticate": "Basic"},
+        )

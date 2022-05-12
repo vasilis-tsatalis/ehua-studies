@@ -36,7 +36,7 @@ async def get_sections(webuser: str = Depends(authenticate_webuser), skip: int =
 
 @section_router.get("/{id}", response_model=section.Section, status_code = status.HTTP_200_OK)
 async def get_section_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
-    db_section = await crud_sections.get_professor_by_id(db, id=id)
+    db_section = await crud_sections.get_section_by_id(db, id=id)
     if db_section is None:
         raise HTTPException(
             status_code=404, 
@@ -58,5 +58,12 @@ async def update_section(id: int, administrator: str = Depends(authenticate_admi
 
 @section_router.delete("/{id}", status_code = status.HTTP_205_RESET_CONTENT)
 async def delete_section(id: int, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
-    db_section = await crud_sections.delete_section_by_id(db, id=id)
-    return db_section
+    status = await crud_sections.delete_section_by_id(db, id=id)
+    db_section = await crud_sections.get_section_by_id(db, id=id)
+    if db_section is None:
+        return {'message': status}
+    raise HTTPException(
+        status_code=501, 
+        detail="Section not deleted",
+        headers={"WWW-Authenticate": "Basic"},
+        )

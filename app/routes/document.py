@@ -69,5 +69,12 @@ async def update_doc(id: int, administrator: str = Depends(authenticate_admin), 
 
 @doc_router.delete("/{id}", status_code = status.HTTP_205_RESET_CONTENT)
 async def delete_doc(id: int, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
-    db_doc = await crud_documents.delete_doc_by_id(db, id=id)
-    return db_doc
+    status = await crud_documents.delete_doc_by_id(db, id=id)
+    db_doc = await crud_documents.get_doc_by_id(db, id=id)
+    if db_doc is None:
+        return {'message': status}
+    raise HTTPException(
+        status_code=501, 
+        detail="Document not deleted",
+        headers={"WWW-Authenticate": "Basic"},
+        )

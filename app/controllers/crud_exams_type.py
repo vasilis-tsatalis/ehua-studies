@@ -25,8 +25,8 @@ async def update_exam_by_id(db: Session, id: int):
     return 'updated'
 
 async def delete_exam_by_id(db: Session, id: int):
-    db_exam = Exam_Type.query.filter_by(id=id).one()
+    db_exam = db.query(Exam_Type).filter(Exam_Type.id == id).first()
     db.delete(db_exam)
     db.commit()
-    db.refresh(db_exam)
-    return db_exam
+    status = 'OK'
+    return status

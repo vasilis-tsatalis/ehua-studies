@@ -2,12 +2,12 @@ from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel
 
-from .professor import Professor
-from .document_type import Document
+#from .professor import Professor
+#from .document_type import Document
  
 class DocBase(BaseModel):
-    professor_id: Professor.id
-    document_type_id: Document.id
+    professor_id: int
+    document_type_id: int
     notes: Optional[str] = None
 
     class Config:

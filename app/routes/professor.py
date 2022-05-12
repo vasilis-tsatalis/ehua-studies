@@ -10,7 +10,7 @@ load_dotenv()
 from ..auth.authentication import authenticate_admin, authenticate_webuser
 security = HTTPBasic()
 
-from ..schemas import professor
+from ..schemas import professor, document
 from ..controllers import crud_professors, crud_documents, crud_sections
 from ..config.database import get_db
 
@@ -76,9 +76,15 @@ async def update_professor(id: int, administrator: str = Depends(authenticate_ad
 
 @professor_router.delete("/{id}", status_code = status.HTTP_205_RESET_CONTENT)
 async def delete_professor(id: int, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
-    db_professor = await crud_professors.delete_exam_by_id(db, id=id)
-    return db_professor
-
+    status = await crud_professors.delete_professor_by_id(db, id=id)
+    db_professor = await crud_professors.get_professor_by_id(db, id=id)
+    if db_professor is None:
+        return {'message': status}
+    raise HTTPException(
+        status_code=501, 
+        detail="Professor not deleted",
+        headers={"WWW-Authenticate": "Basic"},
+        )
 
 @professor_router.get("/{id}/documents", status_code = status.HTTP_200_OK)
 async def get_professor_documents_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):

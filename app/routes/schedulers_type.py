@@ -75,5 +75,12 @@ async def update_schedule(id: int, administrator: str = Depends(authenticate_adm
 
 @schedule_router.delete("/{id}", status_code = status.HTTP_205_RESET_CONTENT)
 async def delete_schedule(id: int, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
-    db_scheduler = await crud_schedulers_type.delete_scheduler_by_id(db, id=id)
-    return db_scheduler
+    status = await crud_schedulers_type.delete_scheduler_by_id(db, id=id)
+    db_scheduler = await crud_schedulers_type.get_schedule_by_id(db, id=id)
+    if db_scheduler is None:
+        return {'message': status}
+    raise HTTPException(
+        status_code=501, 
+        detail="Scheduler not deleted",
+        headers={"WWW-Authenticate": "Basic"},
+        )

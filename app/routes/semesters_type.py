@@ -75,5 +75,12 @@ async def update_semester(id: int, administrator: str = Depends(authenticate_adm
 
 @semester_router.delete("/{id}", status_code = status.HTTP_205_RESET_CONTENT)
 async def delete_semester(id: int, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
-    db_semester = await crud_semesters_type.delete_semester_by_id(db, id=id)
-    return db_semester
+    status = await crud_semesters_type.delete_semester_by_id(db, id=id)
+    db_semester = await crud_semesters_type.get_semester_by_id(db, id=id)
+    if db_semester is None:
+        return {'message': status}
+    raise HTTPException(
+        status_code=501, 
+        detail="Semester not deleted",
+        headers={"WWW-Authenticate": "Basic"},
+        )

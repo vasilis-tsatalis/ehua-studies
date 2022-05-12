@@ -35,7 +35,7 @@ async def get_courses(webuser: str = Depends(authenticate_webuser), skip: int = 
 
 
 @course_router.get("/{id}", response_model=course.Course, status_code = status.HTTP_200_OK)
-async def get_doc_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
+async def get_course_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_course = await crud_courses.get_course_by_id(db, id=id)
     if db_course is None:
         raise HTTPException(
@@ -47,7 +47,7 @@ async def get_doc_by_id(id: int, webuser: str = Depends(authenticate_webuser), d
 
 
 @course_router.get("/{name}", response_model=course.Course, status_code = status.HTTP_200_OK)
-async def get_doc_by_filename(name: str, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
+async def get_course_by_filename(name: str, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_course = await crud_courses.get_course_by_name(db, name=name.upper())
     if db_course is None:
         raise HTTPException(
@@ -59,7 +59,7 @@ async def get_doc_by_filename(name: str, webuser: str = Depends(authenticate_web
 
 
 @course_router.post("/", response_model=course.Course, status_code = status.HTTP_201_CREATED)
-async def create_doc(course: course.CourseCreate, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
+async def create_course(course: course.CourseCreate, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
     db_course = await crud_courses.get_course_by_name(db, name=course.name.upper())
     if db_course:
         raise HTTPException(
@@ -77,5 +77,31 @@ async def update_course(id: int, administrator: str = Depends(authenticate_admin
 
 @course_router.delete("/{id}", status_code = status.HTTP_205_RESET_CONTENT)
 async def delete_course(id: int, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
-    db_course = await crud_courses.delete_course_by_id(db, id=id)
-    return db_course
+    status = await crud_courses.delete_course_by_id(db, id=id)
+    db_course = await crud_courses.get_course_by_id(db, id=id)
+    if db_course is None:
+        return {'message': status}
+    raise HTTPException(
+        status_code=501, 
+        detail="Course not deleted",
+        headers={"WWW-Authenticate": "Basic"},
+        )
+        
+
+@course_router.get("/{id}/sections", status_code = status.HTTP_200_OK)
+async def get_course_sections_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
+    db_course = await crud_courses.get_course_by_id(db, id=id)
+    if db_course is None:
+        raise HTTPException(
+            status_code=404, 
+            detail="Course not found",
+            headers={"WWW-Authenticate": "Basic"},
+            )
+    db_sections = await crud_courses.get_course_sections(db, id=db_course.id)
+    if db_sections:
+        return db_sections
+    raise HTTPException(
+        status_code=404, 
+        detail="Course sections not found",
+        headers={"WWW-Authenticate": "Basic"},
+        )

@@ -27,8 +27,8 @@ async def update_section_by_id(db: Session, id: int):
     return 'updated'
 
 async def delete_section_by_id(db: Session, id: int):
-    db_section = Section.query.filter_by(id=id).one()
+    db_section = db.query(Section).filter(Section.id == id).first()
     db.delete(db_section)
     db.commit()
-    db.refresh(db_section)
-    return db_section
+    status = 'OK'
+    return status

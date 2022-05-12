@@ -35,8 +35,8 @@ async def update_doc_by_id(db: Session, id: int):
     return 'updated'
 
 async def delete_doc_by_id(db: Session, id: int):
-    db_doc = Document.query.filter_by(id=id).one()
+    db_doc = db.query(Document).filter(Document.id == id).first()
     db.delete(db_doc)
     db.commit()
-    db.refresh(db_doc)
-    return db_doc
+    status = 'OK'
+    return status

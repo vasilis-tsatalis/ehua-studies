@@ -8,6 +8,8 @@ class SectionBase(BaseModel):
     classroom_type_id: int
     exam_type_id: Optional[int]
 
+    class Config:
+        orm_mode = True
 
 class SectionAuto(SectionBase):
     pass

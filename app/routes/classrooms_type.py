@@ -76,5 +76,13 @@ async def update_classrooms_type(id: int, administrator: str = Depends(authentic
 
 @classroom_router.delete("/{id}", status_code = status.HTTP_205_RESET_CONTENT)
 async def delete_classrooms_type(id: int, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
-    db_classroom = await crud_classrooms_type.delete_classroom_by_id(db, id=id)
-    return db_classroom
+    status = await crud_classrooms_type.delete_classroom_by_id(db, id=id)
+    db_classroom = await crud_classrooms_type.get_classroom_by_id(db, id=id)
+    if db_classroom is None:
+        return {'message': status}
+    raise HTTPException(
+        status_code=501, 
+        detail="Classroom not deleted",
+        headers={"WWW-Authenticate": "Basic"},
+        )
+        

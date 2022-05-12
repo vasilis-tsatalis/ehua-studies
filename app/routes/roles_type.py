@@ -76,5 +76,12 @@ async def update_role(id: int, administrator: str = Depends(authenticate_admin),
 
 @role_router.delete("/{id}", status_code = status.HTTP_205_RESET_CONTENT)
 async def delete_role(id: int, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
-    db_role = await crud_roles_type.delete_role_by_id(db, id=id)
-    return db_role
+    status = await crud_roles_type.delete_role_by_id(db, id=id)
+    db_role = await crud_roles_type.get_role_by_id(db, id=id)
+    if db_role is None:
+        return {'message': status}
+    raise HTTPException(
+        status_code=501, 
+        detail="Scheduler not deleted",
+        headers={"WWW-Authenticate": "Basic"},
+        )

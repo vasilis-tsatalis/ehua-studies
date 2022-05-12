@@ -161,9 +161,10 @@ class Student(Base):
     year_group = Column(Integer)
     is_active = Column(Boolean, default=True)
     notes = Column(Text)
+    creation_user = Column(String) # Admin
     creation_date = Column(DateTime, default=datetime.datetime.utcnow)
     last_update_at = Column(TIMESTAMP, server_default=func.now())
-
+ 
     # many-many
     sections = relationship("Section", secondary=association_table_students_sections, back_populates="students")
 
@@ -190,6 +191,7 @@ class Professor(Base):
     level = Column(String)
     is_active = Column(Boolean, default=True)
     notes = Column(Text)
+    creation_user = Column(String) # Admin
     creation_date = Column(DateTime, default=datetime.datetime.utcnow)
     last_update_at = Column(TIMESTAMP, server_default=func.now())
 
@@ -209,6 +211,8 @@ class Department(Base):
     name = Column(VARCHAR(20), unique=True, nullable=False)
     description = Column(Text)
     points = Column(String(10))
+    creation_user = Column(String) # Admin
+    creation_date = Column(DateTime, default=datetime.datetime.utcnow)
     last_update_at = Column(TIMESTAMP, server_default=func.now())
 
     # one-many, many-one
@@ -230,6 +234,7 @@ class Document(Base):
     extension = Column(String(10))
     expiration_days = Column(Integer)
     notes = Column(Text)
+    creation_user = Column(String) # Admin
     creation_date = Column(DateTime, default=datetime.datetime.utcnow)
     last_update_at = Column(TIMESTAMP, server_default=func.now())
 
@@ -251,6 +256,8 @@ class Course(Base):
     is_active = Column(Boolean, default=True)
     semester_type_id = Column(Integer, ForeignKey("semester_type.id"))
     gravity = Column(String)
+    creation_user = Column(String) # Admin
+    creation_date = Column(DateTime, default=datetime.datetime.utcnow)
     last_update_at = Column(TIMESTAMP, server_default=func.now())
 
     # many-one, one-many
@@ -273,6 +280,8 @@ class Section(Base):
     classroom_type_id = Column(Integer, ForeignKey('classroom_type.id'))
     year = Column(String(10))
     exam_type_id = Column(Integer, ForeignKey("exam_type.id"), nullable=True)
+    creation_user = Column(String) # Admin
+    creation_date = Column(DateTime, default=datetime.datetime.utcnow)
     last_update_at = Column(TIMESTAMP, server_default=func.now())
 
     # many-many

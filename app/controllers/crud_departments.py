@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 import datetime
-from ..models.tables_definitions import Department
+from ..models.tables_definitions import Department, Course
 from ..schemas.department import DepartmentCreate
 
 
@@ -25,8 +25,12 @@ async def update_department_by_id(db: Session, id: int):
     return 'updated'
 
 async def delete_department_by_id(db: Session, id: int):
-    db_department = Department.query.filter_by(id=id).one()
+    db_department = db.query(Department).filter(Department.id == id).first()
     db.delete(db_department)
     db.commit()
-    db.refresh(db_department)
-    return db_department
+    status = 'OK'
+    return status
+
+async def get_department_courses(db: Session, id: int):
+    db_courses =  db.query(Course).filter(Course.department_id == id).all()
+    return db_courses

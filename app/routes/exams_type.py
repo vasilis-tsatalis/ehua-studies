@@ -75,5 +75,12 @@ async def update_exam(id: int, administrator: str = Depends(authenticate_admin),
 
 @exam_router.delete("/{id}", status_code = status.HTTP_205_RESET_CONTENT)
 async def delete_exam(id: int, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
-    db_exams = await crud_exams_type.delete_exam_by_id(db, id=id)
-    return db_exams
+    status = await crud_exams_type.delete_exam_by_id(db, id=id)
+    db_exams = await crud_exams_type.get_exam_by_id(db, id=id)
+    if db_exams is None:
+        return {'message': status}
+    raise HTTPException(
+        status_code=501, 
+        detail="Exam not deleted",
+        headers={"WWW-Authenticate": "Basic"},
+        )

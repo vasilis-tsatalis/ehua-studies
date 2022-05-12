@@ -75,5 +75,12 @@ async def update_documents_type(id: int, administrator: str = Depends(authentica
 
 @document_router.delete("/{id}", status_code = status.HTTP_205_RESET_CONTENT)
 async def delete_documents_type(id: int, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
-    db_document = await crud_documents_type.delete_document_by_id(db, id=id)
-    return db_document
+    status = await crud_documents_type.delete_document_by_id(db, id=id)
+    db_document = await crud_documents_type.get_document_by_id(db, id=id)
+    if db_document is None:
+        return {'message': status}
+    raise HTTPException(
+        status_code=501, 
+        detail="Document Type not deleted",
+        headers={"WWW-Authenticate": "Basic"},
+        )

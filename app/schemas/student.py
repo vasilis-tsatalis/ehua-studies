@@ -20,10 +20,22 @@ class StudentBase(BaseModel):
 
 
 class StudentCreate(StudentBase):
-    creation_date: datetime
+    pass
+
+
+class StudentUpdate(BaseModel):
+    address: Optional[str] = None
+    city: Optional[str] = None
+    zipcode: Optional[str] = None
+    telephone: Optional[str] = None
+    phone: Optional[str] = None
+    mobile: Optional[str] = None
+    email: Optional[str] = None
+    notes: Optional[str] = None
 
 
 class Student(StudentBase):
     id: int
     creation_user: str
+    creation_date: datetime
     last_update_at: datetime

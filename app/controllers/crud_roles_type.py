@@ -25,8 +25,8 @@ async def update_role_by_id(db: Session, id: int):
     return 'updated'
 
 async def delete_role_by_id(db: Session, id: int):
-    db_role = Role_Type.query.filter_by(id=id).one()
+    db_role = db.query(Role_Type).filter(Role_Type.id == id).first()
     db.delete(db_role)
     db.commit()
-    db.refresh(db_role)
-    return db_role
+    status = 'OK'
+    return status

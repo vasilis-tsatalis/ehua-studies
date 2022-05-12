@@ -25,8 +25,9 @@ async def update_semester_by_id(db: Session, id: int):
     return 'updated'
 
 async def delete_semester_by_id(db: Session, id: int):
-    db_semester = Semester_Type.query.filter_by(id=id).one()
+    db_semester = db.query(Semester_Type).filter(Semester_Type.id == id).first()
     db.delete(db_semester)
     db.commit()
-    db.refresh(db_semester)
-    return db_semester
+    status = 'OK'
+    return status
+    

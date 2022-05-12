@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel, Field
 
-from .document import Document
+from .document import Doc
 from .section import Section
 
 class ProfessorBase(BaseModel):
@@ -29,7 +29,7 @@ class ProfessorCreate(ProfessorBase):
 
 class Professor(ProfessorBase):
     id: int
-    documents: List[Document] = []
+    documents: List[Doc] = []
     sections: List[Section] = []
 
     creation_user: str

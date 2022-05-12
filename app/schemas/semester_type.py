@@ -1,6 +1,9 @@
 from datetime import datetime
+import imp
 from typing import List, Optional
 from pydantic import BaseModel
+
+from .course import Course
 
 class SemesterBase(BaseModel):
     name: str
@@ -16,6 +19,10 @@ class SemesterCreate(SemesterBase):
 
 class Semester(SemesterBase):
     id: int
+    courses: List[Course] = []
     creation_user: str
     creation_date: datetime
     last_update_at: datetime
+
+    class Config:
+        orm_mode = True

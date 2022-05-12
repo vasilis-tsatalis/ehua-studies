@@ -2,16 +2,14 @@ from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel
 
-from .department import Department
-from .semester_type import Semester
-
+from .section import Section
 
 class CourseBase(BaseModel):
-    department_id: Department.id
+    department_id: int
     name: str
     description: Optional[str] = None
     is_active: bool
-    semester_type_id: Semester.id
+    semester_type_id: int
     gravity: str
 
     class Config:
@@ -24,4 +22,8 @@ class CourseCreate(CourseBase):
 
 class Course(CourseBase): 
     id: int
+    sections: List[Section] = []
     last_update_at: datetime
+
+    class Config:
+        orm_mode = True

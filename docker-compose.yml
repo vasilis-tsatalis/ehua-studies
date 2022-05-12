@@ -36,6 +36,14 @@ services:
     ports:
       - '3000:3000'
 
+  admin_console:
+    build:
+      dockerfile: admin.Dockerfile
+    env_file:
+      - ./admin_console/.env
+    ports:
+      - '6600:6600'
+
   mailhog:
       image: mailhog/mailhog
       logging:

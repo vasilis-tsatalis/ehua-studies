@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 import datetime
-from ..models.tables_definitions import Course
+from ..models.tables_definitions import Course, Section
 from ..schemas.course import CourseCreate
 
 
@@ -26,8 +26,12 @@ async def update_course_by_id(db: Session, id: int):
     return 'updated'
 
 async def delete_course_by_id(db: Session, id: int):
-    db_course = Course.query.filter_by(id=id).one()
+    db_course = db.query(Course).filter(Course.id == id).first()
     db.delete(db_course)
     db.commit()
-    db.refresh(db_course)
-    return db_course
+    status = 'OK'
+    return status
+
+async def get_course_sections(db: Session, id: int):
+    db_sections =  db.query(Section).filter(Section.course_id == id).all()
+    return db_sections

@@ -25,8 +25,8 @@ async def update_schedule_by_id(db: Session, id: int):
     return 'updated'
 
 async def delete_scheduler_by_id(db: Session, id: int):
-    db_scheduler = Scheduler_Type.query.filter_by(id=id).one()
+    db_scheduler = db.query(Scheduler_Type).filter(Scheduler_Type.id == id).first()
     db.delete(db_scheduler)
     db.commit()
-    db.refresh(db_scheduler)
-    return db_scheduler
+    status = 'OK'
+    return status

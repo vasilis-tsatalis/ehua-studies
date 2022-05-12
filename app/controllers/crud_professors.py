@@ -31,7 +31,6 @@ async def create_professor(db: Session, professor: ProfessorCreate, creation_use
         level=professor.level,
         notes=professor.notes,
         is_active=professor.is_active,
-        creation_date=datetime.datetime.utcnow, 
         creation_user= creation_user)
     db.add(db_professor)
     db.commit()
@@ -42,11 +41,11 @@ async def update_professor_by_id(db: Session, id: int):
     return 'updated'
 
 async def delete_professor_by_id(db: Session, id: int):
-    db_professor = Professor.query.filter_by(id=id).one()
+    db_professor = db.query(Professor).filter(Professor.id == id).first()
     db.delete(db_professor)
     db.commit()
-    db.refresh(db_professor)
-    return db_professor
+    status = 'OK'
+    return status
 
 async def get_professor_documents(db: Session, id: int):
     return db.query(Document).filter(Document.professor_id == id).all()
