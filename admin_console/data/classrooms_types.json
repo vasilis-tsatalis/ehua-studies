@@ -1,0 +1,38 @@
+[
+    {
+        "name": "class01",
+        "building": "Main Floor 1",
+        "number": "04",
+        "type": "lab"
+    },
+    {
+        "name": "class02",
+        "building": "Main Floor 1",
+        "number": "17",
+        "type": "lab"
+    },
+    {
+        "name": "class06",
+        "building": "Left Build",
+        "number": "04",
+        "type": "class"
+    },
+    {
+        "name": "class22",
+        "building": "Main Floor 5",
+        "number": "9",
+        "type": "lab"
+    },
+    {
+        "name": "class45",
+        "building": "Main Floor 2",
+        "number": "04",
+        "type": "lab"
+    },
+    {
+        "name": "build0201",
+        "building": "New BUILD 02",
+        "number": "01",
+        "type": "class"
+    }
+]

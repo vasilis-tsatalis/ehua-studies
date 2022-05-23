@@ -15,7 +15,7 @@ async def get_role_by_name(db: Session, name: str):
     return db.query(Role_Type).filter(Role_Type.name == name.upper()).first()
 
 async def create_role(db: Session, role: RoleCreate, creation_user: str):
-    db_role = Role_Type(name=role.name.upper(), description=role.description, creation_date=datetime.datetime.utcnow, creation_user= creation_user)
+    db_role = Role_Type(name=role.name.upper(), description=role.description, creation_user= creation_user)
     db.add(db_role)
     db.commit()
     db.refresh(db_role)

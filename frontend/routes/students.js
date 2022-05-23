@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const authenticateUser = require("../middleware/auth/authentication");
-const get_data = require("../requests/get_backend");
+const get_backend = require("../requests/get_backend");
 
 //----------ROUTES----------//
 

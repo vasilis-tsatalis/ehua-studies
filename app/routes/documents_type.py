@@ -21,7 +21,7 @@ document_router = APIRouter(
     tags=['documents']
 )
 
-@document_router.get("/", response_model=List[document_type.Document], status_code = status.HTTP_200_OK)
+@document_router.get("/", status_code = status.HTTP_200_OK)
 async def get_documents_types(webuser: str = Depends(authenticate_webuser), skip: int = 0, limit: int = 200, db: Session = Depends(get_db)):
     db_documents = await crud_documents_type.get_documents(db, skip=skip, limit=limit)
     if db_documents:
@@ -32,7 +32,7 @@ async def get_documents_types(webuser: str = Depends(authenticate_webuser), skip
         headers={"WWW-Authenticate": "Basic"},
         )
 
-@document_router.get("/{id}", response_model=document_type.Document, status_code = status.HTTP_200_OK)
+@document_router.get("/{id}", status_code = status.HTTP_200_OK)
 async def get_documents_type_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_document = await crud_documents_type.get_document_by_id(db, id=id)
     if db_document is None:
@@ -44,7 +44,7 @@ async def get_documents_type_by_id(id: int, webuser: str = Depends(authenticate_
     return db_document
 
 
-@document_router.get("/{name}", response_model=document_type.Document, status_code = status.HTTP_200_OK)
+@document_router.get("/name/{name}", status_code = status.HTTP_200_OK)
 async def get_documents_type_by_name(name: str, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_document = await crud_documents_type.get_document_by_name(db, name=name.upper())
     if db_document is None:
@@ -56,7 +56,7 @@ async def get_documents_type_by_name(name: str, webuser: str = Depends(authentic
     return db_document
 
 
-@document_router.post("/", response_model=document_type.Document, status_code = status.HTTP_201_CREATED)
+@document_router.post("/", status_code = status.HTTP_201_CREATED)
 async def create_documents_type(document: document_type.DocumentCreate, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
     db_document = await crud_documents_type.get_document_by_name(db, name=document.name.upper())
     if db_document:

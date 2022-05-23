@@ -21,7 +21,7 @@ doc_router = APIRouter(
     tags=['uploaded documents']
 )
 
-@doc_router.get("/", response_model=List[document.Doc], status_code = status.HTTP_200_OK)
+@doc_router.get("/", status_code = status.HTTP_200_OK)
 async def get_docs(webuser: str = Depends(authenticate_webuser), skip: int = 0, limit: int = 200, db: Session = Depends(get_db)):
     db_docs = await crud_documents.get_docs(db, skip=skip, limit=limit)
     if db_docs:
@@ -33,7 +33,7 @@ async def get_docs(webuser: str = Depends(authenticate_webuser), skip: int = 0, 
         )
 
 
-@doc_router.get("/{id}", response_model=document.Doc, status_code = status.HTTP_200_OK)
+@doc_router.get("/{id}", status_code = status.HTTP_200_OK)
 async def get_doc_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_doc = await crud_documents.get_doc_by_id(db, id=id)
     if db_doc is None:
@@ -45,7 +45,7 @@ async def get_doc_by_id(id: int, webuser: str = Depends(authenticate_webuser), d
     return db_doc
 
 
-@doc_router.get("/{filename}", response_model=document.Doc, status_code = status.HTTP_200_OK)
+@doc_router.get("/filename/{filename}", status_code = status.HTTP_200_OK)
 async def get_doc_by_filename(filename: str, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_doc = await crud_documents.get_doc_by_filename(db, filename=filename.upper())
     if db_doc is None:
@@ -57,7 +57,7 @@ async def get_doc_by_filename(filename: str, webuser: str = Depends(authenticate
     return db_doc
 
 
-@doc_router.post("/", response_model=document.Doc, status_code = status.HTTP_201_CREATED)
+@doc_router.post("/", status_code = status.HTTP_201_CREATED)
 async def create_doc(doc: document.DocCreate, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     return await crud_documents.create_doc(db, doc=doc, creation_user=webuser)
 

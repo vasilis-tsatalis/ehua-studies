@@ -21,7 +21,7 @@ semester_router = APIRouter(
     tags=['semesters']
 )
 
-@semester_router.get("/", response_model=List[semester_type.Semester], status_code = status.HTTP_200_OK)
+@semester_router.get("/", status_code = status.HTTP_200_OK)
 async def get_semesters(webuser: str = Depends(authenticate_webuser), skip: int = 0, limit: int = 200, db: Session = Depends(get_db)):
     db_semesters = await crud_semesters_type.get_semesters(db, skip=skip, limit=limit)
     if db_semesters:
@@ -32,7 +32,7 @@ async def get_semesters(webuser: str = Depends(authenticate_webuser), skip: int 
         headers={"WWW-Authenticate": "Basic"},
         )
 
-@semester_router.get("/{id}", response_model=semester_type.Semester, status_code = status.HTTP_200_OK)
+@semester_router.get("/{id}", status_code = status.HTTP_200_OK)
 async def get_semester_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_semester = await crud_semesters_type.get_semester_by_id(db, id=id)
     if db_semester is None:
@@ -44,7 +44,7 @@ async def get_semester_by_id(id: int, webuser: str = Depends(authenticate_webuse
     return db_semester
 
 
-@semester_router.get("/{name}", response_model=semester_type.Semester, status_code = status.HTTP_200_OK)
+@semester_router.get("/name/{name}", status_code = status.HTTP_200_OK)
 async def get_semester_by_name(name: str, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_semester = await crud_semesters_type.get_semester_by_name(db, name=name.upper())
     if db_semester is None:
@@ -56,7 +56,7 @@ async def get_semester_by_name(name: str, webuser: str = Depends(authenticate_we
     return db_semester
 
 
-@semester_router.post("/", response_model=semester_type.Semester, status_code = status.HTTP_201_CREATED)
+@semester_router.post("/", status_code = status.HTTP_201_CREATED)
 async def create_semester(semester: semester_type.SemesterCreate, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
     db_semester = await crud_semesters_type.get_semester_by_name(db, name=semester.name.upper())
     if db_semester:

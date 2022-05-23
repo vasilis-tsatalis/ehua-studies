@@ -21,7 +21,7 @@ professor_router = APIRouter(
     tags=['professors']
 )
 
-@professor_router.get("/", response_model=List[professor.Professor], status_code = status.HTTP_200_OK)
+@professor_router.get("/", status_code = status.HTTP_200_OK)
 async def get_professors(webuser: str = Depends(authenticate_webuser), skip: int = 0, limit: int = 200, db: Session = Depends(get_db)):
     db_professors = await crud_professors.get_professors(db, skip=skip, limit=limit)
     if db_professors:
@@ -33,7 +33,7 @@ async def get_professors(webuser: str = Depends(authenticate_webuser), skip: int
         )
 
 
-@professor_router.get("/{id}", response_model=professor.Professor, status_code = status.HTTP_200_OK)
+@professor_router.get("/{id}", status_code = status.HTTP_200_OK)
 async def get_professor_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_professor = await crud_professors.get_professor_by_id(db, id=id)
     if db_professor is None:
@@ -45,7 +45,7 @@ async def get_professor_by_id(id: int, webuser: str = Depends(authenticate_webus
     return db_professor
 
 
-@professor_router.get("/{username}", response_model=professor.Professor, status_code = status.HTTP_200_OK)
+@professor_router.get("/username/{username}", status_code = status.HTTP_200_OK)
 async def get_professor_by_username(username: str, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_professor = await crud_professors.get_professor_by_username(db, username=username.upper())
     if db_professor is None:
@@ -57,7 +57,7 @@ async def get_professor_by_username(username: str, webuser: str = Depends(authen
     return db_professor
 
 
-@professor_router.post("/", response_model=professor.Professor, status_code = status.HTTP_201_CREATED)
+@professor_router.post("/", status_code = status.HTTP_201_CREATED)
 async def create_professor(professor: professor.ProfessorCreate, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
     db_professor = await crud_professors.get_professor_by_username(db, username=professor.username.upper())
     if db_professor:

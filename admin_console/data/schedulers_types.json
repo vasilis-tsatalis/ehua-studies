@@ -1,0 +1,63 @@
+[
+    {
+        "name": "scde1",
+        "day": "Monday",
+        "start_time": "17:00:00",
+        "end_time": "19:30:00"
+    },
+    {
+        "name": "scde2",
+        "day": "Monday",
+        "start_time": "19:30:00",
+        "end_time": "22:00:00"
+    },
+    {
+        "name": "scde3",
+        "day": "Tuesday",
+        "start_time": "17:00:00",
+        "end_time": "19:30:00"
+    },
+    {
+        "name": "scde4",
+        "day": "Tuesday",
+        "start_time": "19:30:00",
+        "end_time": "22:00:00"
+    },
+    {
+        "name": "scde5",
+        "day": "Wednesday",
+        "start_time": "17:00:00",
+        "end_time": "19:30:00"
+    },
+    {
+        "name": "scde6",
+        "day": "Wednesday",
+        "start_time": "19:30:00",
+        "end_time": "22:00:00"
+    },
+    {
+        "name": "scde7",
+        "day": "Thursday",
+        "start_time": "17:00:00",
+        "end_time": "19:30:00"
+    },
+    {
+        "id": 8,
+        "name": "scde8",
+        "day": "Thursday",
+        "start_time": "19:30:00",
+        "end_time": "22:00:00"
+    },
+    {
+        "name": "scde9",
+        "day": "Friday",
+        "start_time": "17:00:00",
+        "end_time": "19:30:00"
+    },
+    {
+        "name": "scde10",
+        "day": "Friday",
+        "start_time": "19:30:00",
+        "end_time": "22:00:00"
+    }
+]

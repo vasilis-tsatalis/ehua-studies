@@ -1,0 +1,22 @@
+[
+    {
+        "name": "notification",
+        "description": "Notification Document"
+    },
+    {
+        "name": "exam",
+        "description": "Exam Document"
+    },
+    {
+        "name": "exercise",
+        "description": "Exercise - Project Document"
+    },
+    {
+        "name": "result",
+        "description": "Results Section Document"
+    },
+    {
+        "name": "other",
+        "description": "General Purpose Documents"
+    }
+]

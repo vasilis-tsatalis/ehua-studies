@@ -18,4 +18,6 @@ COPY ./app ./app
 # EXPOSE 8000/tcp
 
 # Tell what to do when it starts as a container
+# CMD ["/bin/bash", "entrypoint.sh"]
+
 CMD ["uvicorn","app.main:app","--host","0.0.0.0","--port","8000"]

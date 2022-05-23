@@ -21,7 +21,7 @@ schedule_router = APIRouter(
     tags=['schedules']
 )
 
-@schedule_router.get("/", response_model=List[scheduler_type.Scheduler], status_code = status.HTTP_200_OK)
+@schedule_router.get("/", status_code = status.HTTP_200_OK)
 async def get_schedules(webuser: str = Depends(authenticate_webuser), skip: int = 0, limit: int = 200, db: Session = Depends(get_db)):
     db_schedules = await crud_schedulers_type.get_schedules(db, skip=skip, limit=limit)
     if db_schedules:
@@ -32,7 +32,7 @@ async def get_schedules(webuser: str = Depends(authenticate_webuser), skip: int 
         headers={"WWW-Authenticate": "Basic"},
         )
 
-@schedule_router.get("/{id}", response_model=scheduler_type.Scheduler, status_code = status.HTTP_200_OK)
+@schedule_router.get("/{id}", status_code = status.HTTP_200_OK)
 async def get_schedule_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_schedule = await crud_schedulers_type.get_schedule_by_id(db, id=id)
     if db_schedule is None:
@@ -44,7 +44,7 @@ async def get_schedule_by_id(id: int, webuser: str = Depends(authenticate_webuse
     return db_schedule
 
 
-@schedule_router.get("/{day}", response_model=scheduler_type.Scheduler, status_code = status.HTTP_200_OK)
+@schedule_router.get("/name/{name}", status_code = status.HTTP_200_OK)
 async def get_schedule_by_day(name: str, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_schedule = await crud_schedulers_type.get_schedule_by_name(db, name=name.upper())
     if db_schedule is None:
@@ -56,7 +56,7 @@ async def get_schedule_by_day(name: str, webuser: str = Depends(authenticate_web
     return db_schedule
 
 
-@schedule_router.post("/", response_model=scheduler_type.Scheduler, status_code = status.HTTP_201_CREATED)
+@schedule_router.post("/", status_code = status.HTTP_201_CREATED)
 async def create_schedule(schedule: scheduler_type.SchedulerCreate, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
     db_schedule = await crud_schedulers_type.get_schedule_by_name(db, name=schedule.name.upper())
     if db_schedule:

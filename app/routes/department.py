@@ -23,7 +23,7 @@ department_router = APIRouter(
 )
 
 
-@department_router.get("/", response_model=List[department.Department], status_code = status.HTTP_200_OK)
+@department_router.get("/", status_code = status.HTTP_200_OK)
 async def get_departments(webuser: str = Depends(authenticate_webuser), skip: int = 0, limit: int = 200, db: Session = Depends(get_db)):
     db_departments = await crud_departments.get_departments(db, skip=skip, limit=limit)
     if db_departments:
@@ -35,7 +35,7 @@ async def get_departments(webuser: str = Depends(authenticate_webuser), skip: in
         )
 
 
-@department_router.get("/{id}", response_model=department.Department, status_code = status.HTTP_200_OK)
+@department_router.get("/{id}", status_code = status.HTTP_200_OK)
 async def get_department_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_department = await crud_departments.get_department_by_id(db, id=id)
     if db_department is None:
@@ -47,7 +47,7 @@ async def get_department_by_id(id: int, webuser: str = Depends(authenticate_webu
     return db_department
 
 
-@department_router.get("/{name}", response_model=department.Department, status_code = status.HTTP_200_OK)
+@department_router.get("/name/{name}", status_code = status.HTTP_200_OK)
 async def get_department_by_name(name: str, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_department = await crud_departments.get_department_by_name(db, name=name.upper())
     if db_department is None:
@@ -59,7 +59,7 @@ async def get_department_by_name(name: str, webuser: str = Depends(authenticate_
     return db_department
 
 
-@department_router.post("/", response_model=department.Department, status_code = status.HTTP_201_CREATED)
+@department_router.post("/", status_code = status.HTTP_201_CREATED)
 async def create_department(department: department.DepartmentCreate, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
     db_department = await crud_departments.get_department_by_name(db, name=department.name.upper())
     if db_department:

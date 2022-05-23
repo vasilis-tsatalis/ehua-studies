@@ -21,7 +21,7 @@ role_router = APIRouter(
     tags=['roles']
 )
 
-@role_router.get("/", response_model=List[role_type.Role], status_code = status.HTTP_200_OK)
+@role_router.get("/", status_code = status.HTTP_200_OK)
 async def get_roles(webuser: str = Depends(authenticate_webuser), skip: int = 0, limit: int = 200, db: Session = Depends(get_db)):
     db_roles = await crud_roles_type.get_roles(db, skip=skip, limit=limit)
     if db_roles:
@@ -33,7 +33,7 @@ async def get_roles(webuser: str = Depends(authenticate_webuser), skip: int = 0,
         )
 
 
-@role_router.get("/{id}", response_model=role_type.Role, status_code = status.HTTP_200_OK)
+@role_router.get("/{id}", status_code = status.HTTP_200_OK)
 async def get_role_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_role = await crud_roles_type.get_role_by_id(db, id=id)
     if db_role is None:
@@ -45,7 +45,7 @@ async def get_role_by_id(id: int, webuser: str = Depends(authenticate_webuser), 
     return db_role
 
 
-@role_router.get("/{name}", response_model=role_type.Role, status_code = status.HTTP_200_OK)
+@role_router.get("/name/{name}", status_code = status.HTTP_200_OK)
 async def get_role_by_name(name: str, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_role = await crud_roles_type.get_role_by_name(db, name=name.upper())
     if db_role is None:
@@ -57,7 +57,7 @@ async def get_role_by_name(name: str, webuser: str = Depends(authenticate_webuse
     return db_role
 
 
-@role_router.post("/", response_model=role_type.Role, status_code = status.HTTP_201_CREATED)
+@role_router.post("/", status_code = status.HTTP_201_CREATED)
 async def create_role(role: role_type.RoleCreate, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
     db_role = await crud_roles_type.get_role_by_name(db, name=role.name.upper())
     if db_role:

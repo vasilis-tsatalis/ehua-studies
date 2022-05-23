@@ -14,5 +14,10 @@ RUN npm install
 COPY ./frontend .
 
 # EXPOSE 8080
+
+RUN npm config set proxy null
+RUN npm config set https-proxy null
+RUN npm config set registry http://registry.npmjs.org/
+
 # CMD [ "node", "server.js" ]
 CMD [ "npm", "start" ]

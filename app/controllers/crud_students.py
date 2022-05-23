@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 import datetime
 from sqlalchemy.sql import func
-from ..models.tables_definitions import Student, association_table_students_sections, students_sections
+from ..models.tables_definitions import Student, association_table_students_sections
 from ..schemas.student import StudentCreate, StudentUpdate
 
 
@@ -63,7 +63,8 @@ async def delete_student_by_id(db: Session, id: int):
     return status
 
 async def get_student_sections(db: Session, id: int):
-    return db.query(students_sections).filter(students_sections.student_id == id).all()
+    #return db.query(students_sections).filter(students_sections.student_id == id).all()
+    pass
 
 
     #students_sections = (db.query(Sections).select_from(Students, Sections).join(Students).filter(Students.user_id == user_id).all())

@@ -22,7 +22,7 @@ section_router = APIRouter(
 )
 
 
-@section_router.get("/", response_model=List[section.Section], status_code = status.HTTP_200_OK)
+@section_router.get("/", status_code = status.HTTP_200_OK)
 async def get_sections(webuser: str = Depends(authenticate_webuser), skip: int = 0, limit: int = 200, db: Session = Depends(get_db)):
     db_sections = await crud_sections.get_sections(db, skip=skip, limit=limit)
     if db_sections:
@@ -34,7 +34,7 @@ async def get_sections(webuser: str = Depends(authenticate_webuser), skip: int =
         )
 
 
-@section_router.get("/{id}", response_model=section.Section, status_code = status.HTTP_200_OK)
+@section_router.get("/{id}", status_code = status.HTTP_200_OK)
 async def get_section_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_section = await crud_sections.get_section_by_id(db, id=id)
     if db_section is None:
@@ -46,7 +46,7 @@ async def get_section_by_id(id: int, webuser: str = Depends(authenticate_webuser
     return db_section
 
 
-@section_router.post("/", response_model=section.Section, status_code = status.HTTP_201_CREATED)
+@section_router.post("/", status_code = status.HTTP_201_CREATED)
 async def create_section(section: section.SectionCreate, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
     return await crud_sections.create_section(db, section=section)
 

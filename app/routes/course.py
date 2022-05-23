@@ -22,7 +22,7 @@ course_router = APIRouter(
     tags=['courses']
 )
 
-@course_router.get("/", response_model=List[course.Course], status_code = status.HTTP_200_OK)
+@course_router.get("/", status_code = status.HTTP_200_OK)
 async def get_courses(webuser: str = Depends(authenticate_webuser), skip: int = 0, limit: int = 200, db: Session = Depends(get_db)):
     db_courses = await crud_courses.get_courses(db, skip=skip, limit=limit)
     if db_courses:
@@ -34,7 +34,7 @@ async def get_courses(webuser: str = Depends(authenticate_webuser), skip: int = 
         )
 
 
-@course_router.get("/{id}", response_model=course.Course, status_code = status.HTTP_200_OK)
+@course_router.get("/{id}", status_code = status.HTTP_200_OK)
 async def get_course_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_course = await crud_courses.get_course_by_id(db, id=id)
     if db_course is None:
@@ -46,7 +46,7 @@ async def get_course_by_id(id: int, webuser: str = Depends(authenticate_webuser)
     return db_course
 
 
-@course_router.get("/{name}", response_model=course.Course, status_code = status.HTTP_200_OK)
+@course_router.get("/name/{name}", status_code = status.HTTP_200_OK)
 async def get_course_by_filename(name: str, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_course = await crud_courses.get_course_by_name(db, name=name.upper())
     if db_course is None:
@@ -58,7 +58,7 @@ async def get_course_by_filename(name: str, webuser: str = Depends(authenticate_
     return db_course
 
 
-@course_router.post("/", response_model=course.Course, status_code = status.HTTP_201_CREATED)
+@course_router.post("/", status_code = status.HTTP_201_CREATED)
 async def create_course(course: course.CourseCreate, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
     db_course = await crud_courses.get_course_by_name(db, name=course.name.upper())
     if db_course:

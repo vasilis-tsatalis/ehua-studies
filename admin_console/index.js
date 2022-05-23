@@ -13,6 +13,7 @@ const rfs = require('rotating-file-stream');
 require('dotenv/config');
 
 const authenticateUser = require("./auth");
+const requests_modules = require("./admin_requests");
 
 const BASE_URL = process.env.BASE_URL
 
@@ -41,6 +42,45 @@ app.use(cookieSession({keys: [process.env.COOKIE_KEY]}));
 app.use(morgan('combined', { stream: accessLogStream }));
 
 
+// Generic Usage Function
+function create_requests(fullname, route_w){
+
+    fs.readFile(fullname, function(err, data) {
+        if (err) {
+            res.sendStatus(501).json({ message:err });
+        }
+
+        const roles = JSON.parse(data);
+        //console.log(roles)
+
+        if (roles) {
+
+            roles.forEach(element => {
+
+                //console.log(element)
+
+                requests_modules.create_data(route_w, element)
+                .then(item => {
+                    console.log(item)
+                })
+                .catch(err => {
+                    console.log(err)
+                });
+
+            })
+        }
+
+        requests_modules.get_data(route_w)
+        .then(data => {console.log(data)})
+        .catch(err => {
+            console.log('Error: ' + err)
+            });
+        
+    });
+
+};
+
+
 //----------ROUTES----------//
 // Routes for serving frontend files
 
@@ -50,32 +90,10 @@ app.get('/', async(req,res) => { res.render('login') });
 
 //--------------------------//
 
-app.post('/auth', (req, res) => {
+app.get('/home', authenticateUser, async (req, res) => {
     try{
-        const { username, password } = req.body;
-        username.toLowerCase();
-        // check for missing filds
-        if (!username || !password) {
-            return res.render("login", { message: "Please enter all the fields" });
-        }
-
-        if (username !== process.env.ADMINISTRATOR_USER || password !== process.env.ADMINISTRATOR_PASS) {
-            res.send("invalid username or password");
-            return;
-        } else {
-            const doesUserExits = true;
-        }
-
-        if (!doesUserExits) {
-            res.send("invalid username or password");
-            return;
-        }
-          // else he\s logged in
-        req.session.user = {
-            username,
-        };
-       
-        res.render("home");
+        const username = req.session.user.username;
+        res.render("home", {username});
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -83,21 +101,187 @@ app.post('/auth', (req, res) => {
 
 //--------------------------//
 
-app.get('/home', authenticateUser, (req, res) => {
-    res.render("home");
+app.get('/departments', authenticateUser, async (req, res) => {
+    try{
+        const username = req.session.user.username;
+
+        create_requests("./data/roles_types.json", '/roles_types');
+
+        res.redirect('/home');
+    }catch(err){
+        res.sendStatus(400).json({ message:err });
+    }
 });
 
 //--------------------------//
 
+app.get('/classrooms', authenticateUser, async (req, res) => {
+    try{
+        const username = req.session.user.username;
 
+        create_requests("./data/classrooms_types.json", '/classrooms_types');
 
+        res.redirect('/home');
+    }catch(err){
+        res.sendStatus(400).json({ message:err });
+    }
+});
 
+//--------------------------//
 
+app.get('/doc_types', authenticateUser, async (req, res) => {
+    try{
+        const username = req.session.user.username;
+
+        create_requests("./data/roles_types.json", '/roles_types');
+
+        res.redirect('/home');
+    }catch(err){
+        res.sendStatus(400).json({ message:err });
+    }
+});
+
+//--------------------------//
+
+app.get('/exams', authenticateUser, async (req, res) => {
+    try{
+        const username = req.session.user.username;
+
+        create_requests("./data/roles_types.json", '/roles_types');
+
+        res.redirect('/home');
+    }catch(err){
+        res.sendStatus(400).json({ message:err });
+    }
+});
+
+//--------------------------//
+
+app.get('/schedulers', authenticateUser, async (req, res) => {
+    try{
+        const username = req.session.user.username;
+
+        create_requests("./data/roles_types.json", '/roles_types');
+
+        res.redirect('/home');
+    }catch(err){
+        res.sendStatus(400).json({ message:err });
+    }
+});
+
+//--------------------------//
+
+app.get('/semesters', authenticateUser, async (req, res) => {
+    try{
+        const username = req.session.user.username;
+
+        create_requests("./data/roles_types.json", '/roles_types');
+
+        res.redirect('/home');
+    }catch(err){
+        res.sendStatus(400).json({ message:err });
+    }
+});
+
+//--------------------------//
+
+app.get('/roles', authenticateUser, async (req, res) => {
+
+    try{
+        const username = req.session.user.username;
+
+        create_requests("./data/roles_types.json", '/roles_types');
+
+        res.redirect('/home');
+    }catch(err){
+        res.sendStatus(400).json({ message:err });
+    }
+});
+
+//--------------------------//
+
+app.get('/students', authenticateUser, async (req, res) => {
+    try{
+        const username = req.session.user.username;
+        res.redirect('/logout');
+    }catch(err){
+        res.sendStatus(400).json({ message:err });
+    }
+});
+
+//--------------------------//
+
+app.get('/professors', authenticateUser, async (req, res) => {
+    try{
+        const username = req.session.user.username;
+        res.redirect('/logout');
+    }catch(err){
+        res.sendStatus(400).json({ message:err });
+    }
+});
+
+//--------------------------//
+
+app.get('/courses', authenticateUser, async (req, res) => {
+    try{
+        const username = req.session.user.username;
+        res.redirect('/logout');
+    }catch(err){
+        res.sendStatus(400).json({ message:err });
+    }
+});
+
+//--------------------------//
+
+app.get('/documents', authenticateUser, async (req, res) => {
+    try{
+        const username = req.session.user.username;
+        res.redirect('/logout');
+    }catch(err){
+        res.sendStatus(400).json({ message:err });
+    }
+});
+
+//--------------------------//
+
+app.get('/sections', authenticateUser, async (req, res) => {
+    try{
+        const username = req.session.user.username;
+        res.redirect('/logout');
+    }catch(err){
+        res.sendStatus(400).json({ message:err });
+    }
+});
+
+//--------------------------//
+
+app.post('/signin', async (req, res) => {
+    try{
+        const { username, password } = req.body;
+        username.toLowerCase();
+        // check for missing filds
+        if (!username || !password) {
+            return res.render("login", { message: "Please enter all the fields" });
+        };
+        if (username != process.env.ADMINISTRATOR_USER || password != process.env.ADMINISTRATOR_PASS) {
+            res.send("invalid username or password");
+            return;
+        };
+        req.session.user = {
+            username,
+        };     
+        res.redirect('/home');
+    }catch(err){
+        res.sendStatus(400).json({ message:err });
+    }
+});
+
+//--------------------------//
 
 //--------------------------//
 
 //logout - kill current session
-app.get('/logout', authenticateUser, (req, res) => {
+app.get('/logout', authenticateUser, async (req, res) => {
     req.session.user = null;
     res.redirect('/');
   });

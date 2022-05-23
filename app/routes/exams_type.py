@@ -21,7 +21,7 @@ exam_router = APIRouter(
     tags=['exams']
 )
 
-@exam_router.get("/", response_model=List[exam_type.Exam], status_code = status.HTTP_200_OK)
+@exam_router.get("/", status_code = status.HTTP_200_OK)
 async def get_exams(webuser: str = Depends(authenticate_webuser), skip: int = 0, limit: int = 200, db: Session = Depends(get_db)):
     db_exams = await crud_exams_type.get_exams(db, skip=skip, limit=limit)
     if db_exams:
@@ -32,7 +32,7 @@ async def get_exams(webuser: str = Depends(authenticate_webuser), skip: int = 0,
         headers={"WWW-Authenticate": "Basic"},
         )
 
-@exam_router.get("/{id}", response_model=exam_type.Exam, status_code = status.HTTP_200_OK)
+@exam_router.get("/{id}", status_code = status.HTTP_200_OK)
 async def get_exam_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_exam = await crud_exams_type.get_exam_by_id(db, id=id)
     if db_exam is None:
@@ -44,7 +44,7 @@ async def get_exam_by_id(id: int, webuser: str = Depends(authenticate_webuser), 
     return db_exam
 
 
-@exam_router.get("/{name}", response_model=exam_type.Exam, status_code = status.HTTP_200_OK)
+@exam_router.get("/name/{name}", status_code = status.HTTP_200_OK)
 async def get_exam_by_name(name: str, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_exam = await crud_exams_type.get_exam_by_name(db, name=name.upper())
     if db_exam is None:

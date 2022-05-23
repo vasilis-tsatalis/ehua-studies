@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: flask
+  template:
+    metadata:
+      labels:
+        component: flask
+  spec:
+    containers:
+      - name: flask
+        image: basilariusdc/workpermit-employees-system
+        ports:
+          - containerPort: 5000
+        env:
+          - name: DB_URL
+            valueFrom:
+              secretKeyRef:
+                name: flask-app
+                key: DB_URL
+          - name: SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: flask-app
+                key: SECRET_KEY
+          - name: ADMIN_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: flask-app
+                key: ADMIN_USERNAME
+          - name: ADMIN_EMAIL
+            valueFrom:
+              secretKeyRef:
+                name: flask-app
+                key: ADMIN_EMAIL
+          - name: ADMIN_PASS
+            valueFrom:
+              secretKeyRef:
+                name: flask-app
+                key: ADMIN_PASS
+          - name: HOST
+            value: localhost
+          - name: PORT
+            value: "5000"
+          - name: MAIL_SERVER
+            value: localhost
+          - name: MAIL_PORT
+            value: "1025"
+          - name: MAIL_USERNAME
+            value: admin
+          - name: MAIL_PASSWORD
+            value: admin
+          - name: MAIL_USE_TLS
+            value: "False"
+          - name: MAIL_USE_SSL
+            value: "False"
+        imagePullPolicy: Always

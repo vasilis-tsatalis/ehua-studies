@@ -21,7 +21,7 @@ classroom_router = APIRouter(
     tags=['classroom types']
 )
 
-@classroom_router.get("/", response_model=List[classroom_type.Classroom], status_code = status.HTTP_200_OK)
+@classroom_router.get("/", status_code = status.HTTP_200_OK)
 async def get_classrooms_types(webuser: str = Depends(authenticate_webuser), skip: int = 0, limit: int = 200, db: Session = Depends(get_db)):
     db_classrooms = await crud_classrooms_type.get_classrooms(db, skip=skip, limit=limit)
     if db_classrooms:
@@ -45,7 +45,7 @@ async def get_classrooms_type_by_id(id:int, webuser: str = Depends(authenticate_
     return db_classroom
 
 
-@classroom_router.get("/{name}", response_model=classroom_type.Classroom, status_code = status.HTTP_200_OK)
+@classroom_router.get("/name/{name}", status_code = status.HTTP_200_OK)
 async def get_classrooms_type_by_name(name: str, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_classroom = await crud_classrooms_type.get_classroom_by_name(db, name=name.upper())
     if db_classroom is None:
@@ -57,7 +57,7 @@ async def get_classrooms_type_by_name(name: str, webuser: str = Depends(authenti
     return db_classroom
 
 
-@classroom_router.post("/", response_model=classroom_type.Classroom, status_code = status.HTTP_201_CREATED)
+@classroom_router.post("/", status_code = status.HTTP_201_CREATED)
 async def create_classrooms_type(classroom: classroom_type.ClassroomCreate, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
     db_classroom = await crud_classrooms_type.get_classroom_by_name(db, name=classroom.name.upper())
     if db_classroom:

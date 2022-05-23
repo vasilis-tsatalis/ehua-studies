@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 const base64 = require('base-64');
 require('dotenv/config');
 
-const get_data = async (base_url, method='GET') => {
+const get_data = async (base_url) => {
 
     const username = process.env.API_USER;
     const password = process.env.API_PASS;
@@ -10,7 +10,7 @@ const get_data = async (base_url, method='GET') => {
     const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}${base_url}`;
 
     const options = {
-        "method": method
+        "method": 'GET'
     }
 
     const response = await fetch(api_url, {
@@ -29,5 +29,6 @@ const get_data = async (base_url, method='GET') => {
     //console.log(response);
     return response;  
 };
+
 
 module.exports = get_data;

@@ -13,7 +13,7 @@
             <div class="card">
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-hover mb-0" id="myTable">
+                  <table class="table table-hover mb-0" id="tblexportData">
                     <thead>
                       <tr>
                         <th scope="col"></th>
@@ -47,8 +47,11 @@
         <button type="button" class="btn btn-outline-info btn-sm" onclick="tableToCSV()">
             export CSV
         </button>
-        <button type="button" class="btn btn-outline-warning btn-sm" onclick="tableToJSON('myTable')">
+        <button type="button" class="btn btn-outline-warning btn-sm" onclick="tableToJSON()">
           export JSON
+      </button>
+      <button type="button" class="btn btn-outline-success btn-sm" onclick="exportToExcel('tblexportData')">
+        export Excel
       </button>
 
       </div>

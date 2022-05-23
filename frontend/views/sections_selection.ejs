@@ -10,7 +10,7 @@
       <div class="col">
           <label for="my_table"><b><i>Courses Sections</i></b></label>
           <hr class="my-4">
-          <table class="table" id="my_table">
+          <table class="table" id="tblexportData">
               <thead>
               <tr>
                   <th scope="col">Κωδ.Μαθήματος</th>
@@ -39,8 +39,11 @@
           <button type="button" class="btn btn-outline-info btn-sm" onclick="tableToCSV()">
               export CSV
           </button>
-          <button type="button" class="btn btn-outline-warning btn-sm" onclick="tableToJSON('myTable')">
+          <button type="button" class="btn btn-outline-warning btn-sm" onclick="tableToJSON()">
             export JSON
+        </button>
+        <button type="button" class="btn btn-outline-success btn-sm" onclick="exportToExcel('tblexportData')">
+            export Excel
         </button>
 
       </div>           

@@ -15,7 +15,7 @@ async def get_classroom_by_name(db: Session, name: str):
     return db.query(Classroom_Type).filter(Classroom_Type.name == name.upper()).first()
 
 async def create_classroom(db: Session, classroom: ClassroomCreate, creation_user: str):
-    db_classroom = Classroom_Type(name=classroom.name.upper(), building=classroom.building, type=classroom.type, creation_date=datetime.datetime.utcnow, creation_user= creation_user)
+    db_classroom = Classroom_Type(name=classroom.name.upper(), building=classroom.building, type=classroom.type, creation_user= creation_user)
     db.add(db_classroom)
     db.commit()
     db.refresh(db_classroom)
