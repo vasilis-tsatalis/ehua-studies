@@ -1,0 +1,17 @@
+[
+    {
+        "name": "informatics&telematics",
+        "description": "Information Technology and Telematics",
+        "points": "6"
+    },
+    {
+        "name": "network&security",
+        "description": "Network Administration and Security",
+        "points": "5"
+    },
+    {
+        "name": "database_administrator",
+        "description": "Database Administrator",
+        "points": "4"
+    }
+]

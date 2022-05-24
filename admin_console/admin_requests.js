@@ -10,10 +10,10 @@ const create_data = async (base_url, data) => {
     const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}${base_url}`;
 
     const options = {
-        "method": 'POST',
-        //"body": JSON.stringify(data),
-        "body": data,
-        "headers": `{ Content-Type: application/json }`,
+        "method": "POST",
+        "body": `${JSON.stringify(data)}`,
+        //"body": `${data}`,
+        "headers": "{ Content-Type: application/json }",
     }
 
     //console.log(options)

@@ -69,12 +69,6 @@ function create_requests(fullname, route_w){
 
             })
         }
-
-        requests_modules.get_data(route_w)
-        .then(data => {console.log(data)})
-        .catch(err => {
-            console.log('Error: ' + err)
-            });
         
     });
 
@@ -105,7 +99,7 @@ app.get('/departments', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
 
-        create_requests("./data/roles_types.json", '/roles_types');
+        create_requests("./data/departments.json", '/departments');
 
         res.redirect('/home');
     }catch(err){
@@ -133,7 +127,7 @@ app.get('/doc_types', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
 
-        create_requests("./data/roles_types.json", '/roles_types');
+        create_requests("./data/documents_types.json", '/documents_types');
 
         res.redirect('/home');
     }catch(err){
@@ -147,7 +141,7 @@ app.get('/exams', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
 
-        create_requests("./data/roles_types.json", '/roles_types');
+        create_requests("./data/exams_types.json", '/exams_types');
 
         res.redirect('/home');
     }catch(err){
@@ -161,7 +155,7 @@ app.get('/schedulers', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
 
-        create_requests("./data/roles_types.json", '/roles_types');
+        create_requests("./data/schedulers_types.json", '/schedulers_types');
 
         res.redirect('/home');
     }catch(err){
@@ -175,7 +169,7 @@ app.get('/semesters', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
 
-        create_requests("./data/roles_types.json", '/roles_types');
+        create_requests("./data/semesters_types.json", '/semesters_types');
 
         res.redirect('/home');
     }catch(err){
