@@ -110,14 +110,14 @@ class Semester_Type(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True, nullable=False)
     description = Column(Text)
-    start_time = Column(TIMESTAMP)
-    days_time = Column(TIMESTAMP)
+    start_date = Column(String)
+    end_date = Column(String)
     creation_user = Column(String) # Admin
     creation_date = Column(DateTime, default=datetime.datetime.utcnow)
     last_update_at = Column(TIMESTAMP, server_default=func.now())
 
     # one-one Parent.child
-    course = relationship("Course", back_populates="semester_type", uselist=False)
+    courses = relationship("Course", back_populates="semester_type")
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -208,7 +208,7 @@ class Department(Base):
     __tablename__ = "department"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(VARCHAR(20), unique=True, nullable=False)
+    name = Column(String, unique=True, index=True, nullable=False)
     description = Column(Text)
     points = Column(String(10))
     creation_user = Column(String) # Admin
@@ -263,9 +263,9 @@ class Course(Base):
     # many-one, one-many
     department = relationship("Department", back_populates="courses")
     # one-one (many-one)
-    semester_type = relationship("Semester_Type", back_populates="course")
+    semester_type = relationship("Semester_Type", back_populates="courses")
     # one-many, many-one
-    sections = relationship("Section", back_populates="course")
+    sections = relationship("Section", back_populates="courses")
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

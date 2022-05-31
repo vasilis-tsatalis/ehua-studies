@@ -15,7 +15,7 @@ async def get_schedule_by_name(db: Session, name: str):
     return db.query(Scheduler_Type).filter(Scheduler_Type.name == name.upper()).first()
 
 async def create_schedule(db: Session, schedule: SchedulerCreate, creation_user: str):
-    db_scheduler = Scheduler_Type(name=schedule.name.upper(), day=schedule.day, start_time=schedule.start_time, end_time=schedule.end_time, creation_date=datetime.datetime.utcnow, creation_user= creation_user)
+    db_scheduler = Scheduler_Type(name=schedule.name.upper(), day=schedule.day, start_time=schedule.start_time, end_time=schedule.end_time, creation_user= creation_user)
     db.add(db_scheduler)
     db.commit()
     db.refresh(db_scheduler)

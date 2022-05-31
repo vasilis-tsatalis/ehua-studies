@@ -26,7 +26,7 @@ const get_data = async (base_url) => {
             });
         });
     
-    //console.log(response);
+    console.log(response);
     return response;  
 };
 

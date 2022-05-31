@@ -1,32 +1,32 @@
 ////////////////////////////////////////////////////////
-function exportToExcel(tableID, filename = ''){
-    var downloadurl;
-    var dataFileType = 'application/vnd.ms-excel';
+function exportTableToExcel(tableID, filename = ''){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
     var tableSelect = document.getElementById(tableID);
-    var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
     
     // Specify file name
-    filename = filename?filename+'.xls':'export_excel_data.xls';
+    filename = filename?filename+'.xls':'excel_data.xls';
     
     // Create download link element
-    downloadurl = document.createElement("a");
+    downloadLink = document.createElement("a");
     
-    document.body.appendChild(downloadurl);
+    document.body.appendChild(downloadLink);
     
     if(navigator.msSaveOrOpenBlob){
-        var blob = new Blob(['\ufeff', tableHTMLData], {
-            type: dataFileType
+        var blob = new Blob(['\ufeff', tableHTML], {
+            type: dataType
         });
         navigator.msSaveOrOpenBlob( blob, filename);
     }else{
         // Create a link to the file
-        downloadurl.href = 'data:' + dataFileType + ', ' + tableHTMLData;
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
     
         // Setting the file name
-        downloadurl.download = filename;
+        downloadLink.download = filename;
         
         //triggering the function
-        downloadurl.click();
+        downloadLink.click();
     }
 }
 ////////////////////////////////////////////////////////

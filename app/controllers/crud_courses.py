@@ -14,9 +14,9 @@ async def get_course_by_id(db: Session, id: int):
 async def get_course_by_name(db: Session, name: str):
     return db.query(Course).filter(Course.name == name.upper()).first()
 
-async def create_course(db: Session, course: CourseCreate):
+async def create_course(db: Session, course: CourseCreate, creation_user: str):
     db_course = Course(department_id=course.department_id, name=course.name.upper(), description=course.description, 
-        is_active=course.is_active, semester_type_id=course.semester_type_id, gravity= course.gravity)
+        is_active=course.is_active, semester_type_id=course.semester_type_id, gravity=course.gravity, creation_user=creation_user)
     db.add(db_course)
     db.commit()
     db.refresh(db_course)

@@ -24,7 +24,6 @@ async def create_doc(db: Session, doc: DocCreate, creation_user: str):
         extension=doc.extension,
         url=doc.url,
         expiration_days=doc.expiration_days,
-        creation_date=datetime.datetime.utcnow, 
         creation_user= creation_user)
     db.add(db_doc)
     db.commit()

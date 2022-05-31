@@ -1,9 +1,10 @@
 const express = require('express');
 //define an express method
 const router = express.Router();
+const axios = require('axios');
 
 const authenticateUser = require("../middleware/auth/authentication");
-const get_backend = require("../requests/get_backend");
+
 
 //----------ROUTES----------//
 
@@ -13,52 +14,30 @@ router.get('/', authenticateUser, async (req, res) => {
         const courses = [];
         const username = req.session.user.username;
 
-        //const data = await get_data('/courses');
-
-        const data = [{
-            'id': 1,
-            'department_id': 1,
-            'name': 'Software',
-            'description': 'Software basic knowledge',
-            'is_active': 'Y',
-            'gravity': '6'
-        }, 
-        {
-            'id': 2,
-            'department_id': 1,
-            'name': 'Database',
-            'description': 'Database Design',
-            'is_active': 'y',
-            'gravity': '4'
-        },
-        {
-            'id': 3,
-            'department_id': 1,
-            'name': 'Network',
-            'description': 'Network and Security',
-            'is_active': 'N',
-            'gravity': '1'
-        }];
-
-        data.forEach(element => {
-            courses.push({id: element.id, department_id: element.department_id, name: element.name, 
+        await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/courses`, {
+            auth: {
+              username: `${process.env.API_USER}`,
+              password: `${process.env.API_PASS}`
+            }
+          })
+          .then(response => {
+                const metadata = response.data;
+                //console.log(metadata);
+                if (metadata.length == 0) {
+                    res.render("courses", {courses, username});
+                };
+                metadata.forEach(element => {
+                    courses.push({id: element.id, department_id: element.department_id, name: element.name, 
                         description: element.description, is_active: element.is_active, gravity: element.gravity 
-                            })
-        });
+                        })                
+                        });
+            res.render("courses", {courses, username});
+          })
+          .catch(err => {
+            console.log(err);
+            res.render("courses", {courses, username});
+          });
 
-        res.render("courses", {courses, username});
-
-    }catch(err){
-        res.sendStatus(400).json({ message:err });
-    }
-});
-
-
-
-
-router.post('/', authenticateUser, async (req, res) => {
-    try{
-        res.render("courses");
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }

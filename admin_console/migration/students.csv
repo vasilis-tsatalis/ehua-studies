@@ -1,11 +1,10 @@
-id,username,first_name,last_name,date_of_birth,address,city,zipcode,telephone,phone,mobile,email,year_group,is_active,notes,creation_date
-1,"itp00001","Fstudent1","Lstudent1","1990-01-01","The address","Athens","12345",,,"6971234561","itp00001@hua.gr",2019,true,,"2022-03-18 21:19:44.808210"
-2,"itp00002","Fstudent2","Lstudent2","1990-02-01","The address","Athens","12345",,,"6971234562","itp00002@hua.gr",2019,true,,"2022-03-18 21:19:44.808210"
-3,"itp00003","Fstudent3","Lstudent3","1990-03-01","The address","Athens","12345",,,"6971234563","itp00003@hua.gr",2019,true,,"2022-03-18 21:19:44.808210"
-4,"itp00004","Fstudent4","Lstudent4","1990-04-01","The address","Athens","12345",,,"6971234564","itp00004@hua.gr",2019,true,,"2022-03-18 21:19:44.808210"
-5,"itp00005","Fstudent5","Lstudent5","1990-05-01","The address","Athens","12345",,,"6971234565","itp00005@hua.gr",2019,true,,"2022-03-18 21:19:44.808210"
-6,"itp00006","Fstudent6","Lstudent6","1990-06-01","The address","Athens","12345",,,"6971234566","itp00006@hua.gr",2020,true,,"2022-03-18 21:19:44.808210"
-7,"itp00007","Fstudent7","Lstudent7","1990-07-01","The address","Athens","12345",,,"6971234567","itp00007@hua.gr",2020,true,,"2022-03-18 21:19:44.808210"
-8,"itp00008","Fstudent8","Lstudent8","1990-08-01","The address","Athens","12345",,,"6971234568","itp00008@hua.gr",2020,true,,"2022-03-18 21:19:44.808210"
-9,"itp00009","Fstudent9","Lstudent9","1990-09-01","The address","Athens","12345",,,"6971234569","itp00009@hua.gr",2020,true,,"2022-03-18 21:19:44.808210"
-10,"itp00010","Fstudent10","Lstudent10","1990-10-01","The address","Athens","12345",,,"6971234560","itp00010@hua.gr",2020,true,,"2022-03-18 21:19:44.808210"
+1,itp00001,Fstudent1,Lstudent1,1990-01-01,The address,Athens,12345,,,6971234561,itp00001@hua.gr,2019,true,,
+2,itp00002,Fstudent2,Lstudent2,1990-02-01,The address,Athens,12345,,,6971234562,itp00002@hua.gr,2019,true,,
+3,itp00003,Fstudent3,Lstudent3,1990-03-01,The address,Athens,12345,,,6971234563,itp00003@hua.gr,2019,true,,
+4,itp00004,Fstudent4,Lstudent4,1990-04-01,The address,Athens,12345,,,6971234564,itp00004@hua.gr,2019,true,,
+5,itp00005,Fstudent5,Lstudent5,1990-05-01,The address,Athens,12345,,,6971234565,itp00005@hua.gr,2019,true,,
+6,itp00006,Fstudent6,Lstudent6,1990-06-01,The address,Athens,12345,,,6971234566,itp00006@hua.gr,2020,true,,
+7,itp00007,Fstudent7,Lstudent7,1990-07-01,The address,Athens,12345,,,6971234567,itp00007@hua.gr,2020,true,,
+8,itp00008,Fstudent8,Lstudent8,1990-08-01,The address,Athens,12345,,,6971234568,itp00008@hua.gr,2020,true,,
+9,itp00009,Fstudent9,Lstudent9,1990-09-01,The address,Athens,12345,,,6971234569,itp00009@hua.gr,2020,true,,
+10,itp00010,Fstudent10,Lstudent10,1990-10-01,The address,Athens,12345,,,6971234560,itp00010@hua.gr,2020,true,,

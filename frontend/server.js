@@ -14,7 +14,7 @@ require('dotenv/config');
 
 const authenticateUser = require("./middleware/auth/authentication");
 
-const BASE_URL = process.env.BASE_URL
+// const BASE_URL = process.env.BASE_URL;
 
 const app = express();
 

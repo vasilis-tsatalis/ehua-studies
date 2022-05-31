@@ -9,13 +9,14 @@ const cors = require('cors');
 const cookieSession = require("cookie-session");
 const morgan = require('morgan');
 const rfs = require('rotating-file-stream');
+const base64 = require('base-64');
+const axios = require('axios');
 
 require('dotenv/config');
 
 const authenticateUser = require("./auth");
-const requests_modules = require("./admin_requests");
 
-const BASE_URL = process.env.BASE_URL
+//const BASE_URL = process.env.BASE_URL
 
 const app = express();
 
@@ -42,39 +43,6 @@ app.use(cookieSession({keys: [process.env.COOKIE_KEY]}));
 app.use(morgan('combined', { stream: accessLogStream }));
 
 
-// Generic Usage Function
-function create_requests(fullname, route_w){
-
-    fs.readFile(fullname, function(err, data) {
-        if (err) {
-            res.sendStatus(501).json({ message:err });
-        }
-
-        const roles = JSON.parse(data);
-        //console.log(roles)
-
-        if (roles) {
-
-            roles.forEach(element => {
-
-                //console.log(element)
-
-                requests_modules.create_data(route_w, element)
-                .then(item => {
-                    console.log(item)
-                })
-                .catch(err => {
-                    console.log(err)
-                });
-
-            })
-        }
-        
-    });
-
-};
-
-
 //----------ROUTES----------//
 // Routes for serving frontend files
 
@@ -99,9 +67,29 @@ app.get('/departments', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
 
-        create_requests("./data/departments.json", '/departments');
+        const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/departments`;
 
+        const data = JSON.parse(fs.readFileSync("./data/departments.json", "utf-8"));
+        const metadata = data.metadata;
+        metadata.forEach(item => {
+            console.log(item);
+
+            axios.post(api_url, item, {
+                headers: {
+                    'Authorization': 'Basic ' + base64.encode(`${process.env.ADMIN_USER}:${process.env.ADMIN_PASS}`)
+                },
+              })
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+
+        });
+              
         res.redirect('/home');
+        
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -113,9 +101,29 @@ app.get('/classrooms', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
 
-        create_requests("./data/classrooms_types.json", '/classrooms_types');
+        const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/classrooms_types`;
 
+        const data = JSON.parse(fs.readFileSync("./data/classrooms_types.json", "utf-8"));
+        const metadata = data.metadata;
+        metadata.forEach(item => {
+            console.log(item);
+
+            axios.post(api_url, item, {
+                headers: {
+                    'Authorization': 'Basic ' + base64.encode(`${process.env.ADMIN_USER}:${process.env.ADMIN_PASS}`)
+                },
+              })
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+
+        });
+        
         res.redirect('/home');
+        
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -125,11 +133,32 @@ app.get('/classrooms', authenticateUser, async (req, res) => {
 
 app.get('/doc_types', authenticateUser, async (req, res) => {
     try{
+
         const username = req.session.user.username;
 
-        create_requests("./data/documents_types.json", '/documents_types');
+        const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/documents_types`;
 
+        const data = JSON.parse(fs.readFileSync("./data/documents_types.json", "utf-8"));
+        const metadata = data.metadata;
+        metadata.forEach(item => {
+            console.log(item);
+
+            axios.post(api_url, item, {
+                headers: {
+                    'Authorization': 'Basic ' + base64.encode(`${process.env.ADMIN_USER}:${process.env.ADMIN_PASS}`)
+                },
+              })
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+
+        });
+        
         res.redirect('/home');
+
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -141,9 +170,29 @@ app.get('/exams', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
 
-        create_requests("./data/exams_types.json", '/exams_types');
+        const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/exams_types`;
 
+        const data = JSON.parse(fs.readFileSync("./data/exams_types.json", "utf-8"));
+        const metadata = data.metadata;
+        metadata.forEach(item => {
+            console.log(item);
+
+            axios.post(api_url, item, {
+                headers: {
+                    'Authorization': 'Basic ' + base64.encode(`${process.env.ADMIN_USER}:${process.env.ADMIN_PASS}`)
+                },
+              })
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+
+        });
+        
         res.redirect('/home');
+
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -155,9 +204,29 @@ app.get('/schedulers', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
 
-        create_requests("./data/schedulers_types.json", '/schedulers_types');
+        const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/schedulers_types`;
 
+        const data = JSON.parse(fs.readFileSync("./data/schedulers_types.json", "utf-8"));
+        const metadata = data.metadata;
+        metadata.forEach(item => {
+            console.log(item);
+
+            axios.post(api_url, item, {
+                headers: {
+                    'Authorization': 'Basic ' + base64.encode(`${process.env.ADMIN_USER}:${process.env.ADMIN_PASS}`)
+                },
+              })
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+
+        });
+        
         res.redirect('/home');
+
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -169,9 +238,29 @@ app.get('/semesters', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
 
-        create_requests("./data/semesters_types.json", '/semesters_types');
+        const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/semesters_types`;
 
+        const data = JSON.parse(fs.readFileSync("./data/semesters_types.json", "utf-8"));
+        const metadata = data.metadata;
+        metadata.forEach(item => {
+            console.log(item);
+
+            axios.post(api_url, item, {
+                headers: {
+                    'Authorization': 'Basic ' + base64.encode(`${process.env.ADMIN_USER}:${process.env.ADMIN_PASS}`)
+                },
+              })
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+
+        });
+        
         res.redirect('/home');
+
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -184,9 +273,29 @@ app.get('/roles', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
 
-        create_requests("./data/roles_types.json", '/roles_types');
+        const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/roles_types`;
+
+        const data = JSON.parse(fs.readFileSync("./data/roles_types.json", "utf-8"));
+        const metadata = data.metadata;
+        metadata.forEach(item => {
+            console.log(item);
+
+            axios.post(api_url, item, {
+                headers: {
+                    'Authorization': 'Basic ' + base64.encode(`${process.env.ADMIN_USER}:${process.env.ADMIN_PASS}`)
+                },
+              })
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+
+        });
 
         res.redirect('/home');
+
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -197,7 +306,54 @@ app.get('/roles', authenticateUser, async (req, res) => {
 app.get('/students', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
-        res.redirect('/logout');
+
+        const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/students`;
+
+        // READ CSV INTO STRING
+        var data = fs.readFileSync("./migration/students.csv").toLocaleString();
+        // STRING TO ARRAY
+        var rows = data.split("\n"); // SPLIT ROWS
+        rows.forEach((row) => {
+            var columns = row.split(","); //SPLIT COLUMNS
+            if(columns[1] != undefined) {
+
+                var metadata = {
+                    //id: columns[0],    // backend will create id
+                    username: columns[1],
+                    first_name: columns[2],
+                    last_name: columns[3],
+                    date_of_birth: columns[4],
+                    address: columns[5],
+                    city: columns[6],
+                    zipcode: columns[7],
+                    telephone: columns[8],
+                    phone: columns[9],
+                    mobile: columns[10],
+                    email: columns[11],
+                    year_group: columns[12],
+                    //is_active: columns[13],
+                    is_active: true,
+                    notes: columns[14],
+                    //creation_user: columns[15]
+                    creation_user: username
+                };
+                //console.log(metadata);
+                
+                axios.post(api_url, metadata, {
+                    headers: {
+                        'Authorization': 'Basic ' + base64.encode(`${process.env.ADMIN_USER}:${process.env.ADMIN_PASS}`)
+                    },
+                  })
+                  .then(function (response) {
+                    console.log(response.data);
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+            }
+        });
+
+        res.redirect('/home');
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -208,7 +364,55 @@ app.get('/students', authenticateUser, async (req, res) => {
 app.get('/professors', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
-        res.redirect('/logout');
+
+        const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/professors`;
+
+        // READ CSV INTO STRING
+        var data = fs.readFileSync("./migration/professors.csv").toLocaleString();
+        // STRING TO ARRAY
+        var rows = data.split("\n"); // SPLIT ROWS
+        rows.forEach((row) => {
+            var columns = row.split(","); //SPLIT COLUMNS
+            if(columns[1] != undefined) {
+
+                var metadata = {
+                    //id: columns[0],    // backend will create id
+                    username: columns[1],
+                    first_name: columns[2],
+                    last_name: columns[3],
+                    date_of_birth: columns[4],
+                    address: columns[5],
+                    city: columns[6],
+                    zipcode: columns[7],
+                    telephone: columns[8],
+                    office_phone: columns[9],
+                    mobile: columns[10],
+                    email: columns[11],
+                    title: columns[12],
+                    level: columns[13],
+                    //is_active: columns[14],
+                    is_active: true,
+                    notes: columns[15],
+                    //creation_user: columns[16]
+                    creation_user: username
+                };
+                //console.log(metadata);
+                
+                axios.post(api_url, metadata, {
+                    headers: {
+                        'Authorization': 'Basic ' + base64.encode(`${process.env.ADMIN_USER}:${process.env.ADMIN_PASS}`)
+                    },
+                  })
+                  .then(function (response) {
+                    console.log(response.data);
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+            }
+        });
+
+        res.redirect('/home');
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -219,7 +423,43 @@ app.get('/professors', authenticateUser, async (req, res) => {
 app.get('/courses', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
-        res.redirect('/logout');
+
+        const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/courses`;
+
+        // READ CSV INTO STRING
+        var data = fs.readFileSync("./migration/courses.csv").toLocaleString();
+        // STRING TO ARRAY
+        var rows = data.split("\n"); // SPLIT ROWS
+        rows.forEach((row) => {
+            var columns = row.split(","); //SPLIT COLUMNS
+            if(columns[1] != undefined) {
+
+                var metadata = {
+                    //id: columns[0],    // backend will create id
+                    department_id: columns[1],
+                    name: columns[2],
+                    description: columns[3],
+                    is_active: columns[4],
+                    semester_type_id: columns[5],
+                    gravity: columns[6]
+                };
+                //console.log(metadata);
+                
+                axios.post(api_url, metadata, {
+                    headers: {
+                        'Authorization': 'Basic ' + base64.encode(`${process.env.ADMIN_USER}:${process.env.ADMIN_PASS}`)
+                    },
+                  })
+                  .then(function (response) {
+                    console.log(response.data);
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+            }
+        });
+
+        res.redirect('/home');
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -230,7 +470,46 @@ app.get('/courses', authenticateUser, async (req, res) => {
 app.get('/documents', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
-        res.redirect('/logout');
+
+        const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/documents`;
+
+        // READ CSV INTO STRING
+        var data = fs.readFileSync("./migration/documents.csv").toLocaleString();
+        // STRING TO ARRAY
+        var rows = data.split("\n"); // SPLIT ROWS
+        rows.forEach((row) => {
+            var columns = row.split(","); //SPLIT COLUMNS
+            if(columns[1] != undefined) {
+
+                var metadata = {
+                    //id: columns[0],    // backend will create id
+                    professor_id: columns[1],
+                    name: columns[2],
+                    document_type_id: columns[3],
+                    url: columns[4],
+                    bucket: columns[5],
+                    filename: columns[6],
+                    extension: columns[7],
+                    expiration_days: columns[8],
+                    notes: columns[9]
+                };
+                //console.log(metadata);
+                
+                axios.post(api_url, metadata, {
+                    headers: {
+                        'Authorization': 'Basic ' + base64.encode(`${process.env.ADMIN_USER}:${process.env.ADMIN_PASS}`)
+                    },
+                  })
+                  .then(function (response) {
+                    console.log(response.data);
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+            }
+        });
+
+        res.redirect('/home');
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -241,7 +520,42 @@ app.get('/documents', authenticateUser, async (req, res) => {
 app.get('/sections', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
-        res.redirect('/logout');
+
+        const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/sections`;
+
+        // READ CSV INTO STRING
+        var data = fs.readFileSync("./migration/sections.csv").toLocaleString();
+        // STRING TO ARRAY
+        var rows = data.split("\n"); // SPLIT ROWS
+        rows.forEach((row) => {
+            var columns = row.split(","); //SPLIT COLUMNS
+            if(columns[1] != undefined) {
+
+                var metadata = {
+                    //id: columns[0],    // backend will create id
+                    course_id: columns[1],
+                    professor_id: columns[2],
+                    classroom_type_id: columns[3],
+                    year: columns[4],
+                    exam_type_id: columns[5]
+                };
+                //console.log(metadata);
+                
+                axios.post(api_url, metadata, {
+                    headers: {
+                        'Authorization': 'Basic ' + base64.encode(`${process.env.ADMIN_USER}:${process.env.ADMIN_PASS}`)
+                    },
+                  })
+                  .then(function (response) {
+                    console.log(response.data);
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+            }
+        });
+
+        res.redirect('/home');
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }

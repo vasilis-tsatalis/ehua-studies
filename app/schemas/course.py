@@ -12,9 +12,6 @@ class CourseBase(BaseModel):
     semester_type_id: int
     gravity: str
 
-    class Config:
-        orm_mode = True
-
 
 class CourseCreate(CourseBase):
     pass
@@ -23,6 +20,8 @@ class CourseCreate(CourseBase):
 class Course(CourseBase): 
     id: int
     sections: List[Section] = []
+    creation_user: str
+    creation_date: datetime
     last_update_at: datetime
 
     class Config:

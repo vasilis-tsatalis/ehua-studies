@@ -22,14 +22,31 @@ router.post('/', authenticateUser, async (req, res) => {
 
         const { email, subject, the_body } = req.body;
 
-        const username = req.session.user.username;
+        let username = req.session.user.username;
 
-        // receive username logged in email
-        const sender = 'vtsat@programmer.net';
+        await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/professors/username/${username}`, {
+            auth: {
+              username: `${process.env.API_USER}`,
+              password: `${process.env.API_PASS}`
+            }
+          })
+          .then(response => {
+                const metadata = response.data;
+                console.log(metadata);
+                if (metadata.length == 0) {
+                    res.render("contact", {username});
+                };
 
-        send_email(sender, email, subject, the_body);
+                    // receive username logged in email
+                    const sender = metadata.email;
+                    send_email(sender, email, subject, the_body);
+                    res.render("dashboard", {username});
+          })
+          .catch(err => {
+            console.log(err);
+            res.render("contact", {username});
+          });
 
-        res.render("contact", {username});
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }

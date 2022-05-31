@@ -17,7 +17,7 @@ from ..config.database import get_db
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Semester main server route listener
 semester_router = APIRouter(
-    prefix = os.getenv("API_URL") + '/semesters_type',
+    prefix = os.getenv("API_URL") + '/semesters_types',
     tags=['semesters']
 )
 

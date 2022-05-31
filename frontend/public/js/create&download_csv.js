@@ -1,49 +1,36 @@
 ////////////////////////////////////////////////////////
-function tableToCSV() {
-
-    var csv_data = [];
-    var rows = document.getElementsByTagName('tr');
-    for (var i = 0; i < rows.length; i++) {
-        var cols = rows[i].querySelectorAll('td,th');
-
-        var csvrow = [];
-        for (var j = 0; j < cols.length; j++) {
-            csvrow.push(cols[j].innerHTML);
+function htmlToCSV(html, filename) {
+	var data = [];
+	var rows = document.querySelectorAll("table tr");
+			
+	for (var i = 0; i < rows.length; i++) {
+		var row = [], cols = rows[i].querySelectorAll("td, th");
+				
+		for (var j = 0; j < cols.length; j++) {
+		        row.push(cols[j].innerText);
         }
+		        
+		data.push(row.join(",")); 		
+	}
 
-        // Combine each column value with comma
-        csv_data.push(csvrow.join(","));
-    }
-
-    // Combine each row data with new line character
-    csv_data = csv_data.join('\n');
-
-    // Call this function to download csv file 
-    downloadCSVFile(csv_data);
-
+	downloadCSVFile(data.join("\n"), filename);
 }
 ////////////////////////////////////////////////////////
-function downloadCSVFile(csv_data) {
+function downloadCSVFile(csv, filename) {
+	var csv_file, download_link;
 
-    CSVFile = new Blob([csv_data], {
-        type: "text/csv"
-    });
+	csv_file = new Blob([csv], {type: "text/csv"});
 
-    var temp_link = document.createElement('a');
+	download_link = document.createElement("a");
 
-    // Download csv file
-    let filename = new Date();
-    temp_link.download = filename; //(.csv)
-    var url = window.URL.createObjectURL(CSVFile);
-    temp_link.href = url;
+	download_link.download = filename;
 
-    // This link should not be displayed
-    temp_link.style.display = "none";
-    document.body.appendChild(temp_link);
+	download_link.href = window.URL.createObjectURL(csv_file);
 
-    // Automatically click the link to
-    // trigger download
-    temp_link.click();
-    document.body.removeChild(temp_link);
+	download_link.style.display = "none";
+
+	document.body.appendChild(download_link);
+
+	download_link.click();
 }
 ////////////////////////////////////////////////////////

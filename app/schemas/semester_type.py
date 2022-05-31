@@ -8,9 +8,8 @@ from .course import Course
 class SemesterBase(BaseModel):
     name: str
     description: Optional[str] = None
-    start_time: Optional[datetime] = None
-    end_time: Optional[datetime] = None
-    days_time: Optional[datetime] = None
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
 
 
 class SemesterCreate(SemesterBase):

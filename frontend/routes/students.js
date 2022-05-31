@@ -1,9 +1,9 @@
 const express = require('express');
 //define an express method
 const router = express.Router();
+const axios = require('axios');
 
 const authenticateUser = require("../middleware/auth/authentication");
-const get_backend = require("../requests/get_backend");
 
 //----------ROUTES----------//
 
@@ -23,70 +23,32 @@ router.get('/all', authenticateUser, async (req, res) => {
         const students = [];
         const username = req.session.user.username;
 
-        //const data = await get_data('/students');
-
-        const data = [{
-            'id': 1,
-            'username': 'asbasile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'date_of_birth': '10/10/1990',
-            'address': 'My Address',
-            'city': 'Athens',
-            'zipcode': '12345',
-            'telephone': '2101122333',
-            'phone': '2103322111',
-            'mobile': '6971234567',
-            'email': 'prof2@email.com',
-            'year_group': '2020',
-            'is_active': 'Y',
-            'notes': 'some notes'
-        }, 
-        {
-            'id': 2,
-            'username': 'asbasile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'date_of_birth': '10/10/1990',
-            'address': 'My Address',
-            'city': 'Athens',
-            'zipcode': '12345',
-            'telephone': '2101122333',
-            'phone': '2103322111',
-            'mobile': '6971234567',
-            'email': 'prof2@email.com',
-            'year_group': '2020',
-            'is_active': 'Y',
-            'notes': 'some notes'
-        },
-        {
-            'id': 3,
-            'username': 'asbasile',
-            'first_name': 'Vasilis',
-            'last_name': 'Tsatalis',
-            'date_of_birth': '10/10/1990',
-            'address': 'My Address',
-            'city': 'Athens',
-            'zipcode': '12345',
-            'telephone': '2101122333',
-            'phone': '2103322111',
-            'mobile': '6971234567',
-            'email': 'prof2@email.com',
-            'year_group': '2020',
-            'is_active': 'Y',
-            'notes': 'some notes'
-        }];
-
-        data.forEach(element => {
-            students.push({id: element.id, username: element.username, first_name: element.first_name, 
-                last_name: element.last_name, date_of_birth: element.date_of_birth, address: element.address,
-                city: element.city, zipcode: element.zipcode, telephone: element.telephone, 
-                phone: element.phone, mobile: element.mobile, email: element.email, 
-                year_group: element.year_group, is_active: element.is_active, notes: element.notes
-                })
-        });
-
-        res.render("students_list", {students, username});
+        await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/students`, {
+            auth: {
+              username: `${process.env.API_USER}`,
+              password: `${process.env.API_PASS}`
+            }
+          })
+          .then(response => {
+                const metadata = response.data;
+                //console.log(metadata);
+                if (metadata.length == 0) {
+                    res.render("students_list", {students, username});
+                };
+                metadata.forEach(element => {
+                    students.push({id: element.id, username: element.username, first_name: element.first_name, 
+                        last_name: element.last_name, date_of_birth: element.date_of_birth, address: element.address,
+                        city: element.city, zipcode: element.zipcode, telephone: element.telephone, 
+                        phone: element.phone, mobile: element.mobile, email: element.email, 
+                        year_group: element.year_group, is_active: element.is_active, notes: element.notes
+                        })
+                });
+                res.render("students_list", {students, username});
+          })
+          .catch(err => {
+            console.log(err);
+            res.render("students_list", {students, username});
+          });
 
     }catch(err){
         res.sendStatus(400).json({ message:err });

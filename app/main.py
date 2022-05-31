@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from fastapi import FastAPI
 import os
 

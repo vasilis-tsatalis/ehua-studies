@@ -22,8 +22,6 @@ router.get('/', authenticateUser, async (req, res) => {
 });
 
 
-
-
 router.post('/', authenticateUser, async (req, res) => {
     try{
         res.render("dashboard");

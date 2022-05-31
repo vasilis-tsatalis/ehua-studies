@@ -15,7 +15,7 @@ async def get_department_by_name(db: Session, name: str):
     return db.query(Department).filter(Department.name == name.upper()).first()
 
 async def create_department(db: Session, department: DepartmentCreate, creation_user: str):
-    db_department = Department(name=department.name.upper(), description=department.description, points=department.points, creation_date=datetime.datetime.utcnow, creation_user= creation_user)
+    db_department = Department(name=department.name.upper(), description=department.description, points=department.points, creation_user= creation_user)
     db.add(db_department)
     db.commit()
     db.refresh(db_department)

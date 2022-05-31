@@ -1,18 +1,23 @@
-[
-    {
-        "name": "Speaking",
-        "gravity": "10"
-    },
-    {
-        "name": "Final",
-        "gravity": "40"
-    },
-    {
-        "name": "Presentation",
-        "gravity": "20"
-    },
-    {
-        "name": "Project",
-        "gravity": "30"
-    }
-]
+{
+    "metadata": 
+
+        [
+            {
+                "name": "Speaking",
+                "gravity": "10"
+            },
+            {
+                "name": "Final",
+                "gravity": "40"
+            },
+            {
+                "name": "Presentation",
+                "gravity": "20"
+            },
+            {
+                "name": "Project",
+                "gravity": "30"
+            }
+        ]
+
+}

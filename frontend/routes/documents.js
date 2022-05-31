@@ -1,9 +1,9 @@
 const express = require('express');
 //define an express method
 const router = express.Router();
+const axios = require('axios');
 
 const authenticateUser = require("../middleware/auth/authentication");
-const get_backend = require("../requests/get_backend");
 
 //----------ROUTES----------//
 

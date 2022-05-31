@@ -1,62 +1,19 @@
-[
-    {
-        "name": "sem1",
-        "description": "Semester Description 1",
-        "start_time": "17:00:00",
-        "days_time": "19:30:00"
-    },
-    {
-        "name": "sem2",
-        "description": "Semester Description 2",
-        "start_time": "19:30:00",
-        "days_time": "22:00:00"
-    },
-    {
-        "name": "sem3",
-        "description": "Semester Description 3",
-        "start_time": "17:00:00",
-        "days_time": "19:30:00"
-    },
-    {
-        "name": "sem4",
-        "description": "Semester Description 4",
-        "start_time": "19:30:00",
-        "days_time": "22:00:00"
-    },
-    {
-        "name": "sem5",
-        "description": "Semester Description 5",
-        "start_time": "17:00:00",
-        "days_time": "19:30:00"
-    },
-    {
-        "name": "sem6",
-        "description": "Semester Description 6",
-        "start_time": "19:30:00",
-        "days_time": "22:00:00"
-    },
-    {
-        "name": "sem7",
-        "description": "Semester Description 7",
-        "start_time": "17:00:00",
-        "days_time": "19:30:00"
-    },
-    {
-        "name": "sem8",
-        "description": "Semester Description 8",
-        "start_time": "19:30:00",
-        "days_time": "22:00:00"
-    },
-    {
-        "name": "sem9",
-        "description": "Semester Description 9",
-        "start_time": "17:00:00",
-        "days_time": "19:30:00"
-    },
-    {
-        "name": "sem10",
-        "description": "Semester Description 10",
-        "start_time": "19:30:00",
-        "days_time": "22:00:00"
-    }
-]
+{
+    "metadata": 
+
+        [
+            {
+                "name": "sem1",
+                "description": "Semester Winter 1",
+                "start_date": "Monday 05-10-2022",
+                "end_date": "Friday 20-02-2023"
+            },
+            {
+                "name": "sem2",
+                "description": "Semester Summer 1",
+                "start_date": "Monday 05-03-2023",
+                "end_date": "Friday 15-07-2023"
+            }
+        ]
+
+}
