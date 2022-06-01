@@ -117,7 +117,7 @@ class Semester_Type(Base):
     last_update_at = Column(TIMESTAMP, server_default=func.now())
 
     # one-one Parent.child
-    courses = relationship("Course", back_populates="semester_type")
+    course = relationship("Course", back_populates="semester_type", uselist=False)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -208,7 +208,7 @@ class Department(Base):
     __tablename__ = "department"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True, index=True, nullable=False)
+    name = Column(VARCHAR(200), unique=True, nullable=False)
     description = Column(Text)
     points = Column(String(10))
     creation_user = Column(String) # Admin
@@ -226,7 +226,7 @@ class Document(Base):
 
     professor_id = Column(Integer, ForeignKey("professor.id"))
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(50), unique=True, index=True) # document name in the bucket
+    name = Column(String(200), unique=True, index=True) # document name in the bucket
     document_type_id = Column(Integer, ForeignKey("document_type.id"))
     url = Column(String(255))
     bucket = Column(String)
@@ -263,9 +263,9 @@ class Course(Base):
     # many-one, one-many
     department = relationship("Department", back_populates="courses")
     # one-one (many-one)
-    semester_type = relationship("Semester_Type", back_populates="courses")
+    semester_type = relationship("Semester_Type", back_populates="course")
     # one-many, many-one
-    sections = relationship("Section", back_populates="courses")
+    sections = relationship("Section", back_populates="course")
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

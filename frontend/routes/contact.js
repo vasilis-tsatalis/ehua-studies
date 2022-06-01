@@ -1,6 +1,7 @@
 const express = require('express');
 //define an express method
 const router = express.Router();
+const axios = require('axios');
 
 const authenticateUser = require("../middleware/auth/authentication");
 const send_email = require("../tools/email/send_email")
@@ -22,7 +23,7 @@ router.post('/', authenticateUser, async (req, res) => {
 
         const { email, subject, the_body } = req.body;
 
-        let username = req.session.user.username;
+        const username = req.session.user.username;
 
         await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/professors/username/${username}`, {
             auth: {
@@ -32,20 +33,20 @@ router.post('/', authenticateUser, async (req, res) => {
           })
           .then(response => {
                 const metadata = response.data;
-                console.log(metadata);
-                if (metadata.length == 0) {
-                    res.render("contact", {username});
-                };
-
-                    // receive username logged in email
-                    const sender = metadata.email;
-                    send_email(sender, email, subject, the_body);
-                    res.render("dashboard", {username});
+                //console.log(metadata);
+                const sender = metadata.email;
+                send_email(sender, email, subject, the_body);
+                res.render("contact", {username});
           })
           .catch(err => {
             console.log(err);
             res.render("contact", {username});
           });
+
+
+                        // const sender = 'itp20138@hua.gr';
+                        // send_email(sender, email, subject, the_body);
+                        // res.render("dashboard", {username});
 
     }catch(err){
         res.sendStatus(400).json({ message:err });

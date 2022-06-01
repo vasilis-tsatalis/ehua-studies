@@ -13,18 +13,15 @@
     <div class="jumbotron">
         <form action="/upload" enctype="multipart/form-data" method="POST">
 
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                  Select Document Type
-                </button>
-                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                  <li><a class="dropdown-item" href="#">Type 1</a></li>
-                  <li><a class="dropdown-item" href="#">Type 2</a></li>
-                  <li><a class="dropdown-item" href="#">Type 3</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Other</a></li>
-                </ul>
-            </div>
+          <div class="my-3">
+            <% if (typeof docs_types != 'undefined') { %> <% docs_types.forEach(docs_type => { %>
+              <div class="form-check">
+                <input id="docs_type" name="docs_type" type="radio" class="form-check-input" required>
+                <label class="form-check-label" for="docs_type"><%= docs_type.name %> : <%= docs_type.description %></label>
+              </div>
+          <% }) %> <% } %>
+          </div>
+
             <hr class="my-4">
 
             <div class="mb-3 mt-4">

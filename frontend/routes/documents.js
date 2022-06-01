@@ -9,20 +9,31 @@ const authenticateUser = require("../middleware/auth/authentication");
 
 router.get('/', authenticateUser, async (req, res) => {
     try{
+        const docs_types = [];
         const username = req.session.user.username;
 
-        res.render("documents", {username});
-    }catch(err){
-        res.sendStatus(400).json({ message:err });
-    }
-});
+        await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/documents_types`, {
+            auth: {
+              username: `${process.env.API_USER}`,
+              password: `${process.env.API_PASS}`
+            }
+          })
+          .then(response => {
+                const metadata = response.data;
+                //console.log(metadata);
+                if (metadata.length == 0) {
+                    res.render("documents", {docs_types, username});
+                };
+                metadata.forEach(element => {
+                    docs_types.push({id: element.id, name: element.name, description: element.description})
+                });
+            res.render("documents", {docs_types, username});
+          })
+          .catch(err => {
+            console.log(err);
+            res.render("documents", {docs_types, username});
+          });
 
-
-
-
-router.post('/', authenticateUser, async (req, res) => {
-    try{
-        res.render("documents");
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
