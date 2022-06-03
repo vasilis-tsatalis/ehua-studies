@@ -48,7 +48,7 @@ async def get_section_by_id(id: int, webuser: str = Depends(authenticate_webuser
 
 @section_router.post("/", status_code = status.HTTP_201_CREATED)
 async def create_section(section: section.SectionCreate, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
-    return await crud_sections.create_section(db, section=section)
+    return await crud_sections.create_section(db, section=section, creation_user=administrator)
 
 
 @section_router.patch("/{id}", status_code = status.HTTP_202_ACCEPTED)

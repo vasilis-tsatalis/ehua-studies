@@ -269,7 +269,7 @@ class Course(Base):
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
+ 
 # Section class model in database
 class Section(Base):
     __tablename__ = "section"

@@ -100,6 +100,10 @@ app.use('/schedulers', schedulersRoute);
 const coursesRoute = require('./routes/courses');
 app.use('/courses', coursesRoute);
 
+// // // // // // // // // // 
+const uploaded_documentsRoute = require('./routes/uploaded_documents');
+app.use('/uploaded_documents', uploaded_documentsRoute);
+
 //--------------------------//
 
 //logout - kill current session

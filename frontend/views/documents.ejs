@@ -37,6 +37,10 @@
     <% if (typeof message !== 'undefined' ) { %>
         <p><%= message %></p>
         <% } %>
+    <br>
+    <% if (typeof presignedUrl !== 'undefined' ) { %>
+      <a href="<%= presignedUrl %>">Uploaded Document</a>
+      <% } %>
 
 </div>
 

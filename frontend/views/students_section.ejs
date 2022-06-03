@@ -7,6 +7,14 @@
       <h5 class="border-bottom pb-4 mb-2">Students by Section</h5>
       <br>
 
+      <form action="/students/section" method="post">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="floatingInput" name="the_student_id">
+          <label for="floatingInput">StudentID</label>
+        </div>
+        <button class="w-30 btn btn-lg btn-primary" type="submit">Search</button>
+      </form>
+
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-12">
@@ -16,8 +24,8 @@
                   <table class="table table-hover mb-0" id="students_sections_table">
                     <thead>
                       <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Χρήστης</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Username</th>
                         <th scope="col">Όνομα</th>
                         <th scope="col">Επώνυμο</th>
                         <th scope="col">Ηλ.Ταχυδρομείο</th>

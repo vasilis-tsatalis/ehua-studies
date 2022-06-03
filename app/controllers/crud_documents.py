@@ -17,7 +17,8 @@ async def get_doc_by_filename(db: Session, filename: str):
 async def create_doc(db: Session, doc: DocCreate, creation_user: str):
     db_doc = Document(
         professor_id=doc.professor_id, 
-        document_type_id=doc.document_type_id, 
+        document_type_id=doc.document_type_id,
+        name=doc.name.upper(),
         bucket=doc.bucket, 
         filename=doc.filename.upper(),
         notes=doc.notes,

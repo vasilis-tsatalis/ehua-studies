@@ -93,15 +93,5 @@ router.get('/genselection', authenticateUser, async (req, res) => {
 });
 
 
-
-router.post('/', authenticateUser, async (req, res) => {
-    try{
-        res.render("sections");
-    }catch(err){
-        res.sendStatus(400).json({ message:err });
-    }
-});
-
-
 //export the router we have define above
 module.exports = router;

@@ -40,5 +40,43 @@ router.get('/', authenticateUser, async (req, res) => {
 });
 
 
+router.post('/', authenticateUser, async (req, res) => {
+  try{
+
+      const username = req.session.user.username;
+
+      const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/documents`;
+
+      const metadata = {
+        // professor_id: 3,
+        // document_type_id: 1,
+        // notes: "",
+        // name: String(req.file.filename),
+        // bucket: username,
+        // extension: "",
+        // filename: req.file.filename,
+        // url: String(presignedUrl),
+        // expiration_days: 7
+    };
+
+      axios.post(api_url, metadata, {
+        auth: {
+            username: `${process.env.API_USER}`,
+            password: `${process.env.API_PASS}`
+          },
+      })
+      .then(function (response) {
+        //console.log(response.data);
+        res.render("documents", {username, message: 'OK'});
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }catch(err){
+      res.sendStatus(400).json({ message:err });
+  }
+});
+
 //export the router we have define above
 module.exports = router;

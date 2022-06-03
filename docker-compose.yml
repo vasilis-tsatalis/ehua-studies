@@ -4,6 +4,7 @@ services:
 
   db:
     image: postgres:14
+    restart: unless-stopped
     ports:
       - "5432:5432"
     environment:
@@ -12,6 +13,23 @@ services:
       - POSTGRES_DB=ehua-portal
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+
+  # keycloak:
+  #     image: jboss/keycloak:10.0.0
+  #     environment:
+  #       DB_VENDOR: POSTGRES
+  #       DB_ADDR: postgres
+  #       DB_DATABASE: ehua-portal
+  #       DB_USER: dbuser
+  #       DB_PASSWORD: pass123
+  #       KEYCLOAK_USER: keycloakadmin
+  #       KEYCLOAK_PASSWORD: keycloakpass
+        
+  #     ports:
+  #       - 8180:8080
+  #       - 8787:8787
+  #     depends_on:
+  #       - db
 
   web-api:
     #restart: always
@@ -80,6 +98,7 @@ services:
       - web-api
     #  - frontend
     #  - minio
+
 
 volumes:
   postgres_data:

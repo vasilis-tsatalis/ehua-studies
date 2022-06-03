@@ -11,13 +11,14 @@ async def get_sections(db: Session, skip: int = 0, limit: int = 200):
 async def get_section_by_id(db: Session, id: int):
     return db.query(Section).filter(Section.id == id).first()
 
-async def create_section(db: Session, section: SectionCreate):
+async def create_section(db: Session, section: SectionCreate, creation_user: str):
     db_section = Section(
         course_id=section.course_id, 
         professor_id=section.professor_id, 
         exam_type_id=section.exam_type_id,
         classroom_type_id=section.classroom_type_id,
-        year=section.year)
+        year=section.year,
+        creation_user=creation_user)
     db.add(db_section)
     db.commit()
     db.refresh(db_section)

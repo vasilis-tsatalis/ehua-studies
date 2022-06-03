@@ -1,0 +1,27 @@
+<%- include("./partials/header") %>
+<%- include("./navbar/menu") %>
+
+  <div class="list-group">
+
+    <h2 class="border-bottom pb-2">My Documents</h2>
+    <br>
+
+    <% if (typeof mydocuments != 'undefined') { %> <% mydocuments.forEach(mydocument => { %>
+
+    <div class="list-group">
+            <img src="/assets/pass-fail.png" alt="" width="32" height="32" class="rounded-circle flex-shrink-0">
+            <a href="#" class="list-group-item disabled">Name: <%= mydocument.name %></a>
+            <a href="#" class="list-group-item disabled">Etag: <%= mydocument.etag %></a>
+            <a href="#" class="list-group-item disabled">Size (kbytes): <%= mydocument.size %></a>
+            <a href="#" class="list-group-item disabled">Valid Days : <%= mydocument.valid_days %></a>
+            <a href="#" class="list-group-item disabled">Last Modified: <%= mydocument.lastModified %></a>
+            <a href="<%= mydocument.presignedUrl %>" class="list-group-item text-blue">Click to open</a> 
+    </div>
+
+    <% }) %> <% } %>
+
+  </div>
+
+  <br>
+
+  <%- include("./partials/footer") %>
