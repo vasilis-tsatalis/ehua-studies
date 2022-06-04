@@ -70,7 +70,7 @@ async def create_student(student: student.StudentCreate, administrator: str = De
 
 
 @student_router.put("/{id}", status_code = status.HTTP_202_ACCEPTED)
-async def update_student(id: int, student: student.StudentUpdate, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
+async def update_student(id: int, student: student.StudentUpdate, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
     db_student = await crud_students.get_student_by_id(db, id=id)
     if db_student is None:
         raise HTTPException(
@@ -78,8 +78,7 @@ async def update_student(id: int, student: student.StudentUpdate, administrator:
             detail="Student not found",
             headers={"WWW-Authenticate": "Basic"},
             )
-    status = crud_students.update_student_by_id(db, id=id, student=student, creation_user=administrator)
-    return {'message': status}
+    return await crud_students.update_student_by_id(db, id=id, student=student, creation_user=webuser)
 
 
 @student_router.delete("/{id}", status_code = status.HTTP_205_RESET_CONTENT)

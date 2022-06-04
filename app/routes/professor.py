@@ -5,13 +5,15 @@ from sqlalchemy.orm import Session
 from typing import List
 import os
 from dotenv import load_dotenv
+
+from app.controllers import crud_courses
 load_dotenv()
 
 from ..auth.authentication import authenticate_admin, authenticate_webuser
 security = HTTPBasic()
 
 from ..schemas import professor, document
-from ..controllers import crud_professors, crud_documents, crud_sections
+from ..controllers import crud_professors, crud_documents, crud_sections, crud_classrooms_type, crud_exams_type
 from ..config.database import get_db
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -69,9 +71,16 @@ async def create_professor(professor: professor.ProfessorCreate, administrator: 
     return await crud_professors.create_professor(db, professor=professor, creation_user=administrator)
 
 
-@professor_router.patch("/{id}", status_code = status.HTTP_202_ACCEPTED)
-async def update_professor(id: int, administrator: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
-    return {'id': id}
+@professor_router.put("/{id}", status_code = status.HTTP_202_ACCEPTED)
+async def update_professor(id: int, professor: professor.ProfessorUpdate, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
+    db_student = await crud_professors.get_professor_by_id(db, id=id)
+    if db_student is None:
+        raise HTTPException(
+            status_code=404, 
+            detail="Student not found",
+            headers={"WWW-Authenticate": "Basic"},
+            )
+    return await crud_professors.update_professor_by_id(db, id=id, professor=professor, creation_user=webuser)
 
 
 @professor_router.delete("/{id}", status_code = status.HTTP_205_RESET_CONTENT)
@@ -126,13 +135,32 @@ async def get_professor_sections_by_id(id: int, webuser: str = Depends(authentic
     db_sections = await crud_professors.get_professor_sections(db, id=id)
 
     if db_sections:
-        professor_sections = []
 
-        for section in db_sections:
-            the_section = crud_sections.get_section_by_id(db, id=section.id)
-            professor_sections.append(the_section)
+        # professor_sections = []
+        # for section in db_sections:
+        #     course = await crud_courses.get_course_by_id(db, id=section["course_id"])
+        #     course_desc = course["description"]
+        #     professor_username = db_professor["username"]
+        #     classroom_type = await crud_classrooms_type.get_classroom_by_id(db, id=section["classroom_type_id"])
+        #     classroom_type_desc = classroom_type["description"]
+        #     exam_type = await crud_exams_type.get_exam_by_id(db, id=section["exam_type_id"])
+        #     exam_type_name = exam_type["name"]
 
-        return professor_sections
+        #     the_section = {
+        #         "id": section["id"],
+        #         "course_desc": course_desc,
+        #         "professor_username": professor_username,
+        #         "classroom_type_desc": classroom_type_desc,
+        #         "exam_type_name": exam_type_name,
+        #         "year": section["year"],
+        #         "created_at": section["creation_date"]
+        #         }
+
+        #     professor_sections.append(the_section)
+        #     print(section)
+        # print(professor_sections)
+
+        return db_sections
 
     else:
         raise HTTPException(

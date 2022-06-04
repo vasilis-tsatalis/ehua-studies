@@ -24,8 +24,9 @@ router.get('/myselection', authenticateUser, async (req, res) => {
 
         const sections = [];
         const username = req.session.user.username;
+        const db_professor_id = req.session.user.db_professor_id;
 
-        await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/sections`, {
+        await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/professors/${db_professor_id}/sections`, {
             auth: {
               username: `${process.env.API_USER}`,
               password: `${process.env.API_PASS}`

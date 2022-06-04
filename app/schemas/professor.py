@@ -27,6 +27,19 @@ class ProfessorCreate(ProfessorBase):
     pass
 
 
+
+class ProfessorUpdate(BaseModel):
+    address: Optional[str] = None
+    city: Optional[str] = None
+    zipcode: Optional[str] = None
+    telephone: Optional[str] = None
+    office_phone: Optional[str] = None
+    mobile: Optional[str] = None
+    title: Optional[str] = None
+    level: Optional[int] = None
+    notes: Optional[str] = None
+
+
 class Professor(ProfessorBase):
     id: int
     documents: List[Doc] = []

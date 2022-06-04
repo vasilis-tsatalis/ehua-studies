@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 import datetime
 from sqlalchemy.sql import func
-from ..models.tables_definitions import Student, association_table_students_sections
+from ..models.tables_definitions import Student
 from ..schemas.student import StudentCreate, StudentUpdate
 
 
@@ -38,22 +38,31 @@ async def create_student(db: Session, student: StudentCreate, creation_user: str
     return db_student
 
 async def update_student_by_id(db: Session, id: int, student: StudentUpdate, creation_user: str):
-    db.query(Student).filter(Student.id == id).update([
-        {Student.address: student.address.upper()},
-        {Student.city: student.city.upper()},
-        {Student.zipcode: student.zipcode},
-        {Student.telephone: student.telephone},
-        {Student.phone: student.phone},
-        {Student.mobile: student.mobile},
-        {Student.email: student.email.lower()},
-        {Student.notes: student.notes},
-        {Student.creation_user: creation_user},
-        {Student.last_update_at: func.now()}
-    ])
+    # db.query(Student).filter(Student.id == id).update([
+    #     {Student.address: student.address.upper()},
+    #     {Student.city: student.city.upper()},
+    #     {Student.zipcode: student.zipcode},
+    #     {Student.telephone: student.telephone},
+    #     {Student.phone: student.phone},
+    #     {Student.mobile: student.mobile},
+    #     {Student.email: student.email.lower()},
+    #     {Student.notes: student.notes},
+    #     {Student.creation_user: creation_user},
+    #     {Student.last_update_at: func.now()}
+    # ])
+    db_student = db.query(Student).filter(Student.id == id).first()
+    db_student.address = student.address.upper()
+    db_student.city = student.city.upper()
+    db_student.zipcode = student.zipcode
+    db_student.telephone = student.telephone
+    db_student.phone = student.phone
+    db_student.mobile = student.mobile
+    db_student.notes = student.notes
+    db_student.creation_user = creation_user
     db.flush()
     db.commit()
-    status = 'OK'
-    return status
+    # db.refresh(db_student)
+    return db_student
 
 async def delete_student_by_id(db: Session, id: int):
     db_student = db.query(Student).filter(Student.id == id).first()
@@ -74,5 +83,5 @@ async def enable_student_by_id(db: Session, id: int, is_active: bool):
     db_student.is_active = is_active
     db.flush()
     db.commit()
-    db.refresh(db_student)
+    # db.refresh(db_student)
     return db_student

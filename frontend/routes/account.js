@@ -30,13 +30,6 @@ router.get('/', authenticateUser, async (req, res) => {
             res.render("account", {username, first_name, last_name, email});
           });
 
-
-
-        // const first_name = 'Vasilis';
-        // const last_name = 'Tsatalis';
-        // const email = 'itp20138@hua.gr';
-
-        //res.render("account", {username, first_name, last_name, email});
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -46,8 +39,40 @@ router.get('/', authenticateUser, async (req, res) => {
 router.post('/', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
+        const db_professor_id = parseInt(req.session.user.db_professor_id);
 
-        res.render("account", {username});
+        console.log(req.body);
+        const { address, address2, country, state, zip, telephone, office_phone, mobile, title, level, notes } = req.body;
+
+        const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/professors/${db_professor_id}`;
+
+        const metadata = {
+            address: address,
+            city: state,
+            zipcode: zip,
+            telephone: telephone,
+            office_phone: office_phone,
+            mobile: mobile,
+            title: title,
+            level: level,
+            notes: notes
+        }
+
+        await axios.put(api_url, metadata, {
+            auth: {
+                username: `${process.env.API_USER}`,
+                password: `${process.env.API_PASS}`
+              }
+        })
+        .then(function (response) {
+            console.log(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+        res.render("professors", {username});
+
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }

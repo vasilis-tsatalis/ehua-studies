@@ -2,7 +2,7 @@
 <%- include("./navbar/menu") %>
 
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+<!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">dashboard</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
       <div class="btn-group me-2">
@@ -16,7 +16,82 @@
     </div>
   </div>
 
-  <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+  <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
+
+  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+        <img class="mb-4" src="/assets/hua1.jpeg" width="70%" height="80%">
+        <div class="container">
+          <div class="carousel-caption text-start">
+            <h1>Harokopio University of Athens</h1>
+            <p>Department of Informatics and Telematics</p>
+            <p><a class="btn btn-lg btn-success" href="https://msc.dit.hua.gr/en/home-2/">Join us</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+        <img class="mb-4" src="/assets/minio.svg" width="80%" height="100%">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1 class="text-dark">Cloud Documents</h1>
+            <p class="text-dark">Upload and store documents to Minio Object Storage - S3</p>
+            <p><a class="btn btn-lg btn-primary" href="https://min.io/">Learn more</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+        <img class="mb-4" src="/assets/nodejs.webp" width="100%" height="80%">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Web API Framework</h1>
+            <p>Responsive frontend layout with Javascript Framework NodeJS</p>
+            <p><a class="btn btn-lg btn-warning" href="https://nodejs.org/en/">Learn more</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+        <img class="mb-4" src="/assets/fastapi.webp" width="100%" height="80%">
+        <div class="container">
+          <div class="carousel-caption text-start">
+            <!-- <h1 class="text-dark">FastAPI Python Framework</h1> -->
+            <!-- <p class="text-dark">Asynchronous high performance Python Framework - FastAPI</p> -->
+            <p><a class="btn btn-md btn-dark" href="https://fastapi.tiangolo.com/">Go FASTapi</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+        <img class="mb-4" src="/assets/postgres.png" width="40%" height="70%">
+        <div class="container">
+          <div class="carousel-caption">
+            <!-- <h1 class="text-dark">PostgresDB</h1> -->
+            <!-- <p>Open Source RDBMS - PostgreSQL</p> -->
+            <p><a class="btn btn-md btn-danger" href="https://www.postgresql.org/">PostgresDB</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
 
 
 <%- include("./partials/footer") %>

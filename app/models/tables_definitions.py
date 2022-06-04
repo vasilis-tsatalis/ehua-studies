@@ -15,21 +15,20 @@ import datetime
 
 # Association tables relationships (Many to Many)
 
-association_table_students_sections = Table('students_sections', Base.metadata,
-    Column('student_id', ForeignKey('student.id'), primary_key=True),
-    Column('section_id', ForeignKey('section.id'), primary_key=True),
-    Column('status', Integer),
-    Column('results', String(10)),
-    Column('last_update_at', TIMESTAMP, server_default=func.now())
-)
+# association_table_students_sections = Table('students_sections', Base.metadata,
+#     Column('student_id', ForeignKey('student.id'), primary_key=True),
+#     Column('section_id', ForeignKey('section.id'), primary_key=True),
+#     Column('status', Integer),
+#     Column('results', String(10)),
+#     Column('last_update_at', TIMESTAMP, server_default=func.now())
+# )
 
 
-association_table_sections_schedules = Table('sections_schedules', Base.metadata,
-    Column('section_id', ForeignKey('section.id'), primary_key=True),
-    Column('scheduler_type_id', ForeignKey('scheduler_type.id'), primary_key=True),
-    Column('last_update_at', TIMESTAMP, server_default=func.now())
-)
-
+# association_table_sections_schedules = Table('sections_schedules', Base.metadata,
+#     Column('section_id', ForeignKey('section.id'), primary_key=True),
+#     Column('scheduler_type_id', ForeignKey('scheduler_type.id'), primary_key=True),
+#     Column('last_update_at', TIMESTAMP, server_default=func.now())
+# )
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -98,7 +97,7 @@ class Scheduler_Type(Base):
     last_update_at = Column(TIMESTAMP, server_default=func.now())
 
     # many-many
-    sections = relationship("Section", secondary=association_table_sections_schedules, back_populates="scheduler_types")
+    sections = relationship("Section", secondary="sections_schedulers", back_populates="scheduler_types")
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -166,7 +165,7 @@ class Student(Base):
     last_update_at = Column(TIMESTAMP, server_default=func.now())
  
     # many-many
-    sections = relationship("Section", secondary=association_table_students_sections, back_populates="students")
+    sections = relationship("Section", secondary="students_sections", back_populates="students")
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -285,7 +284,7 @@ class Section(Base):
     last_update_at = Column(TIMESTAMP, server_default=func.now())
 
     # many-many
-    students = relationship("Student", secondary=association_table_students_sections, back_populates="sections")
+    students = relationship("Student", secondary="students_sections", back_populates="sections")
     # many-one, one-many
     professor = relationship("Professor", back_populates="sections")
     # many-one, one-many
@@ -293,10 +292,33 @@ class Section(Base):
     # many-one, one-many
     classroom_type = relationship("Classroom_Type", back_populates="sections")
     # many-many
-    scheduler_types = relationship("Scheduler_Type", secondary=association_table_sections_schedules, back_populates="sections")
+    scheduler_types = relationship("Scheduler_Type", secondary="sections_schedulers", back_populates="sections")
     # many-one, one-many
     exam_type = relationship("Exam_Type", back_populates="sections")
 
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # Many to Many (relationship) Tables (instead of assosiation tables)
+
+class Students_Sections(Base):
+    __tablename__ = "students_sections"
+    student_id = Column(Integer, ForeignKey('student.id'), primary_key = True)
+    section_id = Column(Integer, ForeignKey('section.id'), primary_key = True)
+    status = Column(Integer) # exam degree
+    results = Column(String) # pass / failed   
+    creation_user = Column(String) # Admin
+    creation_date = Column(DateTime, default=datetime.datetime.utcnow)
+    last_update_at = Column(TIMESTAMP, server_default=func.now())
+
+
+class Sections_Schedulers(Base):
+    __tablename__ = "sections_schedulers"
+    section_id = Column(Integer, ForeignKey('section.id'), primary_key = True)
+    scheduler_type_id = Column(Integer, ForeignKey('scheduler_type.id'), primary_key = True)
+    creation_user = Column(String) # Admin
+    creation_date = Column(DateTime, default=datetime.datetime.utcnow)
+    last_update_at = Column(TIMESTAMP, server_default=func.now())
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

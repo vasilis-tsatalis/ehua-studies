@@ -38,7 +38,7 @@
   
               <div class="col-12">
                 <label for="address" class="form-label">Address</label>
-                <input type="text" class="form-control" id="address" placeholder="123 Mesogeioon Str." required>
+                <input type="text" class="form-control" id="address" name="address" placeholder="123 Mesogeioon Str." required>
                 <div class="invalid-feedback">
                   Please enter your shipping address.
                 </div>
@@ -46,12 +46,12 @@
   
               <div class="col-12">
                 <label for="address2" class="form-label">Address 2 <span class="text-muted">(Optional)</span></label>
-                <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+                <input type="text" class="form-control" id="address2" name="address2" placeholder="Apartment or suite">
               </div>
   
               <div class="col-md-5">
                 <label for="country" class="form-label">Country</label>
-                <select class="form-select" id="country" required>
+                <select class="form-select" id="country" name="country" required>
                   <option value="">Choose...</option>
                   <option>Greece</option>
                   <option>Other</option>
@@ -63,7 +63,7 @@
   
               <div class="col-md-4">
                 <label for="state" class="form-label">State</label>
-                <select class="form-select" id="state" required>
+                <select class="form-select" id="state" name="state" required>
                   <option value="">Choose...</option>
                   <option>Athens</option>
                   <option>Other</option>
@@ -75,7 +75,7 @@
   
               <div class="col-md-3">
                 <label for="zip" class="form-label">Zip</label>
-                <input type="text" class="form-control" id="zip" placeholder="" required>
+                <input type="text" class="form-control" id="zip" name="zip" placeholder="" required>
                 <div class="invalid-feedback">
                   Zip code required.
                 </div>
@@ -83,17 +83,17 @@
 
               <div class="col-md-4">
                 <label for="telephone" class="form-label">Telephone</label>
-                <input type="text" class="form-control" id="telephone" placeholder="">
+                <input type="text" class="form-control" id="telephone" name="telephone" placeholder="">
               </div>
 
               <div class="col-md-4">
-                <label for="office-phone" class="form-label">Office Phone</label>
-                <input type="text" class="form-control" id="office-phone" placeholder="">
+                <label for="office_phone" class="form-label">Office Phone</label>
+                <input type="text" class="form-control" id="office_phone" name="office_phone" placeholder="">
               </div>
 
               <div class="col-md-4">
                 <label for="mobile" class="form-label">Mobile</label>
-                <input type="text" class="form-control" id="mobile" placeholder="" required>
+                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="" required>
                 <div class="invalid-feedback">
                   Mobile number required.
                 </div>
@@ -108,20 +108,24 @@
             <div class="row gy-3">
               <div class="col-md-6">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" placeholder="">
+                <input type="text" class="form-control" id="title" name="title" placeholder="">
                 <small class="text-muted">Title in the university</small>
               </div>
   
               <div class="col-md-9">
                 <label for="level" class="form-label">Level</label>
-                <input type="range" id="level" value="2">
+                <!-- <input type="range" id="level" name="level" value="2"> -->
+                <input type="text" class="form-control" id="level" name="level" required>
+                <div class="invalid-feedback">
+                  Level value required.
+                </div>
               </div>
               
               <hr class="my-4">
 
               <div class="col-md-12">
                 <label for="motes" class="form-label">Notes</label>
-                <input type="text" class="form-control" id="notes" placeholder="">
+                <input type="text" class="form-control" id="notes" name="notes" placeholder="">
               </div>
             </div>
   
@@ -130,6 +134,9 @@
             <button class="w-100 btn btn-primary btn-lg" type="submit">Update Data</button>
           </form>
         </div>
+        <% if (typeof message !== 'undefined' ) { %>
+          <p><%= message %></p>
+          <% } %>
       </div>
     </main>
   </div>

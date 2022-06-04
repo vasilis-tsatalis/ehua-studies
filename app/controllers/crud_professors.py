@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
 import datetime
+from sqlalchemy.sql import func
 from ..models.tables_definitions import Professor, Document, Section
-from ..schemas.professor import ProfessorCreate
+from ..schemas.professor import ProfessorCreate, ProfessorUpdate
 
 
 async def get_professors(db: Session, skip: int = 0, limit: int = 200):
@@ -37,8 +38,35 @@ async def create_professor(db: Session, professor: ProfessorCreate, creation_use
     db.refresh(db_professor)
     return db_professor
 
-async def update_professor_by_id(db: Session, id: int):
-    return 'updated'
+async def update_professor_by_id(db: Session, id: int, professor: ProfessorUpdate, creation_user: str):
+    # db.query(Professor).filter(Professor.id == id).update([
+    #     {Professor.address: professor.address.upper()},
+    #     {Professor.city: professor.city.upper()},
+    #     {Professor.zipcode: professor.zipcode},
+    #     {Professor.telephone: professor.telephone},
+    #     {Professor.office_phone: professor.office_phone},
+    #     {Professor.mobile: professor.mobile},
+    #     {Professor.title: professor.title.upper()},
+    #     {Professor.level: professor.level},
+    #     {Professor.notes: professor.notes},
+    #     {Professor.creation_user: creation_user},
+    #     {Professor.last_update_at: func.now()}
+    # ])
+    db_professor = db.query(Professor).filter(Professor.id == id).first()
+    db_professor.address = professor.address.upper()
+    db_professor.city = professor.city.upper()
+    db_professor.zipcode = professor.zipcode
+    db_professor.telephone = professor.telephone
+    db_professor.office_phone = professor.office_phone
+    db_professor.mobile = professor.mobile
+    db_professor.title = professor.title.upper()
+    db_professor.level = int(professor.level)
+    db_professor.notes = professor.notes
+    db_professor.creation_user = creation_user
+    db.flush()
+    db.commit()
+    # db.refresh(db_professor)
+    return db_professor
 
 async def delete_professor_by_id(db: Session, id: int):
     db_professor = db.query(Professor).filter(Professor.id == id).first()
