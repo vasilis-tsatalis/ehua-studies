@@ -4,9 +4,10 @@ from minio import Minio, PostPolicy
 from minio.error import ResponseError
 
 
-client = Minio('s3.amazonaws.com',
-               access_key='YOUR-ACCESSKEYID',
-               secret_key='YOUR-SECRETACCESSKEY')
+client = Minio(endpoint='127.0.0.1:9000',
+                secure= False,
+                access_key='',
+                secret_key='')
 
 
 async def post_presigned_url(bucket_name: str, filename: str):

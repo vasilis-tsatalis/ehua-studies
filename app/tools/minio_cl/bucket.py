@@ -5,8 +5,8 @@ from minio.error import InvalidResponseError
 
 client = Minio(endpoint='127.0.0.1:9000',
                 secure= False,
-                access_key='minioadmin',
-                secret_key='minioadmin')
+                access_key='',
+                secret_key='')
 
 
 def bucket_exists(name: str):
