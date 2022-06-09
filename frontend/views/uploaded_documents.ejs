@@ -9,13 +9,13 @@
     <% if (typeof mydocuments != 'undefined') { %> <% mydocuments.forEach(mydocument => { %>
 
     <div class="list-group">
-            <img src="/assets/pass-fail.png" alt="" width="32" height="32" class="rounded-circle flex-shrink-0">
+            <img src="/assets/doc_logo.png" alt="" width="36" height="36" class="flex-shrink-0">
             <a href="#" class="list-group-item disabled">Name: <%= mydocument.name %></a>
             <a href="#" class="list-group-item disabled">Etag: <%= mydocument.etag %></a>
             <a href="#" class="list-group-item disabled">Size (kbytes): <%= mydocument.size %></a>
             <a href="#" class="list-group-item disabled">Valid Days : <%= mydocument.valid_days %></a>
             <a href="#" class="list-group-item disabled">Last Modified: <%= mydocument.lastModified %></a>
-            <a href="<%= mydocument.presignedUrl %>" class="list-group-item text-blue">Click to open</a> 
+            <a href="<%= mydocument.presignedUrl %>" class="list-group-item text-primary">Click to open</a> 
     </div>
 
     <% }) %> <% } %>

@@ -1,0 +1,70 @@
+<%- include("./partials/header") %>
+<%- include("./navbar/menu") %>
+
+<br>
+<h5 class="border-bottom pb-4 mb-2">Προσωπικά Στοιχεία Φοιτητή</h5>
+<br>
+
+<% if (typeof student_data != 'undefined') { %>
+
+
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">#</span>
+        </div>
+        <output type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"><%= student_data.student_username %>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Όνομα</span>
+        </div>
+        <output type="text" class="form-control" aria-describedby="basic-addon1"><%= student_data.student_fname %>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Επώνυμο</span>
+        </div>
+        <output type="text" class="form-control" aria-describedby="basic-addon1"><%= student_data.student_sname %>
+    </div>
+  
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">@</span>
+        </div>
+        <output type="text" class="form-control" aria-label="Email" aria-describedby="basic-addon1"><%= student_data.student_email %>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">+30</span>
+        </div>
+        <output type="text" class="form-control" aria-describedby="basic-addon1"><%= student_data.student_mobile %>
+    </div>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">YYYY</span>
+      <output type="text" class="form-control"><%= student_data.student_year_group %>
+    </div>
+    <div class="input-group-append">
+      <span class="input-group-text">Ενεργός</span>
+      <output type="text" class="form-control"><%= student_data.student_is_active %>
+    </div>
+  </div>
+
+  
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Σημειώσεις</span>
+    </div>
+    <textarea class="form-control" value="<%= student_data.student_notes %>"></textarea>
+  </div>
+
+    <% } %>
+
+
+
+<%- include("./partials/footer") %>

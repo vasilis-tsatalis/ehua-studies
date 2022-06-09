@@ -10,8 +10,8 @@ load_dotenv()
 from ..auth.authentication import authenticate_admin, authenticate_webuser
 security = HTTPBasic()
 
-from ..schemas import section
-from ..controllers import crud_sections
+from ..schemas import section, student_section
+from ..controllers import crud_sections,crud_students
 from ..config.database import get_db
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -65,5 +65,56 @@ async def delete_section(id: int, administrator: str = Depends(authenticate_admi
     raise HTTPException(
         status_code=501, 
         detail="Section not deleted",
+        headers={"WWW-Authenticate": "Basic"},
+        )
+
+
+@section_router.get("/{id}/students", status_code = status.HTTP_200_OK)
+async def get_section_students_by_id(id: int, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
+    db_section = await crud_sections.get_section_by_id(db, id=id)
+    if db_section is None:
+        raise HTTPException(
+            status_code=404, 
+            detail="Section not found",
+            headers={"WWW-Authenticate": "Basic"},
+            )
+    db_students = await crud_sections.get_section_students(db, id=id)
+    if db_students:
+        return db_students
+    else:
+        raise HTTPException(
+            status_code=404, 
+            detail="No Section students found",
+            headers={"WWW-Authenticate": "Basic"},
+            )
+
+
+@section_router.post("/students", status_code = status.HTTP_201_CREATED)
+async def create_section_student(student_section: student_section.Student_Section_Create, webuser: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
+    db_section = await crud_sections.get_section_by_id(db, id=student_section.section_id)
+    if db_section is None:
+        raise HTTPException(
+            status_code=404, 
+            detail="Section not found",
+            headers={"WWW-Authenticate": "Basic"},
+            )
+    db_student = await crud_students.get_student_by_id(db, id=student_section.student_id)
+    if db_student is None:
+        raise HTTPException(
+            status_code=404, 
+            detail="Student not found", 
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    return await crud_sections.create_section_student(db, student_section=student_section, creation_user=webuser)
+
+
+@section_router.get("/students", status_code = status.HTTP_200_OK)
+async def get_sections_students(webuser: str = Depends(authenticate_webuser), skip: int = 0, limit: int = 200, db: Session = Depends(get_db)):
+    db_sections = await crud_sections.get_sections_students(db, skip=skip, limit=limit)
+    if db_sections:
+        return db_sections
+    raise HTTPException(
+        status_code=404, 
+        detail="Sections students not found",
         headers={"WWW-Authenticate": "Basic"},
         )

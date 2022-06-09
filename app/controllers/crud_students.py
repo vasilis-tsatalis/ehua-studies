@@ -1,8 +1,10 @@
 from sqlalchemy.orm import Session
 import datetime
 from sqlalchemy.sql import func
-from ..models.tables_definitions import Student
+from ..models.tables_definitions import Student, Students_Sections
 from ..schemas.student import StudentCreate, StudentUpdate
+from ..schemas.student_section import Student_Section_Create
+
 
 
 async def get_students(db: Session, skip: int = 0, limit: int = 200):
@@ -72,11 +74,7 @@ async def delete_student_by_id(db: Session, id: int):
     return status
 
 async def get_student_sections(db: Session, id: int):
-    #return db.query(students_sections).filter(students_sections.student_id == id).all()
-    pass
-
-
-    #students_sections = (db.query(Sections).select_from(Students, Sections).join(Students).filter(Students.user_id == user_id).all())
+    return db.query(Students_Sections).filter(Students_Sections.student_id == id).all()
 
 async def enable_student_by_id(db: Session, id: int, is_active: bool):
     db_student = db.query(Student).filter(Student.id == id).first()
@@ -85,3 +83,21 @@ async def enable_student_by_id(db: Session, id: int, is_active: bool):
     db.commit()
     # db.refresh(db_student)
     return db_student
+
+
+async def create_student_section(db: Session, student_section: Student_Section_Create, creation_user: str):
+    db_student_section = Students_Sections(
+        student_id=student_section.student_id, 
+        section_id=student_section.section_id,
+        status=student_section.status,
+        results=student_section.results.upper(),
+        creation_user= creation_user)
+    db.add(db_student_section)
+    db.commit()
+    db.refresh(db_student_section)
+    return db_student_section
+    
+
+async def get_students_sections(db: Session, skip: int = 0, limit: int = 200):
+    students_sections = db.query(Students_Sections).offset(skip).limit(limit).all()
+    return students_sections

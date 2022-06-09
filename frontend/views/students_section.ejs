@@ -7,13 +7,18 @@
       <h5 class="border-bottom pb-4 mb-2">Students by Section</h5>
       <br>
 
-      <form action="/students/section" method="post">
-        <div class="form-floating">
-          <input type="text" class="form-control" id="floatingInput" name="the_student_id">
-          <label for="floatingInput">StudentID</label>
-        </div>
-        <button class="w-30 btn btn-lg btn-primary" type="submit">Search</button>
+      <form class="form-inline" action="/sections/students" method="post">
+        <label class="my-1 md-2" for="section_id"> Section ID  </label>
+        <select class="custom-select my-1 md-4" id="section_id" name="section_id">
+          <option selected>Choose...</option>
+          <% if (typeof sections != 'undefined') { %> <% sections.forEach(section => { %>
+          <option value="<%= section.id %>">Year <%= section.year %>: <%= section.id %></option>
+          <% }) %> <% } %>
+        </select>
+        <button type="submit" class="btn btn-outline-secondary my-1 sm-2">Search</button>
+        <!-- <input type="submit" value="search"> -->
       </form>
+      <br>
 
       <div class="container">
         <div class="row justify-content-center">
@@ -24,24 +29,31 @@
                   <table class="table table-hover mb-0" id="students_sections_table">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Όνομα</th>
-                        <th scope="col">Επώνυμο</th>
-                        <th scope="col">Ηλ.Ταχυδρομείο</th>
-                        <th scope="col">Έτος Εγγραφής</th>
+                        <th scope="col">_id</th>
+                        <th scope="col">Κωδ. Μαθητή</th>
+                        <th scope="col">Βαθμολογία</th>
+                        <th scope="col">Αποτέλεσμα</th>
+                        <th scope="col">Χρήστης Καταχώρησης</th>
+                        <th scope="col">Ημερ.Καταχώρησης</th>
+                        <th scope="col">Ημερ.Τελευταίας Αλλαγής</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <% if (typeof students != 'undefined') { %> <% students.forEach(student => { %>
+                      <% if (typeof section_students_id != 'undefined') { %> <% section_students_id.forEach(section_student_id => { %>
+                        
+                        <form action="/students/<%= section_student_id.student_id %>" method="GET">
                         <tr>
-                            <td scope="row"><strong><%= student.section_id %></strong></td>
-                            <td><%= student.username %></td>
-                            <td><%= student.first_name %></td>
-                            <td><%= student.last_name %></td>
-                            <td><%= student.email %></td>
-                            <td><%= student.year_group %></td>
+                            <td scope="row"><strong><%= section_id %></strong></td>
+                            <td><%= section_student_id.student_id %></td>
+                            <td><%= section_student_id.status %></td>
+                            <td><%= section_student_id.results %></td>
+                            <td><%= section_student_id.creation_user %></td>
+                            <td><%= section_student_id.creation_date %></td>
+                            <td><%= section_student_id.last_update_at %></td>
+                            <td><button type="submit" class="btn btn-outline-secondary my-1 sm-2">Data</button></td>
                         </tr>
+                      </form>
+
                         <% }) %> <% } %>
                     </tbody>
                   </table>
@@ -65,12 +77,12 @@
       </div>
 </section>
 
-<script>
-  document.getElementById("download-button-csv").addEventListener("click", function () {
-  var html = document.querySelector("table").outerHTML;
-  htmlToCSV(html, "students_sections.csv");
-  });
-</script>
+  <script>
+    document.getElementById("download-button-csv").addEventListener("click", function () {
+    var html = document.querySelector("table").outerHTML;
+    htmlToCSV(html, "students_sections.csv");
+    });
+  </script>
 
 <br>
 
