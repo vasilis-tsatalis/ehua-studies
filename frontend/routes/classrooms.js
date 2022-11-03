@@ -11,6 +11,7 @@ router.get('/', authenticateUser, async (req, res) => {
     try{
         const classrooms = [];
         const username = req.session.user.username;
+        const role = req.session.user.role;
 
         await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/classrooms_types`, {
             auth: {
@@ -22,16 +23,16 @@ router.get('/', authenticateUser, async (req, res) => {
                 const metadata = response.data;
                 //console.log(metadata);
                 if (metadata.length == 0) {
-                    res.render("classrooms", {classrooms, username});
+                    res.render("classrooms", {classrooms, username, role});
                 };
                 metadata.forEach(element => {
                     classrooms.push({id: element.id, name: element.name, building: element.building, number: element.number, type: element.type});
                 });
-            res.render("classrooms", {classrooms, username});
+            res.render("classrooms", {classrooms, username, role});
           })
           .catch(err => {
             console.log(err);
-            res.render("classrooms", {classrooms, username});
+            res.render("classrooms", {classrooms, username, role});
           });
 
     }catch(err){

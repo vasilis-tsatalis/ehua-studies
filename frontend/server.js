@@ -48,6 +48,9 @@ app.use(morgan('combined', { stream: accessLogStream }));
 
 app.get('/', async(req,res) => { res.render('signin') });
 
+const signupRoute = require('./routes/signup');
+app.use('/signup', signupRoute);
+
 const authRoute = require('./routes/auth');
 app.use('/auth', authRoute);
 

@@ -2,6 +2,7 @@ const express = require('express');
 //define an express method
 const router = express.Router();
 const axios = require('axios');
+const Feusers = require('../models/Feusers');
 
 const authenticateUser = require("../middleware/auth/authentication");
 const send_email = require("../tools/email/send_email")
@@ -11,7 +12,9 @@ const send_email = require("../tools/email/send_email")
 router.get('/', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
-        res.render("contact", {username});
+        const role = req.session.user.role;
+
+        res.render("contact", {username, role});
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -24,29 +27,16 @@ router.post('/', authenticateUser, async (req, res) => {
         const { email, subject, the_body } = req.body;
 
         const username = req.session.user.username;
+        const role = req.session.user.role;
 
-        await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/professors/username/${username}`, {
-            auth: {
-              username: `${process.env.API_USER}`,
-              password: `${process.env.API_PASS}`
-            }
-          })
-          .then(response => {
-                const metadata = response.data;
-                //console.log(metadata);
-                const sender = metadata.email;
-                send_email(sender, email, subject, the_body);
-                res.render("contact", {username});
-          })
-          .catch(err => {
-            console.log(err);
-            res.render("contact", {username});
-          });
+        const db_user = await Feusers.findOne({ username: `${username.toLowerCase()}` }).exec();
 
+        if (db_user) {
+            const sender = db_user.email;
+            send_email(sender, email, subject, the_body);
+        };
 
-                        // const sender = 'itp20138@hua.gr';
-                        // send_email(sender, email, subject, the_body);
-                        // res.render("dashboard", {username});
+        res.render("contact", {username, role});
 
     }catch(err){
         res.sendStatus(400).json({ message:err });

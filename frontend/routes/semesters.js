@@ -11,6 +11,7 @@ router.get('/', authenticateUser, async (req, res) => {
     try{
         const semesters = [];
         const username = req.session.user.username;
+        const role = req.session.user.role;
 
         await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/semesters_types`, {
             auth: {
@@ -22,16 +23,16 @@ router.get('/', authenticateUser, async (req, res) => {
                 const metadata = response.data;
                 //console.log(metadata);
                 if (metadata.length == 0) {
-                    res.render("semesters", {semesters, username});
+                    res.render("semesters", {semesters, username, role});
                 };
                 metadata.forEach(element => {
                     semesters.push({id: element.id, name: element.name, description: element.description, start_date: element.start_date, end_date: element.end_date})
                 });
-            res.render("semesters", {semesters, username});
+            res.render("semesters", {semesters, username, role});
           })
           .catch(err => {
             console.log(err);
-            res.render("semesters", {semesters, username});
+            res.render("semesters", {semesters, username, role});
           });
 
     }catch(err){

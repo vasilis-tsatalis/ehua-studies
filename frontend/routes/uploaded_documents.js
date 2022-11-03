@@ -12,6 +12,7 @@ router.get('/', authenticateUser, async (req, res) => {
     try{
         
         const username = req.session.user.username;
+        const role = req.session.user.role;
 
         const mydocuments = [];
 
@@ -38,7 +39,7 @@ router.get('/', authenticateUser, async (req, res) => {
                 });
             });
 
-            res.render("uploaded_documents", {mydocuments, username});
+            res.render("uploaded_documents", {mydocuments, username, role});
         })
         stream.on('error', function(err) { console.log(err) } )
 

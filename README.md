@@ -25,3 +25,22 @@ docker-compose up
 ```bash
 docker-compose down
 ```
+
+
+
+** mongodb shell
+```bash
+docker exec -it ehua-studies-mongodb_container-1 mongosh -u "root" -p "rootpassword"
+```
+```bash
+show dbs
+```
+```bash
+use huadatabase
+```
+```bash
+db.createUser({user: "root", pwd: "rootpassword", roles:["dbOwner"]})
+```
+```bash
+db.feusers.find()
+```

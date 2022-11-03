@@ -37,6 +37,7 @@ router.post('/', authenticateUser, async (req, res) => {
     try{
 
         const username = req.session.user.username;
+        const role = req.session.user.role;
 
         // const docs_type = req.body;
         // console.log(docs_type);
@@ -77,7 +78,7 @@ router.post('/', authenticateUser, async (req, res) => {
                 // to uploading file of size greater than
                 // 10MB or uploading different file type
                 // res.send(err)
-                return res.render("documents", {username, message: err});               
+                return res.render("documents", {username, message: err, role});               
             }
             else {
                 console.log(req.file.path);
@@ -102,7 +103,7 @@ router.post('/', authenticateUser, async (req, res) => {
 
                         minioClient.presignedUrl('GET', username, req.file.filename, 7*24*60*60, function(err, presignedUrl) {
                             if(err) return console.log(err);
-                            return res.render("documents", {username, presignedUrl: presignedUrl});
+                            return res.render("documents", {username, presignedUrl: presignedUrl, role});
                         });
 
                     });

@@ -1,5 +1,10 @@
 <%- include("./partials/header") %>
-<%- include("./navbar/menu") %>
+
+<% if (role == 'professor') { %>
+  <%- include("./navbar/menu_p") %>
+<% } else { %>
+  <%- include("./navbar/menu_s") %>
+<% } %>
 
 <br>
 
@@ -10,6 +15,7 @@
     <thead>
       <tr>
         <th scope="col">Κωδικός Τμήματος</th>
+        <th scope="col">Περιγραφή τμήματος</th>
         <th scope="col">_id</th>
         <th scope="col">Όνομα</th>
         <th scope="col">Περιγραφή</th>
@@ -21,6 +27,7 @@
       <% if (typeof courses != 'undefined') { %> <% courses.forEach(course => { %>
       <tr>
           <td><%= course.department_id %></td>
+          <td<%= course.department_desc %></td>
           <td scope="row"><%= course.id %></td>
           <td><%= course.name %></td>
           <td><%= course.description %></td>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signin</title>
+    <title>Signup</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/signin.css">
     <style>
@@ -19,6 +19,10 @@
           font-size: 3.5rem;
         }
       }
+        select {
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
     </style>
   </head>
 
@@ -26,9 +30,9 @@
     
     <main class="form-signin">
 
-      <form action="/auth" method="POST">
+      <form action="/signup" method="POST">
         <img class="mb-4" src="/assets/Harokopio_University_Logo.png" alt="" width="104" height="90">
-        <h3 class="h2 mb-3 fw-normal">Please Sign in</h3>
+        <h3 class="h2 mb-3 fw-normal">Sign up</h3>
         <h3 class="h6 mb-3">HUA WebPortal</h3>
 
         <div class="form-floating">
@@ -37,26 +41,37 @@
         </div>
 
         <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInput" name="email" placeholder="itp00000@hua.gr" required>
+            <label for="floatingInput">Email</label>
+        </div>
+
+        <div class="form-floating">
           <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password" required>
           <label for="floatingPassword">Password</label>
         </div>
 
-        <div class="checkbox mb-3">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword2" name="password2" placeholder="Confirm Password">
+            <label for="floatingPassword2">Confirm Password</label>
         </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+
+        <div class="form-floating">
+            <select name="role" id="role" required>
+              <option value="">Select your role</option>
+              <option value="professor">Professor</option>
+              <option value="student">Student</option>
+            </select>
+        </div>
+
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
         <p class="mt-5 mb-3 text-muted">&copy; eHUA 2022</p>
-
-        <div>  
-          <a class="nav-link" href="/signup">
-            <span data-feather="users"></span>
-            Don't have an account? Signup
-          </a>
-        </div>
-
       </form>
+      <div>  
+        <a class="nav-link" href="/">
+          <span data-feather="users"></span>
+          Signin now
+        </a>
+      </div>
     </main>
 
     <ul>

@@ -1,5 +1,10 @@
 <%- include("./partials/header") %>
-<%- include("./navbar/menu") %>
+
+<% if (role == 'professor') { %>
+  <%- include("./navbar/menu_p") %>
+<% } else { %>
+  <%- include("./navbar/menu_s") %>
+<% } %>
 
 <br>
 

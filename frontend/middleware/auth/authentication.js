@@ -1,8 +1,5 @@
 // Authentication module 
-// after keycloak validation
 // based on username and role
-
-const { TIMEOUT } = require('dns');
 const fs = require('fs');
 
 module.exports = (req, res, next) => {

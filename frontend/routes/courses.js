@@ -13,8 +13,10 @@ router.get('/', authenticateUser, async (req, res) => {
 
         const courses = [];
         const username = req.session.user.username;
+        const role = req.session.user.role;
 
-        await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/courses`, {
+         
+          await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/courses`, {
             auth: {
               username: `${process.env.API_USER}`,
               password: `${process.env.API_PASS}`
@@ -24,18 +26,27 @@ router.get('/', authenticateUser, async (req, res) => {
                 const metadata = response.data;
                 //console.log(metadata);
                 if (metadata.length == 0) {
-                    res.render("courses", {courses, username});
+                    res.render("courses", {courses, username, role});
                 };
                 metadata.forEach(element => {
+
+                  var dept = axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/departments/${element.department_id}`, {
+                    auth: {
+                      username: `${process.env.API_USER}`,
+                      password: `${process.env.API_PASS}`
+                    }
+                  });
+
                     courses.push({id: element.id, department_id: element.department_id, name: element.name, 
-                        description: element.description, is_active: element.is_active, gravity: element.gravity 
+                        description: element.description, is_active: element.is_active, gravity: element.gravity,
+                        department_desc: dept.description
                         })                
                         });
-            res.render("courses", {courses, username});
+            res.render("courses", {courses, username, role});
           })
           .catch(err => {
             console.log(err);
-            res.render("courses", {courses, username});
+            res.render("courses", {courses, username, role});
           });
 
     }catch(err){

@@ -1,22 +1,11 @@
 <%- include("./partials/header") %>
-<%- include("./navbar/menu") %>
 
+<% if (role == 'professor') { %>
+    <%- include("./navbar/menu_p") %>
+<% } else { %>
+    <%- include("./navbar/menu_s") %>
+<% } %>
 
-<!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">dashboard</h1>
-    <div class="btn-toolbar mb-2 mb-md-0">
-      <div class="btn-group me-2">
-        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-      </div>
-      <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-        <span data-feather="calendar"></span>
-        This week
-      </button>
-    </div>
-  </div>
-
-  <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
 
   <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -25,6 +14,7 @@
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="5" aria-label="Slide 6"></button>
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
@@ -79,6 +69,15 @@
             <!-- <h1 class="text-dark">PostgresDB</h1> -->
             <!-- <p>Open Source RDBMS - PostgreSQL</p> -->
             <p><a class="btn btn-md btn-danger" href="https://www.postgresql.org/">PostgresDB</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+        <img class="mb-4" src="/assets/mongodb-3149457204.png" width="40%" height="70%">
+        <div class="container">
+          <div class="carousel-caption">
+            <p><a class="btn btn-md btn-danger" href="https://www.postgresql.org/">MongoDB</a></p>
           </div>
         </div>
       </div>

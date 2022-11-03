@@ -1,5 +1,10 @@
 <%- include("./partials/header") %>
-<%- include("./navbar/menu") %>
+
+<% if (role == 'professor') { %>
+  <%- include("./navbar/menu_p") %>
+<% } else { %>
+  <%- include("./navbar/menu_s") %>
+<% } %>
 
   <div class="list-group">
 
@@ -7,36 +12,42 @@
     <br>
     <br>
 
-    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-      <img src="/assets/doc_logo.png" alt="" width="32" height="32" class="rounded-circle flex-shrink-0">
-      <div class="d-flex gap-2 w-100 justify-content-between">
-        <div>
-          <h6 class="mb-0">List group item heading</h6>
-          <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
-        </div>
-        <small class="opacity-50 text-nowrap">now</small>
+    <form class="form-inline" action="/results" method="post">
+
+      <label class="my-1 md-2" for="section_id"> Section ID  </label>
+      <select class="custom-select my-1 md-4" id="section_id" name="section_id">
+        <option selected>Choose...</option>
+        <% if (typeof sections != 'undefined') { %> <% sections.forEach(section => { %>
+        <option value="<%= section.id %>">Year <%= section.year %>: <%= section.id %></option>
+        <% }) %> <% } %>
+      </select>
+
+      <br>
+
+      <label class="my-1 md-2" for="section_id"> Student </label>
+      <select class="custom-select my-1 md-4" id="student_id" name="student_id">
+        <option selected>Choose...</option>
+        <% if (typeof students != 'undefined') { %> <% students.forEach(student => { %>
+        <option value="<%= student.id %>">Username <%= student.username %>: <%= student.id %></option>
+        <% }) %> <% } %>
+      </select>
+
+      <br>
+
+      <div class="col-sm-6">
+        <label for="status" class="form-label">Degree</label>
+        <input type="text" class="form-control" id="status" name="status">
       </div>
-    </a>
-    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-      <img src="/assets/doc_logo.png" alt="" width="32" height="32" class="rounded-circle flex-shrink-0">
-      <div class="d-flex gap-2 w-100 justify-content-between">
-        <div>
-          <h6 class="mb-0">Another title here</h6>
-          <p class="mb-0 opacity-75">Some placeholder content in a paragraph that goes a little longer so it wraps to a new line.</p>
-        </div>
-        <small class="opacity-50 text-nowrap">3d</small>
-      </div>
-    </a>
-    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-      <img src="/assets/doc_logo.png" alt="" width="32" height="32" class="rounded-circle flex-shrink-0">
-      <div class="d-flex gap-2 w-100 justify-content-between">
-        <div>
-          <h6 class="mb-0">Third heading</h6>
-          <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
-        </div>
-        <small class="opacity-50 text-nowrap">1w</small>
-      </div>
-    </a>
+
+      <button type="submit" class="btn btn-outline-secondary my-3 sm-2">Add</button>
+      <!-- <input type="submit" value="search"> -->
+    </form>
+
+    <% if (typeof message !== 'undefined' ) { %>
+      <p><%= message %></p>
+      <% } %>
+
+
   </div>
 
   <br>

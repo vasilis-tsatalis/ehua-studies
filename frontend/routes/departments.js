@@ -11,6 +11,7 @@ router.get('/', authenticateUser, async (req, res) => {
     try{
         const departments = [];
         const username = req.session.user.username;
+        const role = req.session.user.role;
 
         await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/departments`, {
             auth: {
@@ -23,11 +24,11 @@ router.get('/', authenticateUser, async (req, res) => {
                 metadata.forEach(element => {
                     departments.push({id: element.id, name: element.name, description: element.description, points: element.points})
                 });
-            res.render("departments", {departments, username});
+            res.render("departments", {departments, username, role});
           })
           .catch(err => {
               console.log(err);
-              res.render("departments", {departments, username});
+              res.render("departments", {departments, username, role});
             });
 
     }catch(err){

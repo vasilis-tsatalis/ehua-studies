@@ -11,8 +11,9 @@ const authenticateUser = require("../middleware/auth/authentication");
 router.get('/', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
+        const role = req.session.user.role;
 
-        res.render("sections", {username});
+        res.render("sections", {username, role});
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -24,9 +25,10 @@ router.get('/myselection', authenticateUser, async (req, res) => {
 
         const sections = [];
         const username = req.session.user.username;
-        const db_professor_id = req.session.user.db_professor_id;
+        const role = req.session.user.role;
+        const ref_code = req.session.user.ref_code;
 
-        await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/professors/${db_professor_id}/sections`, {
+        await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/professors/${ref_code}/sections`, {
             auth: {
               username: `${process.env.API_USER}`,
               password: `${process.env.API_PASS}`
@@ -36,7 +38,7 @@ router.get('/myselection', authenticateUser, async (req, res) => {
                 const metadata = response.data;
                 //console.log(metadata);
                 if (metadata.length == 0) {
-                    res.render("sections_selection", {sections, username});
+                    res.render("sections_selection", {sections, username, role});
                 };
                 metadata.forEach(element => {
                     sections.push({course_id: element.course_id, id: element.id, professor_id: element.professor_id, 
@@ -44,11 +46,11 @@ router.get('/myselection', authenticateUser, async (req, res) => {
                         exam_type_id: element.exam_type_id
                                     })                
                     });
-                res.render("sections_selection", {sections, username});
+                res.render("sections_selection", {sections, username, role});
           })
           .catch(err => {
             console.log(err);
-            res.render("sections_selection", {sections, username});
+            res.render("sections_selection", {sections, username, role});
           });
 
     }catch(err){
@@ -62,6 +64,7 @@ router.get('/genselection', authenticateUser, async (req, res) => {
 
         const sections = [];
         const username = req.session.user.username;
+        const role = req.session.user.role;
 
         await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/sections`, {
             auth: {
@@ -73,7 +76,7 @@ router.get('/genselection', authenticateUser, async (req, res) => {
                 const metadata = response.data;
                 //console.log(metadata);
                 if (metadata.length == 0) {
-                    res.render("sections_selection", {sections, username});
+                    res.render("sections_selection", {sections, username, role});
                 };
                 metadata.forEach(element => {
                     sections.push({course_id: element.course_id, id: element.id, professor_id: element.professor_id, 
@@ -81,11 +84,11 @@ router.get('/genselection', authenticateUser, async (req, res) => {
                         exam_type_id: element.exam_type_id
                                     })                
                     });
-                res.render("sections_selection", {sections, username});
+                res.render("sections_selection", {sections, username, role});
           })
           .catch(err => {
             console.log(err);
-            res.render("sections_selection", {sections, username});
+            res.render("sections_selection", {sections, username, role});
           });
 
     }catch(err){
@@ -97,6 +100,7 @@ router.get('/genselection', authenticateUser, async (req, res) => {
 router.post('/students', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
+        const role = req.session.user.role;
         const section_id = parseInt(req.body.section_id);
 
         const section_students_id = [];
@@ -111,7 +115,7 @@ router.post('/students', authenticateUser, async (req, res) => {
                 const metadata = response.data;
                 //console.log(metadata);
                 if (metadata.length == 0) {
-                    res.render("students_section", {username, section_id});
+                    res.render("students_section", {username, section_id, role});
                 };
                 metadata.forEach(element => {
                     section_students_id.push({student_id: element.student_id, section_id: element.section_id, 
@@ -119,11 +123,11 @@ router.post('/students', authenticateUser, async (req, res) => {
                         creation_date: element.creation_date, last_update_at: element.last_update_at
                         })                
                     });
-                res.render("students_section", {section_students_id, username, section_id});
+                res.render("students_section", {section_students_id, username, section_id, role});
           })
           .catch(err => {
             console.log(err);
-            res.render("students_section", {section_id, username});
+            res.render("students_section", {section_id, username, role});
           });
 
     }catch(err){
