@@ -14,8 +14,8 @@
   <table class="table table-striped table-sm" id="all_courses">
     <thead>
       <tr>
-        <th scope="col">Κωδικός Τμήματος</th>
-        <th scope="col">Περιγραφή τμήματος</th>
+        <!-- <th scope="col">Κωδικός Τμήματος</th>
+        <th scope="col">Περιγραφή τμήματος</th> -->
         <th scope="col">_id</th>
         <th scope="col">Όνομα</th>
         <th scope="col">Περιγραφή</th>
@@ -26,8 +26,8 @@
     <tbody>
       <% if (typeof courses != 'undefined') { %> <% courses.forEach(course => { %>
       <tr>
-          <td><%= course.department_id %></td>
-          <td<%= course.department_desc %></td>
+          <!-- <td<%= course.department_id %></td>
+          <td<%= course.department_desc %></td> -->
           <td scope="row"><%= course.id %></td>
           <td><%= course.name %></td>
           <td><%= course.description %></td>

@@ -13,8 +13,9 @@ router.get('/', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
         const role = req.session.user.role;
+        const ref_code = req.session.user.ref_code;
 
-        res.render("contact", {username, role});
+        res.render("contact", {username, role, ref_code});
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -28,6 +29,7 @@ router.post('/', authenticateUser, async (req, res) => {
 
         const username = req.session.user.username;
         const role = req.session.user.role;
+        const ref_code = req.session.user.ref_code;
 
         const db_user = await Feusers.findOne({ username: `${username.toLowerCase()}` }).exec();
 
@@ -36,7 +38,7 @@ router.post('/', authenticateUser, async (req, res) => {
             send_email(sender, email, subject, the_body);
         };
 
-        res.render("contact", {username, role});
+        res.render("contact", {username, role, ref_code});
 
     }catch(err){
         res.sendStatus(400).json({ message:err });

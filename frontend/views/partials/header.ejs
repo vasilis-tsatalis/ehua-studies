@@ -36,10 +36,16 @@
   <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
     <!-- <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#"></a> -->
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">
-    <img src="/assets/HUAIMG.jpeg" alt="" width="66" height="40">
 
+    <% if (role == 'professor') { %>
+        <img src="/assets/professor1.jpg" alt="" width="66" height="40">
+    <% } else { %>
+        <img src="/assets/HUAIMG.jpeg" alt="" width="66" height="40">
+    <% } %>
+
+    
     <% if (username) { %>
-    <i class="text-info mx-auto"><%= username %></i>
+    <i class="text-info mx-auto"> <%= username %> </i>
     <% } %>
     
     </a>

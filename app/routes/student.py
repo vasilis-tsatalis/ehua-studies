@@ -130,7 +130,7 @@ async def activate_student(id: int, is_active: bool, administrator: str = Depend
 @student_router.post("/sections", status_code = status.HTTP_201_CREATED)
 async def create_student_section(student_section: student_section.Student_Section_Create, webuser: str = Depends(authenticate_admin), db: Session = Depends(get_db)):
     db_student = await crud_students.get_student_by_id(db, id=student_section.student_id)
-    if db_student:
+    if db_student is None:
         raise HTTPException(
             status_code=404, 
             detail="Student not found", 

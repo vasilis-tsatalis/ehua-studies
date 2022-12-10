@@ -2,8 +2,8 @@ const express = require('express');
 //define an express method
 const router = express.Router();
 const axios = require('axios');
-const Feusers = require('../models/Feusers');
 const mongoose = require('mongoose');
+const Feusers = require('../models/Feusers');
 
 require('dotenv/config');
 
@@ -11,12 +11,12 @@ require('dotenv/config');
 //connect to mongodb
 //here is a promise
 mongoose.connect(process.env.DB_CONNECTION);
+
 const db = mongoose.connection;
 db.on('error', console.log.bind(console, "MongoDB connection error"));
 db.once('open', function(callback){
     console.log("MongoDB connection succeeded");
 });
-
 
 //----------ROUTES----------//
 
@@ -67,14 +67,14 @@ router.post('/', async (req, res) => {
                     const metadata = response.data;
                     console.log(metadata);
                     if ((username.toLowerCase() === metadata.username.toLowerCase()) && (email.toLowerCase() === metadata.email.toLowerCase())) {
-                        const ref_code = metadata.id;
+                        const refcode = metadata.id;
 
                         const user_data = {
                             "username": username.toLowerCase(),
                             "email": email.toLowerCase(),
                             "password": password,
                             "role": role,
-                            "ref_code": ref_code.toString(),
+                            "refcode": refcode.toString(),
                         };
 
                         db.collection('feusers').insertOne(user_data, (err, res) => {
@@ -136,7 +136,6 @@ router.post('/', async (req, res) => {
         res.sendStatus(400).json({ message:err });
     }
 });
-
 
 //export the router we have define above
 module.exports = router;

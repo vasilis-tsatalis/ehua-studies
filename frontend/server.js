@@ -107,6 +107,13 @@ app.use('/courses', coursesRoute);
 const uploaded_documentsRoute = require('./routes/uploaded_documents');
 app.use('/uploaded_documents', uploaded_documentsRoute);
 
+// // // // // // // // // // 
+const stdaccountRoute = require('./routes/std_account');
+app.use('/std/account', stdaccountRoute);
+
+const stdresultsRoute = require('./routes/std_results');
+app.use('/std/results', stdresultsRoute);
+
 //--------------------------//
 
 //logout - kill current session

@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 import datetime
 from ..models.tables_definitions import Section, Students_Sections
 from ..schemas.section import SectionCreate
-from ..schemas.student_section import Student_Section_Create
+from ..schemas.student_section import Student_Section_Create, Student_Section_Update
 
 
 async def get_sections(db: Session, skip: int = 0, limit: int = 200):
@@ -54,3 +54,14 @@ async def create_section_student(db: Session, student_section: Student_Section_C
 async def get_sections_students(db: Session, skip: int = 0, limit: int = 200):
     students_sections = db.query(Students_Sections).offset(skip).limit(limit).all()
     return students_sections
+
+async def get_section_and_student(db: Session, section_id: int, student_id: int):
+    return db.query(Students_Sections).filter(Students_Sections.section_id == section_id, Students_Sections.student_id == student_id).first()
+
+async def update_section_student_degree(db: Session, student_section: Student_Section_Update, creation_user: str):
+    db_student_section = db.query(Students_Sections).filter(Students_Sections.section_id == student_section.section_id, Students_Sections.student_id == student_section.student_id).first()
+    db_student_section.status = student_section.status
+    db_student_section.results = student_section.results
+    db.flush()
+    db.commit()
+    return db_student_section

@@ -5,7 +5,7 @@ from ..models.tables_definitions import Students_Sections
 from ..schemas.student_section import Student_Section_Create
 
 
-async def get_students_sections(db: Session, skip: int = 0, limit: int = 200):
+async def get_students_sections_all(db: Session, skip: int = 0, limit: int = 200):
     students_sections = db.query(Students_Sections).offset(skip).limit(limit).all()
     return students_sections
 

@@ -1,0 +1,136 @@
+<%- include("./partials/header") %>
+<%- include("./navbar/menu_s") %>
+
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="/assets/account-64.png" alt="" width="84" height="69">
+        <h2>My Account</h2>
+      </div>
+
+      <div class="row g-2">
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">Personal Data</h4>
+        <form class="needs-validation" novalidate action="/account" method="POST">
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label for="firstName" class="form-label">First Name</label>
+                <label id="firstName" class="form-control"><%= first_name %></label>
+              </div>
+  
+              <div class="col-sm-6">
+                <label for="lastName" class="form-label">Last name</label>
+                <label id="lastName" class="form-control"><%= last_name %></label>
+              </div>
+  
+              <div class="col-12">
+                <label for="username" class="form-label">Username</label>
+                <div class="input-group has-validation">
+                  <span class="input-group-text">@</span>
+                  <label id="username" class="form-control"><%= username %></label>
+                </div>
+              </div>
+  
+              <div class="col-12">
+                <label for="email" class="form-label">Email</label>
+                <label id="email" class="form-control"><%= email %></label>
+              </div>
+  
+              <div class="col-12">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="address" name="address" placeholder="123 Mesogeioon Str." required>
+                <div class="invalid-feedback">
+                  Please enter your shipping address.
+                </div>
+              </div>
+  
+              <div class="col-12">
+                <label for="address2" class="form-label">Address 2 <span class="text-muted">(Optional)</span></label>
+                <input type="text" class="form-control" id="address2" name="address2" placeholder="Apartment or suite">
+              </div>
+  
+              <div class="col-md-5">
+                <label for="country" class="form-label">Country</label>
+                <select class="form-select" id="country" name="country" required>
+                  <option value="">Choose...</option>
+                  <option>Greece</option>
+                  <option>Other</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please select a valid country.
+                </div>
+              </div>
+  
+              <div class="col-md-4">
+                <label for="state" class="form-label">State</label>
+                <select class="form-select" id="state" name="state" required>
+                  <option value="">Choose...</option>
+                  <option>Athens</option>
+                  <option>Other</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please provide a valid state.
+                </div>
+              </div>
+  
+              <div class="col-md-3">
+                <label for="zip" class="form-label">Zip</label>
+                <input type="text" class="form-control" id="zip" name="zip" placeholder="" required>
+                <div class="invalid-feedback">
+                  Zip code required.
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="telephone" class="form-label">Telephone</label>
+                <input type="text" class="form-control" id="telephone" name="telephone" placeholder="">
+              </div>
+
+                <div class="col-md-4">
+                  <label for="office_phone" class="form-label">Office Phone</label>
+                  <input type="text" class="form-control" id="office_phone" name="office_phone" placeholder="">
+                </div>
+
+              <div class="col-md-4">
+                <label for="mobile" class="form-label">Mobile</label>
+                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="" required>
+                <div class="invalid-feedback">
+                  Mobile number required.
+                </div>
+              </div>
+
+            </div>
+  
+            <hr class="my-4">
+  
+            <h4 class="mb-3">Thesis</h4>
+
+            <div class="row gy-3">
+
+                <div class="col-md-6">
+                  <label for="year_group" class="form-label">Year Group</label>
+                  <input type="text" class="form-control" id="year_group" name="year_group" placeholder="">
+                  <small class="text-muted">Year enter the university</small>
+                </div>
+              
+              <hr class="my-4">
+
+              <div class="col-md-12">
+                <label for="motes" class="form-label">Notes</label>
+                <input type="text" class="form-control" id="notes" name="notes" rows="4" placeholder="">
+              </div>
+            </div>
+  
+            <hr class="my-4">
+  
+            <button class="w-100 btn btn-primary btn-lg" type="submit">Update Data</button>
+          </form>
+        </div>
+        <% if (typeof message !== 'undefined' ) { %>
+          <p><%= message %></p>
+          <% } %>
+      </div>
+    </main>
+  </div>
+
+<%- include("./partials/footer") %>

@@ -12,8 +12,9 @@ router.get('/', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
         const role = req.session.user.role;
+        const ref_code = req.session.user.ref_code;
 
-        res.render("sections", {username, role});
+        res.render("sections", {username, role, ref_code});
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }
@@ -28,30 +29,28 @@ router.get('/myselection', authenticateUser, async (req, res) => {
         const role = req.session.user.role;
         const ref_code = req.session.user.ref_code;
 
-        await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/professors/${ref_code}/sections`, {
-            auth: {
-              username: `${process.env.API_USER}`,
-              password: `${process.env.API_PASS}`
-            }
-          })
-          .then(response => {
-                const metadata = response.data;
-                //console.log(metadata);
-                if (metadata.length == 0) {
-                    res.render("sections_selection", {sections, username, role});
-                };
-                metadata.forEach(element => {
-                    sections.push({course_id: element.course_id, id: element.id, professor_id: element.professor_id, 
-                        classroom_type_id: element.classroom_type_id, year: element.year, 
-                        exam_type_id: element.exam_type_id
-                                    })                
-                    });
-                res.render("sections_selection", {sections, username, role});
-          })
-          .catch(err => {
-            console.log(err);
-            res.render("sections_selection", {sections, username, role});
-          });
+        function axiosProfessorSections(ref_code) {
+            return axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/professors/${ref_code}/sections`, {
+                auth: {
+                  username: `${process.env.API_USER}`,
+                  password: `${process.env.API_PASS}`
+                }
+            }).then(response => response.data).catch(err => {console.log(err)})
+        };
+
+
+        const db_sections = await axiosProfessorSections(ref_code);
+        if (!db_sections) {
+            res.render("sections_selection", {sections, username, role, ref_code});
+        };
+
+        db_sections.forEach(element => {
+            sections.push({course_id: element.course_id, id: element.id, professor_id: element.professor_id, 
+                classroom_type_id: element.classroom_type_id, year: element.year, 
+                exam_type_id: element.exam_type_id
+                            })                
+            });
+        res.render("sections_selection", {sections, username, role, ref_code});
 
     }catch(err){
         res.sendStatus(400).json({ message:err });
@@ -65,6 +64,7 @@ router.get('/genselection', authenticateUser, async (req, res) => {
         const sections = [];
         const username = req.session.user.username;
         const role = req.session.user.role;
+        const ref_code = req.session.user.ref_code;
 
         await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/sections`, {
             auth: {
@@ -76,7 +76,7 @@ router.get('/genselection', authenticateUser, async (req, res) => {
                 const metadata = response.data;
                 //console.log(metadata);
                 if (metadata.length == 0) {
-                    res.render("sections_selection", {sections, username, role});
+                    res.render("sections_selection", {sections, username, role, ref_code});
                 };
                 metadata.forEach(element => {
                     sections.push({course_id: element.course_id, id: element.id, professor_id: element.professor_id, 
@@ -84,11 +84,11 @@ router.get('/genselection', authenticateUser, async (req, res) => {
                         exam_type_id: element.exam_type_id
                                     })                
                     });
-                res.render("sections_selection", {sections, username, role});
+                res.render("sections_selection", {sections, username, role, ref_code});
           })
           .catch(err => {
             console.log(err);
-            res.render("sections_selection", {sections, username, role});
+            res.render("sections_selection", {sections, username, role, ref_code});
           });
 
     }catch(err){
@@ -101,6 +101,8 @@ router.post('/students', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
         const role = req.session.user.role;
+        const ref_code = req.session.user.ref_code;
+
         const section_id = parseInt(req.body.section_id);
 
         const section_students_id = [];
@@ -115,7 +117,7 @@ router.post('/students', authenticateUser, async (req, res) => {
                 const metadata = response.data;
                 //console.log(metadata);
                 if (metadata.length == 0) {
-                    res.render("students_section", {username, section_id, role});
+                    res.render("students_section", {username, section_id, role, ref_code});
                 };
                 metadata.forEach(element => {
                     section_students_id.push({student_id: element.student_id, section_id: element.section_id, 
@@ -123,11 +125,11 @@ router.post('/students', authenticateUser, async (req, res) => {
                         creation_date: element.creation_date, last_update_at: element.last_update_at
                         })                
                     });
-                res.render("students_section", {section_students_id, username, section_id, role});
+                res.render("students_section", {section_students_id, username, section_id, role, ref_code});
           })
           .catch(err => {
             console.log(err);
-            res.render("students_section", {section_id, username, role});
+            res.render("students_section", {section_id, username, role, ref_code});
           });
 
     }catch(err){

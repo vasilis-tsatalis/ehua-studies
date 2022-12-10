@@ -302,6 +302,8 @@ app.get('/roles', authenticateUser, async (req, res) => {
 });
 
 //--------------------------//
+//////////////////////////////
+//--------------------------//
 
 app.get('/students', authenticateUser, async (req, res) => {
     try{
@@ -556,6 +558,42 @@ app.get('/sections', authenticateUser, async (req, res) => {
         });
 
         res.redirect('/home');
+    }catch(err){
+        res.sendStatus(400).json({ message:err });
+    }
+});
+
+//--------------------------//
+//////////////////////////////
+//--------------------------//
+
+app.get('/student_section', authenticateUser, async (req, res) => {
+    try{
+        const username = req.session.user.username;
+
+        const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/students/sections`;
+
+        const data = JSON.parse(fs.readFileSync("./data/students_section.json", "utf-8"));
+        const metadata = data.metadata;
+        metadata.forEach(item => {
+            console.log(item);
+
+            axios.post(api_url, item, {
+                headers: {
+                    'Authorization': 'Basic ' + base64.encode(`${process.env.ADMIN_USER}:${process.env.ADMIN_PASS}`)
+                },
+              })
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+
+        });
+        
+        res.redirect('/home');
+
     }catch(err){
         res.sendStatus(400).json({ message:err });
     }

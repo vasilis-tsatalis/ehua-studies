@@ -27,13 +27,20 @@ docker-compose down
 ```
 
 
-
+Enter MongoDB container and create DB
+----------------------------------
 ** mongodb shell
 ```bash
 docker exec -it ehua-studies-mongodb_container-1 mongosh -u "root" -p "rootpassword"
 ```
 ```bash
 show dbs
+```
+```bash
+use admin
+```
+``` mongo shell
+db.createUser({user: "hua_user", pwd: "hua_pass", roles:[{role:"dbOwner", db:"huadatabase"}]})
 ```
 ```bash
 use huadatabase

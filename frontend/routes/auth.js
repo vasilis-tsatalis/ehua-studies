@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
 
         if ((username === db_user.username) || (password === db_user.password)) {
 
-            const ref_code = db_user.ref_code;
+            const ref_code = db_user.refcode;
             const role = db_user.role;
             //console.log(db_user);
 
@@ -36,8 +36,11 @@ router.post('/', async (req, res) => {
               role,
             };
             
+            //app.locals.username = username;
             console.log(req.session.user)
-            res.render("dashboard", {username, role});
+            res.render("dashboard", {username, role, ref_code});
+            //res.render("dashboard", {role, ref_code});
+
             
         } else {
           res.render("signin", { message: "Username or password has error" });

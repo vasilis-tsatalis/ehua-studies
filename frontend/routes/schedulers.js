@@ -12,6 +12,7 @@ router.get('/', authenticateUser, async (req, res) => {
         const schedulers = [];
         const username = req.session.user.username;
         const role = req.session.user.role;
+        const ref_code = req.session.user.ref_code;
 
         await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/schedulers_types`, {
             auth: {
@@ -23,16 +24,16 @@ router.get('/', authenticateUser, async (req, res) => {
                 const metadata = response.data;
                 //console.log(metadata);
                 if (metadata.length == 0) {
-                    res.render("schedulers", {schedulers, username, role});
+                    res.render("schedulers", {schedulers, username, role, ref_code});
                 };
                 metadata.forEach(element => {
                     schedulers.push({id: element.id, name: element.name, day: element.day, start_time: element.start_time, end_time: element.end_time})
                 });
-            res.render("schedulers", {schedulers, username, role});
+            res.render("schedulers", {schedulers, username, role, ref_code});
           })
           .catch(err => {
             console.log(err);
-            res.render("schedulers", {schedulers, username, role});
+            res.render("schedulers", {schedulers, username, role, ref_code});
           });
         
     } catch(err){

@@ -18,6 +18,10 @@ class Student_Section_Create(Student_Section_Base):
     pass
 
 
+class Student_Section_Update(Student_Section_Base):
+    pass
+
+
 class Student_Session(Student_Section_Base):
     creation_user: str
     creation_date: datetime

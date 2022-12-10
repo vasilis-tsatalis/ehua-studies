@@ -10,7 +10,9 @@ router.get('/', authenticateUser, async (req, res) => {
     try{
 
         const username = req.session.user.username;
-        res.render("dashboard", { username });
+        const role = req.session.user.role;
+        const ref_code = req.session.user.ref_code;
+        res.render("dashboard", { username, role, ref_code });
 
     }catch(err){
         res.sendStatus(400).json({ message:err });

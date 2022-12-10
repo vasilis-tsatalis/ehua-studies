@@ -2,6 +2,7 @@ const express = require('express');
 //define an express method
 const router = express.Router();
 const axios = require('axios');
+const Feusers = require('../models/Feusers');
 
 const authenticateUser = require("../middleware/auth/authentication");
 
@@ -13,7 +14,7 @@ router.get('/', authenticateUser, async (req, res) => {
         const role = req.session.user.role;
         const ref_code = req.session.user.ref_code;
 
-            await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/professors/username/${username}`, {
+            await axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/students/username/${username}`, {
                 auth: {
                   username: `${process.env.API_USER}`,
                   password: `${process.env.API_PASS}`
@@ -25,11 +26,11 @@ router.get('/', authenticateUser, async (req, res) => {
                     const first_name = metadata.first_name;
                     const last_name = metadata.last_name;
                     const email = metadata.email;
-                    res.render("account", {username, first_name, last_name, email, role, ref_code});
+                    res.render("std_account", {username, first_name, last_name, email, role, ref_code});
               })
               .catch(err => {
                 console.log(err);
-                res.render("account", {username, first_name, last_name, email, role, ref_code});
+                res.render("std_account", {username, first_name, last_name, email, role, ref_code});
               });
 
     }catch(err){
@@ -42,24 +43,22 @@ router.post('/', authenticateUser, async (req, res) => {
     try{
         const username = req.session.user.username;
         const role = req.session.user.role;
-        const ref_code = req.session.user.ref_code;
+        const ref_code = parseInt(req.session.user.ref_code);
 
         //console.log(req.body);
-
-            const { address, address2, country, state, zip, telephone, office_phone, mobile, title, level, notes } = req.body;
-            const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/professors/${ref_code}`;    
-        
+            const { address, address2, country, state, zip, telephone, phone, mobile, year_group, notes } = req.body;
+            const api_url = `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/students/${ref_code}`;
+            
             const metadata = {
                 address: address,
                 city: state,
                 zipcode: zip,
                 telephone: telephone,
-                office_phone: office_phone,
+                phone: phone,
                 mobile: mobile,
-                title: title,
-                level: level,
+                year_group: year_group,
                 notes: notes
-            };
+            }
 
         await axios.put(api_url, metadata, {
             auth: {
@@ -74,7 +73,7 @@ router.post('/', authenticateUser, async (req, res) => {
             console.log(error);
         });
 
-        res.render("professors", {username, role});
+        res.render("std_account", {username, role, ref_code});
 
     }catch(err){
         res.sendStatus(400).json({ message:err });

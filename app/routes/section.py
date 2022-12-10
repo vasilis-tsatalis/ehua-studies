@@ -11,7 +11,7 @@ from ..auth.authentication import authenticate_admin, authenticate_webuser
 security = HTTPBasic()
 
 from ..schemas import section, student_section
-from ..controllers import crud_sections,crud_students
+from ..controllers import crud_sections,crud_students,crud_students_sections
 from ..config.database import get_db
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -108,9 +108,21 @@ async def create_section_student(student_section: student_section.Student_Sectio
     return await crud_sections.create_section_student(db, student_section=student_section, creation_user=webuser)
 
 
+@section_router.put("/students", status_code = status.HTTP_200_OK)
+async def create_section_student(student_section: student_section.Student_Section_Update, webuser: str = Depends(authenticate_webuser), db: Session = Depends(get_db)):
+    db_section_student = await crud_sections.get_section_and_student(db, section_id=student_section.section_id, student_id=student_section.student_id)
+    if db_section_student is None:
+        raise HTTPException(
+            status_code=404, 
+            detail="Student is not connected with this Section",
+            headers={"WWW-Authenticate": "Basic"},
+            )
+    return await crud_sections.update_section_student_degree(db, student_section=student_section, creation_user=webuser)
+
+
 @section_router.get("/students", status_code = status.HTTP_200_OK)
 async def get_sections_students(webuser: str = Depends(authenticate_webuser), skip: int = 0, limit: int = 200, db: Session = Depends(get_db)):
-    db_sections = await crud_sections.get_sections_students(db, skip=skip, limit=limit)
+    db_sections = await crud_students_sections.get_students_sections_all(db, skip=skip, limit=limit)
     if db_sections:
         return db_sections
     raise HTTPException(
@@ -118,3 +130,4 @@ async def get_sections_students(webuser: str = Depends(authenticate_webuser), sk
         detail="Sections students not found",
         headers={"WWW-Authenticate": "Basic"},
         )
+

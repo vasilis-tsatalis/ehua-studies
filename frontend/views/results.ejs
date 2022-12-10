@@ -8,11 +8,11 @@
 
   <div class="list-group">
 
-    <h2 class="border-bottom pb-2">Αποτελέσματα Εξετάσεων</h2>
+    <h2 class="border-bottom pb-2">Results</h2>
     <br>
     <br>
 
-    <form class="form-inline" action="/results" method="post">
+    <form class="form-inline" method="post" action="/results">
 
       <label class="my-1 md-2" for="section_id"> Section ID  </label>
       <select class="custom-select my-1 md-4" id="section_id" name="section_id">
@@ -24,23 +24,10 @@
 
       <br>
 
-      <label class="my-1 md-2" for="section_id"> Student </label>
-      <select class="custom-select my-1 md-4" id="student_id" name="student_id">
-        <option selected>Choose...</option>
-        <% if (typeof students != 'undefined') { %> <% students.forEach(student => { %>
-        <option value="<%= student.id %>">Username <%= student.username %>: <%= student.id %></option>
-        <% }) %> <% } %>
-      </select>
+      <button type="submit" class="btn btn-outline-secondary my-1 sm-2">Search</button>
 
-      <br>
+      <!-- <button type="submit" class="btn btn-outline-secondary my-3 sm-2">Add</button> -->
 
-      <div class="col-sm-6">
-        <label for="status" class="form-label">Degree</label>
-        <input type="text" class="form-control" id="status" name="status">
-      </div>
-
-      <button type="submit" class="btn btn-outline-secondary my-3 sm-2">Add</button>
-      <!-- <input type="submit" value="search"> -->
     </form>
 
     <% if (typeof message !== 'undefined' ) { %>
