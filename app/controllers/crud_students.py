@@ -101,3 +101,4 @@ async def create_student_section(db: Session, student_section: Student_Section_C
 async def get_students_sections(db: Session, skip: int = 0, limit: int = 200):
     students_sections = db.query(Students_Sections).offset(skip).limit(limit).all()
     return students_sections
+

@@ -114,6 +114,9 @@ app.use('/std/account', stdaccountRoute);
 const stdresultsRoute = require('./routes/std_results');
 app.use('/std/results', stdresultsRoute);
 
+const stdcoursesRoute = require('./routes/std_courses');
+app.use('/std/courses', stdcoursesRoute);
+
 //--------------------------//
 
 //logout - kill current session

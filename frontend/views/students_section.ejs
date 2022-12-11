@@ -34,13 +34,14 @@
                   <table class="table table-hover mb-0" id="students_sections_table">
                     <thead>
                       <tr>
-                        <th scope="col">_id</th>
-                        <th scope="col">Κωδ. Μαθητή</th>
-                        <th scope="col">Βαθμολογία</th>
-                        <th scope="col">Αποτέλεσμα</th>
-                        <th scope="col">Χρήστης Καταχώρησης</th>
-                        <th scope="col">Ημερ.Καταχώρησης</th>
-                        <th scope="col">Ημερ.Τελευταίας Αλλαγής</th>
+                        <th scope="col">Section Id</th>
+                        <th scope="col">Student Id</th>
+                        <th scope="col">Student Username</th>
+                        <th scope="col">Student Email</th>
+                        <th scope="col">Points</th>
+                        <th scope="col">Result</th>
+                        <th scope="col">Creation Date</th>
+                        <th scope="col">Last Update</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -50,12 +51,13 @@
                         <tr>
                             <td scope="row"><strong><%= section_id %></strong></td>
                             <td><%= section_student_id.student_id %></td>
+                            <td><%= section_student_id.student_username %></td>
+                            <td><%= section_student_id.student_email %></td>
                             <td><%= section_student_id.status %></td>
                             <td><%= section_student_id.results %></td>
-                            <td><%= section_student_id.creation_user %></td>
                             <td><%= section_student_id.creation_date %></td>
                             <td><%= section_student_id.last_update_at %></td>
-                            <td><button type="submit" class="btn btn-outline-secondary my-1 sm-2">Data</button></td>
+                            <td><button type="submit" class="btn btn-outline-secondary my-1 sm-2">Info</button></td>
                         </tr>
                       </form>
                         <% }) %> <% } %>

@@ -7,7 +7,7 @@
 <% } %>
 
 <br>
-<h5 class="border-bottom pb-4 mb-2">Προσωπικά Στοιχεία Φοιτητή</h5>
+<h5 class="border-bottom pb-4 mb-2">Student Personal Data</h5>
 <br>
 
 <% if (typeof student_data != 'undefined') { %>
@@ -23,14 +23,14 @@
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Όνομα</span>
+            <span class="input-group-text" id="basic-addon1">Name</span>
         </div>
         <output type="text" class="form-control" aria-describedby="basic-addon1"><%= student_data.student_fname %>
     </div>
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Επώνυμο</span>
+            <span class="input-group-text" id="basic-addon1">Surname</span>
         </div>
         <output type="text" class="form-control" aria-describedby="basic-addon1"><%= student_data.student_sname %>
     </div>
@@ -51,11 +51,11 @@
 
   <div class="input-group mb-3">
     <div class="input-group-prepend">
-      <span class="input-group-text">YYYY</span>
+      <span class="input-group-text">Start Year</span>
       <output type="text" class="form-control"><%= student_data.student_year_group %>
     </div>
     <div class="input-group-append">
-      <span class="input-group-text">Ενεργός</span>
+      <span class="input-group-text">Active</span>
       <output type="text" class="form-control"><%= student_data.student_is_active %>
     </div>
   </div>
@@ -63,7 +63,7 @@
   
   <div class="input-group">
     <div class="input-group-prepend">
-      <span class="input-group-text">Σημειώσεις</span>
+      <span class="input-group-text">Notes</span>
     </div>
     <textarea class="form-control" value="<%= student_data.student_notes %>"></textarea>
   </div>
