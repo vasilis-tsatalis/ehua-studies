@@ -25,11 +25,52 @@ router.get('/', authenticateUser, async (req, res) => {
                     const first_name = metadata.first_name;
                     const last_name = metadata.last_name;
                     const email = metadata.email;
-                    res.render("account", {username, first_name, last_name, email, role, ref_code});
+                    const address = metadata.address;
+                    const state = metadata.city;
+                    const zipcode = metadata.zipcode;
+                    const telephone = metadata.telephone;
+                    const office_phone = metadata.office_phone;
+                    const mobile = metadata.mobile;
+                    const title = metadata.title;
+                    const level = metadata.level;
+                    const notes = metadata.notes;
+                    res.render("account", {
+                        username, 
+                        first_name, 
+                        last_name, 
+                        email,
+                        address,
+                        state,
+                        zipcode,
+                        telephone,
+                        office_phone,
+                        mobile,
+                        title,
+                        level,
+                        notes,
+                        role, 
+                        ref_code
+                    });
               })
               .catch(err => {
                 console.log(err);
-                res.render("account", {username, first_name, last_name, email, role, ref_code});
+                res.render("account", {
+                    username, 
+                    first_name, 
+                    last_name, 
+                    email,
+                    address,
+                    state,
+                    zipcode,
+                    telephone,
+                    office_phone,
+                    mobile,
+                    title,
+                    level,
+                    notes,
+                    role, 
+                    ref_code
+                });
               });
 
     }catch(err){

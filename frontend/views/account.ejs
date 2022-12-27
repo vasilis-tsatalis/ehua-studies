@@ -1,10 +1,5 @@
 <%- include("./partials/header") %>
-
-<% if (role == 'professor') { %>
-  <%- include("./navbar/menu_p") %>
-<% } else { %>
-  <%- include("./navbar/menu_s") %>
-<% } %>
+<%- include("./navbar/menu_p") %>
 
 <div class="container">
     <main>
@@ -20,30 +15,31 @@
             <div class="row g-3">
               <div class="col-sm-6">
                 <label for="firstName" class="form-label">First Name</label>
-                <label id="firstName" class="form-control"><%= first_name %></label>
+                <input type="text" class="form-control" id="firstName" name="firstName" value="<%= first_name %>" readonly>
               </div>
   
               <div class="col-sm-6">
                 <label for="lastName" class="form-label">Last name</label>
-                <label id="lastName" class="form-control"><%= last_name %></label>
+                <input type="text" class="form-control" id="lastName" name="lastName" value="<%= last_name %>" readonly>
               </div>
   
               <div class="col-12">
                 <label for="username" class="form-label">Username</label>
                 <div class="input-group has-validation">
                   <span class="input-group-text">@</span>
-                  <label id="username" class="form-control"><%= username %></label>
+                  <input type="text" class="form-control" id="username" name="username" value="<%= username %>" readonly>
+                  <!-- <label id="username" class="form-control"><%= username %></label> -->
                 </div>
               </div>
   
               <div class="col-12">
                 <label for="email" class="form-label">Email</label>
-                <label id="email" class="form-control"><%= email %></label>
+                <input type="email" class="form-control" id="email" name="email" value="<%= email %>" readonly>
               </div>
   
               <div class="col-12">
                 <label for="address" class="form-label">Address</label>
-                <input type="text" class="form-control" id="address" name="address" placeholder="123 Mesogeioon Str." required>
+                <input type="text" class="form-control" id="address" name="address" value="<%= address %>" required>
                 <div class="invalid-feedback">
                   Please enter your shipping address.
                 </div>
@@ -68,10 +64,10 @@
   
               <div class="col-md-4">
                 <label for="state" class="form-label">State</label>
-                <select class="form-select" id="state" name="state" required>
+                <select class="form-select" id="state" name="state" value="<%= state %>" required>
                   <option value="">Choose...</option>
-                  <option>Athens</option>
-                  <option>Other</option>
+                  <option value="ATHENS">Athens</option>
+                  <option value="OTHER">Other</option>
                 </select>
                 <div class="invalid-feedback">
                   Please provide a valid state.
@@ -80,7 +76,7 @@
   
               <div class="col-md-3">
                 <label for="zip" class="form-label">Zip</label>
-                <input type="text" class="form-control" id="zip" name="zip" placeholder="" required>
+                <input type="text" class="form-control" id="zip" name="zip" value="<%= zipcode %>" required>
                 <div class="invalid-feedback">
                   Zip code required.
                 </div>
@@ -88,24 +84,17 @@
 
               <div class="col-md-4">
                 <label for="telephone" class="form-label">Telephone</label>
-                <input type="text" class="form-control" id="telephone" name="telephone" placeholder="">
+                <input type="text" class="form-control" id="telephone" name="telephone" value="<%= telephone %>">
               </div>
 
-              <% if (role == 'professor') { %>
                 <div class="col-md-4">
                   <label for="office_phone" class="form-label">Office Phone</label>
-                  <input type="text" class="form-control" id="office_phone" name="office_phone" placeholder="">
+                  <input type="text" class="form-control" id="office_phone" name="office_phone" value="<%= office_phone %>">
                 </div>
-              <% } else { %>
-                <div class="col-md-4">
-                  <label for="phone" class="form-label">Phone</label>
-                  <input type="text" class="form-control" id="phone" name="phone" placeholder="">
-                </div>
-              <% } %>
 
               <div class="col-md-4">
                 <label for="mobile" class="form-label">Mobile</label>
-                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="" required>
+                <input type="text" class="form-control" id="mobile" name="mobile" value="<%= mobile %>" required>
                 <div class="invalid-feedback">
                   Mobile number required.
                 </div>
@@ -119,34 +108,26 @@
 
             <div class="row gy-3">
 
-              <% if (role == 'professor') { %>
                 <div class="col-md-6">
                   <label for="title" class="form-label">Title</label>
-                  <input type="text" class="form-control" id="title" name="title" placeholder="">
+                  <input type="text" class="form-control" id="title" name="title" value="<%= title %>">
                   <small class="text-muted">Title in the university</small>
                 </div>
     
                 <div class="col-md-9">
                   <label for="level" class="form-label">Level</label>
                   <!-- <input type="range" id="level" name="level" value="2"> -->
-                  <input type="text" class="form-control" id="level" name="level" required>
+                  <input type="text" class="form-control" id="level" name="level" value="<%= level %>" required>
                   <div class="invalid-feedback">
                     Level value required.
                   </div>
                 </div>
-              <% } else { %>
-                <div class="col-md-6">
-                  <label for="year_group" class="form-label">Year Group</label>
-                  <input type="text" class="form-control" id="year_group" name="year_group" placeholder="">
-                  <small class="text-muted">Year enter the university</small>
-                </div>
-              <% } %>
               
               <hr class="my-4">
 
               <div class="col-md-12">
                 <label for="motes" class="form-label">Notes</label>
-                <input type="text" class="form-control" id="notes" name="notes" rows="4" placeholder="">
+                <input type="text" class="form-control" id="notes" name="notes" rows="6" value="<%= notes %>">
               </div>
             </div>
   

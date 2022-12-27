@@ -26,11 +26,49 @@ router.get('/', authenticateUser, async (req, res) => {
                     const first_name = metadata.first_name;
                     const last_name = metadata.last_name;
                     const email = metadata.email;
-                    res.render("std_account", {username, first_name, last_name, email, role, ref_code});
+                    const address = metadata.address;
+                    const state = metadata.city;
+                    const zipcode = metadata.zipcode;
+                    const telephone = metadata.telephone;
+                    const phone = metadata.phone;
+                    const mobile = metadata.mobile;
+                    const year_group = metadata.year_group;
+                    const notes = metadata.notes;
+                    res.render("std_account", {
+                        username, 
+                        first_name, 
+                        last_name, 
+                        email,
+                        address,
+                        state,
+                        zipcode,
+                        telephone,
+                        phone,
+                        mobile,
+                        year_group,
+                        notes,
+                        role, 
+                        ref_code
+                    });
               })
               .catch(err => {
                 console.log(err);
-                res.render("std_account", {username, first_name, last_name, email, role, ref_code});
+                res.render("std_account", {
+                    username, 
+                    first_name, 
+                    last_name, 
+                    email,
+                    address,
+                    state,
+                    zipcode,
+                    telephone,
+                    phone,
+                    mobile,
+                    year_group,
+                    notes,
+                    role, 
+                    ref_code
+                });
               });
 
     }catch(err){
