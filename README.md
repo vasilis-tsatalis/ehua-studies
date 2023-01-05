@@ -1,53 +1,58 @@
 # ehua-studies
 HUA E-Studies Repository
 
-#
-Run web server via Docker locally
+### Run web server via Docker locally
 ----------------------------------
-** config file
+* config file
 ```bash
-cp .env.test .env
-cp ./frontend/.test.env ./frontend/.env
-cp ./admin_console/.test.env ./admin_console/.env
+    cp .env.test .env
+    cp ./frontend/.test.env ./frontend/.env
+    cp ./admin_console/.test.env ./admin_console/.env
 ```
 
-** docker start
+* docker start
 ```bash
-docker-compose build
+    docker-compose build
 ```
 
-** docker running
+* docker running
 ```bash
-docker-compose up
+    docker-compose up
 ```
 
-** docker end - remove
+* docker end - remove
 ```bash
-docker-compose down
+    docker-compose down
 ```
 
-
-Enter MongoDB container and create DB
+### Enter MongoDB container and create DB
 ----------------------------------
-** mongodb shell
+* mongodb shell
 ```bash
-docker exec -it ehua-studies-mongodb_container-1 mongosh -u "root" -p "rootpassword"
+    docker exec -it ehua-studies-mongodb_container-1 mongosh -u "root" -p "rootpassword"
 ```
 ```bash
-show dbs
+    show dbs
 ```
 ```bash
-use admin
+    use admin
 ```
 ``` mongo shell
-db.createUser({user: "hua_user", pwd: "hua_pass", roles:[{role:"dbOwner", db:"huadatabase"}]})
+    db.createUser({user: "hua_user", pwd: "hua_pass", roles:[{role:"dbOwner", db:"huadatabase"}]})
 ```
 ```bash
-use huadatabase
+    use huadatabase
 ```
 ```bash
-db.createUser({user: "root", pwd: "rootpassword", roles:["dbOwner"]})
+    db.createUser({user: "root", pwd: "rootpassword", roles:["dbOwner"]})
 ```
 ```bash
-db.feusers.find()
+    db.feusers.find()
 ```
+
+### MinIO Platform
+----------------------------------
+* Enter Minio with admin credentials
+* Create new Access Key
+* Create new Secret Key
+* Copy these to .env parameters

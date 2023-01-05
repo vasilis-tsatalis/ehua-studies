@@ -65,12 +65,15 @@ services:
       - '6600:6600'
 
   mailhog:
-      image: mailhog/mailhog
-      logging:
-          driver: 'none' # disable saving logs
-      ports:
-          - 1025:1025 # smtp server
-          - 8025:8025 # web ui
+    image: mailhog/mailhog
+    logging:
+      driver: 'none' # disable saving logs
+    restart: always
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+    #depends_on:
+    #  - frontend
 
   minio:
     image: minio/minio:latest
@@ -105,11 +108,11 @@ services:
     image: mongo:latest
     restart: unless-stopped
     environment:
-      # MONGO_INITDB_ROOT_USERNAME: root
-      # MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      #MONGO_INITDB_ROOT_USERNAME: root
+      #MONGO_INITDB_ROOT_PASSWORD: rootpassword
       MONGO_INITDB_DATABASE: huadatabase
-    # env_file:
-    #   - ./frontend/.env
+    env_file:
+      - ./frontend/.env
     ports:
       - 27017:27017
     volumes:

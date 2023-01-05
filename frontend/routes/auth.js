@@ -48,7 +48,8 @@ router.post('/', async (req, res) => {
         ///////////
 
     }catch(err){
-        res.sendStatus(400).json({ message:err });
+        //res.sendStatus(400).json({ message:err });
+        res.render("signin", { message: "Username or password has error" });
     }
 });
 
