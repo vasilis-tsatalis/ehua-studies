@@ -10,7 +10,7 @@
       <div class="col">
           <label for="my_table"><b><i>My results</i></b></label>
           <hr class="my-4">
-          <table class="table" id="results">
+          <table class="table" id="std_results">
               <thead>
               <tr>
                   <th scope="col">Section</th>
@@ -33,25 +33,25 @@
 
           <br>
           <button type="button" class="btn btn-outline-info btn-sm" id="download-button-csv">
-            export CSV
+            export CSV <img src="/assets/csv.png" width="23rem" height="auto">
           </button>
-          <button type="button" class="btn btn-outline-warning btn-sm" onclick="tableToJSON()">
-            export JSON
-        </button>
-        <button type="button" class="btn btn-outline-success btn-sm" onclick="exportTableToExcel('selected_sections', 'mysections')">
-            export Excel
-        </button>
+          <button type="button" class="btn btn-outline-warning btn-sm" onclick="downloadObjectAsJson('std_results','file')">
+          export JSON <img src="/assets/json.png" width="23rem" height="auto">
+          </button>
+          <button type="button" class="btn btn-outline-success btn-sm" onclick="tableToExcel()">
+          export Excel <img src="/assets/excel.png" width="23rem" height="auto">
+          </button>
 
       </div>           
 
   </div>
 </div>
 
-    <script>
+<script>
     document.getElementById("download-button-csv").addEventListener("click", function () {
     var html = document.querySelector("table").outerHTML;
-    htmlToCSV(html, "my_sections.csv");
-    });
+    htmlToCSV(html, "file.csv");
+    });   
   </script>
 
 

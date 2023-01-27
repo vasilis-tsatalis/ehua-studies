@@ -108,14 +108,14 @@
 
         <br>
         <button type="button" class="btn btn-outline-info btn-sm" id="download-button-csv">
-          export CSV
-        </button>
-        <button type="button" class="btn btn-outline-warning btn-sm" onclick="tableToJSON()">
-          export JSON
-      </button>
-      <button type="button" class="btn btn-outline-success btn-sm" onclick="exportTableToExcel('professors_sections_table', 'professors_sections')">
-        export Excel
-      </button>
+            export CSV <img src="/assets/csv.png" width="23rem" height="auto">
+          </button>
+          <button type="button" class="btn btn-outline-warning btn-sm" onclick="downloadObjectAsJson('professors_sections_table','file')">
+          export JSON <img src="/assets/json.png" width="23rem" height="auto">
+          </button>
+          <button type="button" class="btn btn-outline-success btn-sm" onclick="tableToExcel()">
+          export Excel <img src="/assets/excel.png" width="23rem" height="auto">
+          </button>
 
       </div>
 </section>
@@ -123,8 +123,8 @@
   <script>
     document.getElementById("download-button-csv").addEventListener("click", function () {
     var html = document.querySelector("table").outerHTML;
-    htmlToCSV(html, "professors_sections.csv");
-    });
+    htmlToCSV(html, "file.csv");
+    });   
   </script>
 
 <br>

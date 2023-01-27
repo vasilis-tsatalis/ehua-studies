@@ -40,23 +40,21 @@
 
   <br>
   <button type="button" class="btn btn-outline-info btn-sm" id="download-button-csv">
-    export CSV
+    export CSV <img src="/assets/csv.png" width="23rem" height="auto">
   </button>
-  <button type="button" class="btn btn-outline-warning btn-sm" onclick="tableToJSON('myTable')">
-    export JSON
+  <button type="button" class="btn btn-outline-warning btn-sm" onclick="downloadObjectAsJson('all_courses','file')">
+  export JSON <img src="/assets/json.png" width="23rem" height="auto">
   </button>
-  <button type="button" class="btn btn-outline-success btn-sm" onclick="exportTableToExcel('all_courses', 'courses')">
-    export Excel
+  <button type="button" class="btn btn-outline-success btn-sm" onclick="tableToExcel()">
+  export Excel <img src="/assets/excel.png" width="23rem" height="auto">
   </button>
 
-</div>
-
-<script>
-  document.getElementById("download-button-csv").addEventListener("click", function () {
-  var html = document.querySelector("table").outerHTML;
-  htmlToCSV(html, "courses.csv");
-  });
-</script>
+  <script>
+    document.getElementById("download-button-csv").addEventListener("click", function () {
+    var html = document.querySelector("table").outerHTML;
+    htmlToCSV(html, "file.csv");
+    });   
+  </script>
 
 <br>
 
