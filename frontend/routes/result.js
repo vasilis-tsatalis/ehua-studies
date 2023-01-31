@@ -65,19 +65,42 @@ router.post('/', authenticateUser, async (req, res) => {
             }).then(response => response.data).catch(err => {console.log(err)})
         };
 
+        function axiosStudents() {
+            return axios.get(`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}${process.env.API_URL}/students`, {
+                auth: {
+                    username: `${process.env.API_USER}`,
+                    password: `${process.env.API_PASS}`
+                }
+            }).then(response => response.data).catch(err => {console.log(err)})
+        };
+
         const db_section_students = await axiosSectionStudents(section_id);
+        const db_students = await axiosStudents();
 
         if (!db_section_students) {
             res.render("results", {username, role, ref_code});
         };
 
-        db_section_students.forEach(element => {
-            section_students.push({
-                section_id: element.section_id,
-                student_id: element.student_id,
-                points: element.status
+        if (!db_students) {
+            res.render("dashboard", {username, role, ref_code});
+        };
 
-            });
+        db_section_students.forEach(element => {
+
+            db_students.forEach(item =>{
+
+                if (item.id === element.student_id) {
+                    section_students.push({
+                        section_id: element.section_id,
+                        student_id: element.student_id,
+                        username: item.username,
+                        first_name: item.first_name,
+                        last_name: item.last_name,
+                        points: element.status
+        
+                    });
+                }
+            })
         });
 
         res.render("results_points", {section_students, username, role, ref_code});

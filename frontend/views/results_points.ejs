@@ -6,8 +6,6 @@
   <%- include("./navbar/menu_s") %>
 <% } %>
 
-  <div class="list-group">
-
     <h2 class="border-bottom pb-2">Add Students Points</h2>
     <br>
     <br>
@@ -20,6 +18,9 @@
               <tr>
                 <th scope="col">Section ID</th>
                 <th scope="col">Student ID</th>
+                <th scope="col">Student Username</th>
+                <th scope="col">Student FirstName</th>
+                <th scope="col">Student LastName</th>
                 <th scope="col">Point</th>
                 <th scope="col"> </th>
               </tr>
@@ -34,6 +35,15 @@
                   </strong></td>
                   <td>
                     <input type="text" class="form-control" id="student_id" name="student_id" value="<%= section_student.student_id %>" readonly>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" id="student_username" name="student_username" value="<%= section_student.username %>" readonly>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" id="student_firstname" name="student_firstname" value="<%= section_student.first_name %>" readonly>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" id="student_lastname" name="student_lastname" value="<%= section_student.last_name %>" readonly>
                   </td>
                   <td>                
                     <div class="col-sm-6">

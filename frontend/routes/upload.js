@@ -87,10 +87,12 @@ router.post('/', authenticateUser, async (req, res) => {
                 console.log(req.file.filename);
                 console.log(req.file.size);
 
-                minioClient.bucketExists(username, function(err, exists) {
+                const bucket_name = username.toLowerCase()
+
+                minioClient.bucketExists(bucket_name, function(err, exists) {
                     if (err) return console.log(err);
                     if (!exists) {
-                        minioClient.makeBucket(username, 'europe-west2-a', function(err) {
+                        minioClient.makeBucket(bucket_name, 'us-east-1', function(err) {
                             if (err) return console.log('Error creating bucket.', err);
                         })
                     };
@@ -99,10 +101,10 @@ router.post('/', authenticateUser, async (req, res) => {
                         const chunk = data.toString();
                         return chunk;
                     });
-                    minioClient.putObject(username, req.file.filename, the_file, function(error, etag) {
+                    minioClient.putObject(bucket_name, req.file.filename, the_file, function(error, etag) {
                         if(error) return console.log(error);
 
-                        minioClient.presignedUrl('GET', username, req.file.filename, 7*24*60*60, function(err, presignedUrl) {
+                        minioClient.presignedUrl('GET', bucket_name, req.file.filename, 7*24*60*60, function(err, presignedUrl) {
                             if(err) return console.log(err);
                             return res.render("documents", {username, presignedUrl: presignedUrl, role, ref_code});
                         });

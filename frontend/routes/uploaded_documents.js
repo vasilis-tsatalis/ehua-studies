@@ -15,10 +15,12 @@ router.get('/', authenticateUser, async (req, res) => {
         const role = req.session.user.role;
         const ref_code = req.session.user.ref_code;
 
+        const bucket_name = username.toLowerCase()
+
         const mydocuments = [];
 
         const data = [];
-        var stream = minioClient.listObjects(username,'', true)
+        var stream = minioClient.listObjects(bucket_name,'', true)
         stream.on('data', function(obj) { data.push(obj) } )
         stream.on("end", function (obj) { 
             //console.log(data)
@@ -26,7 +28,7 @@ router.get('/', authenticateUser, async (req, res) => {
             //console.log(mydocuments);
             
             data.forEach(element => {
-                minioClient.presignedUrl('GET', username, element.name, 7*24*60*60, function(err, presignedUrl) {
+                minioClient.presignedUrl('GET', bucket_name, element.name, 7*24*60*60, function(err, presignedUrl) {
                     if(err) return console.log(err);
                     
                     mydocuments.push({
